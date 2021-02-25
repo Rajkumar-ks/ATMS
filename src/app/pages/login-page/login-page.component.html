@@ -1,0 +1,46 @@
+<div class="account-page">
+  <div class="container">
+    <h3 class="account-title"></h3>
+    <p *ngIf="invalidLogin" class="error">
+      Invalid username and/or password.
+    </p>
+    <div class="account-box">
+      <div class="account-wrapper">
+        <div class="account-logo">
+          <a href="javascript:"><img src="assets/img/logo2.jpg" alt="Focus Technologies"></a>
+        </div>
+        <form [formGroup]="form" autocomplete="off">
+          <div class="form-group" [class.has-error]="username.invalid && username.touched"
+            [class.has-success]="username.valid">
+            <label class="control-label">Username</label>
+            <input class="form-control floating" type="text" required formControlName="username" id="username"
+              name="username">
+            <div class="help-block" *ngIf="!username.valid && (username.touched || username.dirty)">
+              <div *ngIf="username.errors.required">Username is required</div>
+              <div *ngIf="username.errors.pattern">Username is invalid</div>
+            </div>
+          </div>
+          <div class="form-group" [class.has-error]="password.invalid && password.touched"
+            [class.has-success]="password.valid">
+            <label class="control-label">Password</label>
+            <input class="form-control floating" type="password" required formControlName="password" id="password"
+              name="password" maxlength="16" (keyup.enter)="onSubmit()">
+            <div class="help-block" *ngIf="!password.valid && (password.touched || password.dirty)">
+              <div *ngIf="password.errors.required">Password is required</div>
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <button class="btn btn-primary btn-block account-btn" type="button" [disabled]="form.invalid"
+              (click)="onSubmit()">Login</button>
+          </div>
+          <div *ngIf="showErrorMessage" class="alert alert-danger">
+            Invalid username / password!
+          </div>
+          <div class="text-center">
+            <a routerLink="../forgot-password">Forgot your password?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

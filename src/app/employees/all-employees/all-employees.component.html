@@ -1,0 +1,478 @@
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-xs-4">
+      <h4 class="page-title">HR Employee</h4>
+    </div>
+
+    <div class="col-xs-8 text-right m-b-30">
+      <a href="javascript:" class="btn btn-primary pull-right rounded" (click)="addReset()"><i class="fa fa-plus"></i>
+        Create Employee</a>
+      <div class="view-icons">
+        <a class="grid-view btn btn-link" [ngClass]="{active:!allEmployees}" (click)="allEmployees=false"><i
+            class="fa fa-th"></i></a>
+        <a class="list-view btn btn-link" [ngClass]="{active:allEmployees}" (click)="allEmployees=true"><i
+            class="fa fa-bars"></i></a>
+      </div>
+
+    </div>
+  </div>
+  <!--<div class="row filter-row">
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Employees</label>
+          <select style="height:40px; width:180px;" class="select floating form-control" (input)="searchEmployee($event.target.value)">
+            <option class="control-label" value="">Select Employee</option>
+            <option value="All">All</option>
+            <option *ngFor="let employee of employee" value="{{employee.id}}">
+              {{employee.itemName}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Job Title</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchJobTitle($event.target.value)">
+            <option class="control-label" value="">Select Job</option>
+            <option value="All">All</option>
+            <option *ngFor="let job of jobs" value="{{job.id}}">
+              {{job.itemName}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Status</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchStatus($event.target.value)">
+            <option class="control-label">Select Status</option>
+            <option value="All">All</option>
+            <option *ngFor="let status of employeeStatus" value="{{status.id}}">
+              {{status.itemName}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Start Date</label>
+          <my-date-picker class="my-date" [options]="myDatePickerOptions2"  required (dateChanged)="searchStartDate($event)"></my-date-picker>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">End Date</label>
+          <my-date-picker class="my-date-end" [options]="myDatePickerOptions3"  required (dateChanged)="searchEndDate($event)"></my-date-picker>
+        </div>
+      </div>
+    </div>   -->
+  <div class="row">
+    <!-- <div style="margin-right: 50%;" class="alert alert-success" *ngIf="errorMessage" >{{errorMessage}}</div>     -->
+    <div class="col-md-12">
+      <div class="table-responsive table-responsive-inherit">
+        <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable"
+          [mfRowsOnPage]="5">
+          <thead>
+            <tr>
+              <th style="width: 15%">
+                <mfDefaultSorter by="firstName">Employee Name</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="employeeID">Employee ID</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="email">Email</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="mobile">Mobile</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="joinDate">Date of Joining</mfDefaultSorter>
+              </th>
+              <th style="width: 5%" class="text-center">
+                <mfDefaultSorter by="status">Status</mfDefaultSorter>
+              </th>
+              <th style="width: 5%" class="text-center">
+                <mfDefaultSorter by="action">Action</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of paginationData |paginate: { 
+                                          itemsPerPage: pageSize, 
+                                          currentPage:page,
+                                          totalItems : Count }; let i index">
+              <td><a href="javascript:" class="avatar">{{item.f_name.split('')[0]}}</a>
+                <h2><a href="javascript:" data-toggle="modal" data-target="#edit_employee"
+                    (click)="onEdit(item)">{{item.f_name}} {{item.l_name}}<span>{{item.job_title}}</span></a></h2>
+              </td>
+              <td>{{item.emp_id}}</td>
+              <td>{{item.official_mail}}</td>
+              <td>{{item.ph_no}}</td>
+              <td>{{item.doj | date: "dd/MM/yyyy" }}</td>
+              <td [ngStyle]="{'color': item.status === '1' ? 'green' : 'red' }">
+                {{item.status === '1' ? 'Active' : 'Inactive'}}</td>
+              <td>
+                <!-- <h2><button type="button" class="btn btn-sm btn-info" (click)="onEdit(item)"><i class="fas fa-edit"></i></button></h2> -->
+                <h2><button class="button" (click)="onEdit(item)"><i class="fa fa-pencil fa-fw" aria-hidden="true"></i></button></h2>
+              </td>
+            </tr>
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <td colspan="20">
+                <div class="row">
+                  <div class="col">
+                    <div class="col-sm-8">
+                        Items per Page:
+                        <select (change)="handlePageSizeChange($event)">
+                          <option *ngFor="let size of pageSizes" [ngValue]="size">
+                            {{ size }}
+                          </option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+                          (pageChange)="handlePageChange($event)"></pagination-controls>
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="mt-3">
+                  Items per Page:
+                  <select (change)="handlePageSizeChange($event)">
+                    <option *ngFor="let size of pageSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div id="page">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+                    (pageChange)="handlePageChange($event)"></pagination-controls>
+                  <mfBootstrapPaginator></mfBootstrapPaginator>
+                </div> -->
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row staff-grid-row" *ngIf="!allEmployees">
+    <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3" *ngFor="let item of empDetails">
+      <div class="profile-widget">
+        <div class="profile-img">
+          <a href="javascript:"><img class="avatar" src="{{item.prof_pic}}" alt=""></a>
+        </div>
+        <div class="dropdown profile-action">
+          <a href="javascript:" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+              class="fa fa-ellipsis-v"></i></a>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="javascript:" data-toggle="modal" data-target="#edit_employee" (click)="onEdit(item)"><i
+                  class="fa fa-pencil m-r-5"></i> Edit</a></li>
+            <li><a (click)="onDelete(item.id)"><i class="fa fa-trash-o m-r-5"></i>
+                Delete</a></li>
+          </ul>
+        </div>
+        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="javascript:">{{item.f_name}} {{item.l_name}}</a></h4>
+        <div class="small text-muted">{{item.job_title}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="add_employee" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-content modal-lg">
+      <!-- <div class="modal-header">
+        <h4 class="modal-title employee">Add Employee</h4>
+      </div> -->
+      <div class="modal-body">
+        <div class="row m-t-20">
+          <div class="col-md-12">
+             <form class="form-horizontal example-form" [formGroup]="form" autocomplete="off">
+              <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <div class="panel-title">Create Employee</div>
+                </div>
+                <div class="panel-body">
+                  <mat-slide-toggle formControlName="status" id="status">Status</mat-slide-toggle>
+                  <div class="row" id="input-size">
+                    <div class="col">
+                      <div class="col-sm-12">
+                            <mat-form-field class="example-full-width col-sm-4" appearance="standard">
+                              <mat-label >First name</mat-label>
+                              <input matInput formControlName="f_name" placeholder="Your Name">
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width col-sm-4" appearance="standard">
+                              <mat-label>Last name</mat-label>
+                              <input matInput formControlName="l_name">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="standard" class="example-full-width col-sm-4">
+                              <mat-label>Business Unit</mat-label>
+                              <mat-select formControlName="bussiness_id" name="bussiness_id" [(ngModel)]="selectedValue">
+                                <mat-option *ngFor="let unit of business_unit_arr" [value]="unit.key">
+                                  {{unit.value}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                            <div class="col-sm-2">
+                              <img id="prof-pic" [src]="testimgresult" alt="img"/>
+                              <input type="file" formControlName="profile_picture" id="profile_picture" class="form-control input-sm" size="60" (change)="onFileSelect($event)">
+                            </div>
+      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" id="input-size">
+                    <div class="col">
+                      <div class="col-sm-12">
+                        <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                          <mat-label>Resource Type</mat-label>
+                          <mat-select formControlName="resourcetype_id" name="food">
+                            <mat-option *ngFor="let unit of resource_type_Arr" [value]="unit.key">
+                              {{unit.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                          <mat-label>Designation</mat-label>
+                          <mat-select formControlName="descignation_id" name="food">
+                            <mat-option *ngFor="let unit of designation_arr" [value]="unit.key">
+                              {{unit.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                          <mat-label>Role Type</mat-label>
+                          <mat-select formControlName="roletype_id" name="food">
+                            <mat-option *ngFor="let unit of role_type_arr" [value]="unit.key">
+                              {{unit.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                          <mat-label>Grade</mat-label>
+                          <mat-select formControlName="level_id" name="food">
+                            <mat-option *ngFor="let unit of level_type_arr" [value]="unit.key">
+                              {{unit.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field> 
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" id="input-size">
+                    <div class="col">
+                      <div class="col-md-12">
+
+                        <div id="ng-autocomplete" class="col-md-3">
+                          <label for="country" class="control-label">Enter Country Name</label>
+                          <ng-autocomplete 
+                            
+                            [data]="countryData"
+                            formControlName = "country"
+                            [searchKeyword]="keywordCountry"
+                            (selected)='selectEvent($event)'
+                            (inputChanged)='onCountryChangeSearch($event)'
+                            (inputFocused)='onFocused($event)'
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">                                 
+                          </ng-autocomplete>
+                          
+                          <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                          </ng-template>
+                          
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+                        </div>
+
+                        <div id="ng-autocomplete"  class="col-md-3">
+                          <label for="state" class="control-label">Enter State Name</label>
+                          <ng-autocomplete 
+                            formControlName = "state"
+                            [data]="stateData"
+                            [searchKeyword]="keywordState"
+                            (selected)='selectEvent($event)'
+                            (inputChanged)='onStateChangesSearch($event)'
+                            (inputFocused)='onFocused($event)'
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">                                 
+                          </ng-autocomplete>
+                          
+                          <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                          </ng-template>
+                          
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+                        </div>
+                      
+                        <div id="ng-autocomplete" class="col-md-3">
+                          <label for="state" class="control-label">Enter City Name</label>
+                          <ng-autocomplete 
+                            formControlName = "job_location"
+                            [data]="locData"
+                            [searchKeyword]="keywordLoc"
+                            (selected)='selectEvent($event)'
+                            (inputChanged)='onCityChangesSearch($event)'
+                            (inputFocused)='onFocused($event)'
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">                                 
+                          </ng-autocomplete>
+                          
+                          <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                          </ng-template>
+                          
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+                        </div>
+
+                        <mat-form-field class="example-full-width col-sm-3" appearance="standard" style="margin-top: 2%;">
+                          <mat-label>Choose a Date of Birth</mat-label>
+                          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="dob">
+                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field> 
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" id="input-size">
+                    <div class="col">
+                      <div class="col-md-12">
+                     
+                        <mat-form-field class="example-full-width col-sm-3" appearance="standard">
+                          <mat-label >Pan Number</mat-label>
+                          <input matInput formControlName="pan_num" placeholder="ex: AHEDK5803R">
+                          <mat-error class="help-block" *ngIf="!pan_num.valid && (pan_num.touched || pan_num.dirty)">
+                            <mat-error *ngIf="pan_num.errors.required">Pan Number is required</mat-error>
+                            <mat-error *ngIf="pan_num.errors.pattern">Pan Number should be Valid</mat-error>
+                          </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-sm-3" appearance="standard">
+                          <mat-label >Aadhar Id</mat-label>
+                          <input matInput formControlName="addhar_num">
+                          <mat-error class="help-block" *ngIf="!addhar_num.valid && (addhar_num.touched || addhar_num.dirty)">
+                            <mat-error *ngIf="addhar_num.errors.required">Addhar Number is required</mat-error>
+                            <mat-error *ngIf="addhar_num.errors.pattern">Addhar Number should be Valid</mat-error>
+                          </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="example-full-width col-sm-3" appearance="standard">
+                          <mat-label>Personal Email</mat-label>
+                          <input type="email" matInput formControlName="per_mail" [errorStateMatcher]="matcher"
+                                placeholder="Ex. admin@agnoshin.com">
+                          <mat-error *ngIf="per_mail.hasError('email') && !per_mail.hasError('required')">
+                            Please enter a valid email address
+                          </mat-error>
+                          <mat-error *ngIf="per_mail.hasError('required')">
+                            Email is <strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+      
+                        <mat-form-field class="example-full-width col-sm-3" appearance="standard">
+                          <mat-label>Official Email</mat-label>
+                          <input type="email" matInput [formControl]="official_mail" [errorStateMatcher]="matcher"
+                                placeholder="Ex. admin@agnoshin.com">
+                          <mat-error *ngIf="official_mail.hasError('email') && !official_mail.hasError('required')">
+                            Please enter a valid email address
+                          </mat-error>
+                          <mat-error *ngIf="official_mail.hasError('required')">
+                            Email is <strong>required</strong>
+                          </mat-error>
+                        </mat-form-field>
+      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" id="input-size">
+                    <div class="col">
+                      <div class="col-md-12">
+      
+                        <div class="col-md-6">
+                          <label for="gender" class="control-label col-md-2" id="gender-label">Gender</label>
+                          <mat-radio-group aria-label="Select an Gender" formControlName="gender" class="col-md-10">
+                            <mat-radio-button value="male">Male</mat-radio-button>
+                            <mat-radio-button value="female">Female</mat-radio-button>
+                            <mat-radio-button value="other">Transgender</mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+
+                        <label for="gender" class="control-label col-sm-2" id="resourcetype-label">Resource Type</label>
+                        <mat-radio-group aria-label="Select an Resource Type Request" class="col-sm-3" formControlName="rep_emp_id">
+                          <mat-radio-button name="rep_emp_id" value="New" (change)="enableNew()">New</mat-radio-button>
+                          <mat-radio-button name="rep_emp_id" value="replace" (change)="enableReplace()">Replace</mat-radio-button>
+                        </mat-radio-group>
+                      
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" id="input-size">
+                    <div class="col">
+                      <div class="col-md-12">
+                        <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                          <mat-label>Access Role</mat-label>
+                          <mat-select formControlName="role_id" name="food">
+                            <mat-option *ngFor="let unit of role_id_arr" [value]="unit.key">
+                              {{unit.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-sm-3" appearance="outline">
+                          <mat-label>Choose a Date of Joining</mat-label>
+                          <input matInput [min]="minDateDOJ" [max]="maxDateDOJ" [matDatepicker]="picker2" formControlName="doj">
+                          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                          <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field> 
+      
+                        <mat-form-field appearance="standard" class="col-sm-3">
+                          <mat-label>Reporting Manager</mat-label>
+                          <mat-select formControlName="rptmgr_id" name="rptmgr_id">
+                            <mat-option *ngFor="let unit of prgOwnerRes" [value]="unit.empid">
+                              {{unit.empname}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="standard" class="example-full-width col-sm-3" *ngIf="isEmployeeId">
+                          <mat-label>Employee Id</mat-label>
+                          <mat-select formControlName="emp_id" name="emp_id">
+                            <mat-option *ngFor="let unit of prgEmpRes" [value]="unit.empid">
+                              {{unit.empname}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-footer">
+                  <button class="btn btn-primary" type="button" [disabled]="form.invalid" (click)="addEmployee()">Create Employee</button>
+                </div>
+              </div>
+             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

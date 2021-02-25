@@ -1,0 +1,126 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <form [formGroup]="form" autocomplete="off">
+      <button class=close (click)=close()>×</button>
+      <!-- <label>Year</label> -->
+      <div class=YYYYMMDD style="text-align:center;">
+        <select class="year" name="year" id="year" required (change)='onYearSelected($event)'>
+          <option value=" " disabled>Select Year</option>
+          <option style="padding-top: 8px; padding-right: 2px; padding-bottom: 8px; padding-left: 2px; height:10px" *ngFor="let y of years" [value]="y">
+            {{y}}
+          </option>
+        </select>
+<!--copy from lastweek-->
+<!-- <select class="copyweek"  id="copyweek" required>
+  <option value="" disabled>Copy from a week</option>
+  <option style="height: 15px;" *ngFor="let cpyweek of copyweek" value="cpy.copyweekvalue">{{cpy.copyweekname}}</option>
+</select> -->
+        <!-- <label>Month</label> -->
+
+        <select formControlName = "month" class="month" [(ngModel)]="Month" id="month" required (change)='onMonthSelected($event)'>
+          <option [ngValue]="null" disabled>Select Month</option>
+          <option style="height: 15px;" *ngFor="let month of months" [ngValue]="month.val">{{month.name}}</option>
+        </select>
+   
+
+        <select formControlName="Week" [(ngModel)]="Week" class="week selectopt" name="week" id="week" required (click)='onWeekSelected($event)' (change)='weekChange()'>
+          <option value="undefined" disabled>Select a Week</option>
+          <option *ngFor="let i of week" [ngValue]="i.weekvalue" class="week" id="week">{{ i.weekname }}</option>
+        </select>
+      </div>
+</form>
+   
+    <table id="prjectheader" style="border: 1px solid rgb(122, 122, 122);height: 40px; margin-bottom:1%;border-radius: 5px;">
+      <tr>
+        <td class="link" *ngFor="let link of links">{{link}}</td>
+      </tr>
+    </table>
+
+    <ng-template [ngIf]="tshtprojectlist">
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let project of tshtprojectlist; let j=index;">
+          <mat-expansion-panel-header >
+            <mat-panel-title style="width:10px;">{{project.ProjectName}}
+            </mat-panel-title>
+           
+            <mat-panel-description  style="width:10px;margin-left:150px;" id="totalHrs_{{project?.ProjectCode}}">Total Hours:{{project.TotalHours}}
+            </mat-panel-description>
+            <mat-panel-description  style="width:10px;margin-left:70px;" id="billableHrs_{{project?.ProjectCode}}">Billable Hours:{{project.BillableHours}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+
+          <div class="row" id="{{project.project_ID}}">
+            <table id="table_{{project.project_ID}}">
+              <tr *ngFor="let wrkactiv of project.DayofDetail; let i=index;" id="row_{{wrkactiv?.ddelementid}}" style='display: block;margin-bottom:0.4em;'>
+                
+
+                <td>
+                  <select class="activity" name="activity" id="{{wrkactiv?.ddelementid}}" required
+                  style="display:inline-block; padding:2px;width:17%" ngModel="{{wrkactiv?.SelectedActivity}}" (change)="activitychange($event,j)" (click)="activityclick($event)"  >
+                  <option value="" disabled>Select Activity</option>
+                  <option *ngFor="let act of wrkactiv.Loadactivities" value="{{act.activ_id}}">
+                    {{act.activ_name}} </option>
+                </select>
+                <input class="tsht_hour_field" type="text" autocomplete="off" name="hours1" (click)="timeField_Click($event,wrkactiv.Activity?.day1,wrkactiv?.ddelementid,1)"
+                  placeholder="00:00"  style="margin-left: 1%;
+                  width: 10% ;display:inline-block; "
+                  value='{{wrkactiv.Activity?.day1?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day1,wrkactiv?.ddelementid,1,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+                  <input class="tsht_hour_field" type="text" autocomplete="off" name="hours2"  (click)="timeField_Click($event,wrkactiv.Activity?.day2,wrkactiv?.ddelementid,2)"
+                  placeholder="00:00"  style="margin-left: 1%;
+                  width: 10% ;display:inline-block;"
+                  value='{{wrkactiv.Activity?.day2?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day2,wrkactiv?.ddelementid,2,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+                <input class="tsht_hour_field" type="text" autocomplete="off" name="hours3"  (click)="timeField_Click($event,wrkactiv.Activity?.day3,wrkactiv?.ddelementid,3)"
+                  placeholder="00:00"  style="margin-left: 1%;
+                  width: 10% ;display:inline-block;"
+                  value='{{wrkactiv.Activity?.day3?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day3,wrkactiv?.ddelementid,3,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+                <input class="tsht_hour_field"  type="text" autocomplete="off" name="hours4"  (click)="timeField_Click($event,wrkactiv.Activity?.day4,wrkactiv?.ddelementid,4)"
+                  placeholder="00:00" style="margin-left: 1%;
+                  width: 10% ;display:inline-block;"
+                  value='{{wrkactiv.Activity?.day4?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day4,wrkactiv?.ddelementid,4,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+                <input class="tsht_hour_field" type="text" autocomplete="off" name="hours5"  (click)="timeField_Click($event,wrkactiv.Activity?.day5,wrkactiv?.ddelementid,5)"
+                  placeholder="00:00"  style="margin-left: 1%;
+                  width: 10% ;display:inline-block;"
+                  value='{{wrkactiv.Activity?.day5?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day5,wrkactiv?.ddelementid,5,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+                <input class="tsht_hour_field" type="text" autocomplete="off" name="hours6"  (click)="timeField_Click($event,wrkactiv.Activity?.day6,wrkactiv?.ddelementid,6)"
+                  placeholder="00:00"style="margin-left: 1%;
+                  width: 10% ; display:inline-block;"
+                  value='{{wrkactiv.Activity?.day6?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day6,wrkactiv?.ddelementid,6,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+                <input class="tsht_hour_field" type="text" autocomplete="off" name="hours7"  (click)="timeField_Click($event,wrkactiv.Activity?.day7,wrkactiv?.ddelementid,7)"
+                  placeholder="00:00"style="margin-left: 1%;
+                  width: 10% ;display:inline-block;"
+                  value='{{wrkactiv.Activity?.day7?.hours}}'
+                  (change)="timeField_Changes($event,wrkactiv.Activity?.day7,wrkactiv?.ddelementid,7,wrkactiv?.SelectedActvStatus)" (blur)="onBlurMethod($event)">
+
+
+                  <button class="add fa fa-plus" id="add_{{wrkactiv?.ddelementid}}" (click)='addTimesheetUI(project.project_ID,wrkactiv?.ddelementid,wrkactiv?.Loadactivities,wrkactiv?.SelectedActvStatus,j)'
+              style="margin-left:2%;" [ngClass]="{'display_block': i+1==project.DayofDetail.length}">
+              </button> 
+              <button class="minus fa fa-minus" id="minus_{{wrkactiv?.ddelementid}}" (click)='removeTimesheetUI(wrkactiv.ddelementid,wrkactiv)'
+              style="margin-left:2%;" [ngClass]="{'display_block': i+1<project.DayofDetail.length}">
+              </button> 
+              <input type="hidden" id="custId" name="custId" value="{{wrkactiv?.ddelementid}}">
+                </td>
+               </tr>
+            </table>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-template>
+     <br><tr class="description" id="description" *ngIf=disable>
+      <textarea style="margin-left:22%" (change)="adddescription($event);" rows='7' cols='100' placeholder="please enter the activity description" id="descriptionid" name="description" [(ngModel)]="description"></textarea>
+      <button class="cancel" (click)="cancel()">x</button>
+    </tr>
+    <div class="save_submit" *ngIf=display>
+      <button class="save" (click)='saveTimeSheet()' >Save
+      </button>
+      <button class="submit" (click)='SumbitCheck()'>Submit
+      </button></div>
+  </div>
+</div>

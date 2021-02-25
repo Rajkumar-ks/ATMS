@@ -1,0 +1,247 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="col-md-12">
+      <h4 class="page-title">Oganization Configuration</h4>
+    </div>
+
+    <div class=" profile-widget" style="margin-top:44px;">
+      <div row>
+        <form [formGroup]="businessUnitform">
+          <mat-form-field class="full-width col-sm-3">
+            <mat-label>Configuration Type</mat-label>
+            <mat-select formControlName="businessunittype" matNativeControl required>
+              <mat-option value="role">Role</mat-option>
+              <mat-option value="businessunit">Business Unit</mat-option>
+              <mat-option value="roletype">Role Type</mat-option>
+              <mat-option value="designation">Designation</mat-option>
+              <mat-option value="resourcetype">Resource Type</mat-option>
+              <mat-option value="techskills">Technical Skills</mat-option>
+              <mat-option value="projecttype">Project Type</mat-option>
+              <mat-option value="projectactvtype">Project Activity Type</mat-option>
+              <mat-option value="level">Level</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="full-width col-sm-3">
+            <mat-label>Configuration Value</mat-label>
+            <input (keypress)="keyPressChar($event)"  matInput formControlName="businessUnit">
+          </mat-form-field>
+
+        </form>
+        <div class="m-t-20 btn-toolbar" style="margin-right: 167px;">
+          <button class="btn btn-danger pull-right" data-dismiss="modal" (click)=businessUnitform.reset();>
+            <span class="usrrm glyphicon glyphicon-remove" style="color:white;"></span></button>
+          <button class="btn btn-success pull-right" data-dismiss="modal" [disabled]="businessUnitform.invalid"
+            (click)="onConfirm()"><span class="usrrm glyphicon glyphicon-ok"> </span></button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <mat-form-field class="full-width col-sm-2" style="margin-top: 35px;">
+        <mat-label class="navbar-toggler-icon fa fa-search">Organization</mat-label>
+        <mat-select (selectionChange)="searchClient($event.value)">
+          <mat-option value="All">All</mat-option>
+          <mat-option value="role">Role</mat-option>
+          <mat-option value="businessunit">Business Unit</mat-option>
+          <mat-option value="roletype">Role Type</mat-option>
+          <mat-option value="designation">Designation</mat-option>
+          <mat-option value="resourcetype">Resource Type</mat-option>
+          <mat-option value="techskills">Technical Skills</mat-option>
+          <mat-option value="projecttype">Project Type</mat-option>
+          <mat-option value="projectactvtype">Project Activity Type</mat-option>
+          <mat-option value="level">Level</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="table-responsive table-responsive-inherit">
+          <table class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead>
+              <tr>
+                <th style="width: 8%">
+                  <mfDefaultSorter by=""> #</mfDefaultSorter>
+                </th>
+                <th style="width: 15%">
+                  <mfDefaultSorter by="">Configuration Type</mfDefaultSorter>
+                </th>
+                <th style="width: 15%">
+                  <mfDefaultSorter by="">Configuration Value</mfDefaultSorter>
+                </th>
+                <th style="width: 15%">
+                  <mfDefaultSorter by="">Created Date</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="">Action</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of bUnitList; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.mastertype}}</td>
+                <td>{{item.masterName}}</td>
+                <td>{{item.date | date:'mediumDate'}}</td>
+                <td>
+                  <button data-toggle="modal" class="btn btn-warning btn-sm-toolbar"
+                    (click)="edit(item.mastertype,item.masterName, item.hr_mas_id)">
+                    <span class="usrrm glyphicon glyphicon-pencil" style="color:white;"> </span>
+                  </button>
+                  <button data-toggle="modal" class="btn btn-danger btn-sm-toolbar" (click)="delete(item.hr_mas_id)">
+                    <span class="usrrm glyphicon glyphicon-trash"> </span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="add_bunit" style="padding: 49px 0 3px 3px;" class="modal fade" role="dialog">
+      <div class="modal-dialog uc-modal">
+        <div class=" profile-widget">
+
+          <!-- <div class="panel panel-primary" style=" width: 500px"> -->
+          <!-- <div class="panel-heading"> -->
+          <h3 class="panel-title" class="text-center" style=" font-weight: bold; color:#c2a6a6; margin-bottom: 28px;">
+            Add Configuration
+          </h3>
+          <!-- </div> -->
+          <!-- <div class="panel-body" style="padding: 30px ;"> -->
+          <h6 style="margin-bottom: 28px;">Are you sure want to submit?</h6>
+
+          <!-- </div> -->
+          <!-- <div class="panel-footer"> -->
+          <div class=" m-t-20 text-left">
+            <div row>
+              <div class="col-sm-2">
+                <button class="btn btn-info" data-dismiss="modal" (click)="reappear()">
+                  <i class="fa fa-arrow-left" style="size:38%;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="text-right">
+              <button type="cancel" class="btn btn-danger" data-dismiss="modal"
+                (click)=businessUnitform.reset();>Cancel</button>
+              <button type="submit" data-dismiss="modal" (click)="addBusinessUnit()"
+                class="btn btn-success">Submit</button>
+            </div>
+          </div>
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div id="edit_bunit" class="modal fade" style="padding: 20px;" role="dialog">
+      <div class="modal-dialog uc-modal">
+        <div class="modal-body" style=" width: 572px">
+          <form class="form-horizontal" [formGroup]="editbusinessUnitform">
+            <div class="panel panel-primary" style="color:black">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-sm-5">
+                    <h4 class="modal-title m-l-15" style="margin:3px 3px 3px 4px;">Edit Organization</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body" style="padding: 27px ;">
+                <form [formGroup]="editbusinessUnitform">
+                  <mat-form-field class="full-width col-sm-5">
+                    <mat-label>Configuration Value</mat-label>
+                    <input (keypress)="keyPressChar($event)" matInput formControlName="editbusinessUnit" [(ngModel)]="masterName">
+                  </mat-form-field>
+                  <mat-form-field class="full-width col-sm-5">
+                    <mat-label>Configuration Type</mat-label>
+                    <mat-select formControlName="editbusinessunittype" matNativeControl required
+                      [(ngModel)]="mastertype">
+                      <mat-option value="role">Role</mat-option>
+                      <mat-option value="businessunit">Business Unit</mat-option>
+                      <mat-option value="roletype">Role Type</mat-option>
+                      <mat-option value="designation">Designation</mat-option>
+                      <mat-option value="resourcetype">Resource Type</mat-option>
+                      <mat-option value="techskills">Technical Skills</mat-option>
+                      <mat-option value="projecttype">Project Type</mat-option>
+                      <mat-option value="projectactvtype">Project Activity Type</mat-option>
+                      <mat-option value="level">Level</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </form>
+              </div>
+              <div row>
+                <div class=" text-right" style="margin-right: 5px; margin-bottom: 5px;">
+                  <button class="btn btn-success" data-dismiss="modal" (click)="update()"><span
+                      class="usrrm glyphicon glyphicon-ok" > </span></button>
+                  <button class="btn btn-danger" data-dismiss="modal"> <span
+                      class="usrrm glyphicon glyphicon-remove" style="color:white;"></span></button>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="edit_bunit_cofirm" style="padding: 49px 0 3px 3px;" class="modal fade" role="dialog">
+      <div class="modal-dialog uc-modal">
+        <div class=" profile-widget">
+
+          <!-- <div class="panel panel-primary" style=" width: 500px">
+          <div class="panel-heading"> -->
+          <h3 class="panel-title" class="text-center">
+            Edit Configuration
+          </h3>
+          <h6>Are you sure want to submit?</h6>
+
+          <div class=" m-t-20 text-left">
+            <div class="row">
+              <div class="col-sm-2">
+                <button class="btn btn-info" data-dismiss="modal" (click)="reappear()">
+                  <i class="fa fa-arrow-left" style="size:38%;"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <button type="cancel" class="btn btn-danger" data-dismiss="modal"
+              (click)=businessUnitform.reset();>Cancel</button>
+            <button type="submit" data-dismiss="modal" (click)="editSubmit()" class="btn btn-success">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="delete_bunit_cofirm" style="padding: 49px 0 3px 3px;" class="modal fade" role="dialog">
+      <div class="modal-dialog uc-modal">
+        <div class=" profile-widget">
+          <!-- <div class="panel panel-primary" style=" width: 500px">
+          <div class="panel-heading"> -->
+          <h3 class="panel-title" class="text-center">
+            Delete Configuration
+          </h3>
+          <h6>Are you sure want to delete?</h6>
+
+          <div class=" m-t-20 text-left">
+            <div row>
+              <div class="col-sm-2">
+                <button class="btn btn-info" data-dismiss="modal" (click)="reappear()">
+                  <i class="fa fa-arrow-left" style="size:38%;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="text-right">
+              <button type="cancel" class="btn btn-danger" data-dismiss="modal"
+                (click)=businessUnitform.reset();>Cancel</button>
+              <button type="submit" data-dismiss="modal" (click)="deleteSubmit()"
+                class="btn btn-success">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1808 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+   <h4>Add Employee</h4>
+   <img src="http://192.168.8.135:8080/Agno/TimeSheet/Users/ProfilePicture/default-user.jpg" alt=""/>
+    <form class="m-b-30 input-box" [formGroup]="form" novalidate>
+     <div class="row">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group">
+             <h4>Employee Id :</h4>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+             <h4>Employee Name:</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="city.invalid && city.touched" [class.has-success]="city.valid">
+              <label class="control-label">City <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="city" id="city" name="city" maxlength="30">
+              <div class="help-block" *ngIf="!city.valid && (city.touched || city.dirty)">
+                <div *ngIf="city.errors.required">City is required</div>
+                <div *ngIf="city.errors.pattern">City should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="phone_number.invalid && phone_number.touched" [class.has-success]="phone_number.valid">
+              <label class="control-label">Phone Number <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="phone_number" id="phone_number" name="phone_number" maxlength="30">
+              <div class="help-block" *ngIf="!phone_number.valid && (phone_number.touched || phone_number.dirty)">
+                <div *ngIf="phone_number.errors.required">Phone Number is required</div>
+                <div *ngIf="phone_number.errors.pattern">Phone Number should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="emergency_contact_person_name.invalid && emergency_contact_person_name.touched" [class.has-success]="emergency_contact_person_name.valid">
+              <label class="control-label">Emergency Contact Person Name <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="emergency_contact_person_name" id="emergency_contact_person_name" name="emergency_contact_person_name" maxlength="30">
+              <div class="help-block" *ngIf="!emergency_contact_person_name.valid && (emergency_contact_person_name.touched || emergency_contact_person_name.dirty)">
+                <div *ngIf="emergency_contact_person_name.errors.required">Emergency Contact Person Name is required</div>
+                <div *ngIf="emergency_contact_person_name.errors.pattern">Emergency Contact Person Name should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="emergency_contact_person_number.invalid && emergency_contact_person_number.touched" [class.has-success]="emergency_contact_person_number.valid">
+              <label class="control-label">Emergencty Contact Person Number <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="emergency_contact_person_number" id="emergency_contact_person_number" name="emergency_contact_person_number" maxlength="30">
+              <div class="help-block" *ngIf="!emergency_contact_person_number.valid && (emergency_contact_person_number.touched || emergency_contact_person_number.dirty)">
+                <div *ngIf="emergency_contact_person_number.errors.required">Emergencty Contact Person Number is required</div>
+                <div *ngIf="emergency_contact_person_number.errors.pattern">Emergencty Contact Person Number should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="per_addr.invalid && per_addr.touched" [class.has-success]="per_addr.valid">
+              <label class="control-label">Permanent Address <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="per_addr" id="per_addr" name="per_addr" maxlength="30">
+              <div class="help-block" *ngIf="!per_addr.valid && (per_addr.touched || per_addr.dirty)">
+                <div *ngIf="per_addr.errors.required">Permanent Address is required</div>
+                <div *ngIf="per_addr.errors.pattern">Permanent Address should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="tem_addr.invalid && tem_addr.touched" [class.has-success]="tem_addr.valid">
+              <label class="control-label">Temporary Address <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="tem_addr" id="tem_addr" name="tem_addr" maxlength="30">
+              <div class="help-block" *ngIf="!tem_addr.valid && (tem_addr.touched || tem_addr.dirty)">
+                <div *ngIf="tem_addr.errors.required">Temporary Address is required</div>
+                <div *ngIf="tem_addr.errors.pattern">Temporary Address should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <button class="btn btn-sm btn-primary btn-tab" (click)="BankDetails()">Bank Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row" *ngIf="isButtonBankDetails">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="acc_name.invalid && acc_name.touched" [class.has-success]="acc_name.valid">
+              <label class="control-label">Name <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="acc_name" id="acc_name" name="acc_name" maxlength="30">
+              <div class="help-block" *ngIf="!acc_name.valid && (acc_name.touched || acc_name.dirty)">
+                <div *ngIf="acc_name.errors.required">Name is required</div>
+                <div *ngIf="acc_name.errors.pattern">Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="acc_num.invalid && acc_num.touched" [class.has-success]="acc_num.valid">
+              <label class="control-label">Account Number <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="acc_num" id="acc_num" name="acc_num" maxlength="30">
+              <div class="help-block" *ngIf="!acc_num.valid && (acc_num.touched || acc_num.dirty)">
+                <div *ngIf="acc_num.errors.required">Account Number is required</div>
+                <div *ngIf="acc_num.errors.pattern">Account Number should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonBankDetails">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="bank_name.invalid && bank_name.touched" [class.has-success]="bank_name.valid">
+              <label class="control-label">Bank Name <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="bank_name" id="bank_name" name="bank_name" maxlength="30">
+              <div class="help-block" *ngIf="!bank_name.valid && (bank_name.touched || bank_name.dirty)">
+                <div *ngIf="bank_name.errors.required">Bank Name is required</div>
+                <div *ngIf="bank_name.errors.pattern">Bank Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="ifsc_code.invalid && ifsc_code.touched" [class.has-success]="ifsc_code.valid">
+              <label class="control-label">IFSC Code <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="ifsc_code" id="ifsc_code" name="ifsc_code" maxlength="30">
+              <div class="help-block" *ngIf="!ifsc_code.valid && (ifsc_code.touched || ifsc_code.dirty)">
+                <div *ngIf="ifsc_code.errors.required">IFSC Code is required</div>
+                <div *ngIf="ifsc_code.errors.pattern">IFSC Code should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonBankDetails">
+        <div class="col">
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="branch.invalid && branch.touched" [class.has-success]="branch.valid">
+              <label class="control-label">Branch <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="branch" id="branch" name="branch" maxlength="30">
+              <div class="help-block" *ngIf="!branch.valid && (branch.touched || branch.dirty)">
+                <div *ngIf="branch.errors.required">Branch is required</div>
+                <div *ngIf="branch.errors.pattern">Branch should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="check_copy.invalid && check_copy.touched" [class.has-success]="check_copy.valid">
+              <label class="control-label">Check Copy <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="file" required formControlName="check_copy" id="check_copy" name="check_copy" maxlength="30">
+              <div class="help-block" *ngIf="!check_copy.valid && (check_copy.touched || check_copy.dirty)">
+                <div *ngIf="check_copy.errors.required">Check Copy is required</div>
+                <div *ngIf="check_copy.errors.pattern">Check Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <button class="btn btn-sm btn-primary btn-tab" (click)="documentDetails()">Documents</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonDocumentDetails">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="aadhar_num.invalid && aadhar_num.touched" [class.has-success]="aadhar_num.valid">
+              <label class="control-label">Aadhar Number <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="aadhar_num" id="aadhar_num" name="aadhar_num" maxlength="30">
+              <div class="help-block" *ngIf="!aadhar_num.valid && (aadhar_num.touched || aadhar_num.dirty)">
+                <div *ngIf="aadhar_num.errors.required">Aadhar Number is required</div>
+                <div *ngIf="aadhar_num.errors.pattern">Aadhar Number should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="aadhar_soft_copy.invalid && aadhar_soft_copy.touched" [class.has-success]="aadhar_soft_copy.valid">
+              <label class="control-label">Aadhar Soft Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="file" required formControlName="aadhar_soft_copy" id="aadhar_soft_copy" name="aadhar_soft_copy">
+              <div class="help-block" *ngIf="!aadhar_soft_copy.valid && (aadhar_soft_copy.touched || aadhar_soft_copy.dirty)">
+                <div *ngIf="aadhar_soft_copy.errors.required">Aadhar Soft Copy is required</div>
+                <div *ngIf="aadhar_soft_copy.errors.pattern">Aadhar Soft Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonDocumentDetails">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="pan_soft_copy.invalid && pan_soft_copy.touched" [class.has-success]="pan_soft_copy.valid">
+              <label class="control-label">Pan Soft Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="file" required formControlName="pan_soft_copy" id="pan_soft_copy" name="pan_soft_copy" maxlength="30">
+              <div class="help-block" *ngIf="!pan_soft_copy.valid && (pan_soft_copy.touched || pan_soft_copy.dirty)">
+                <div *ngIf="pan_soft_copy.errors.required">Pan Soft Copy is required</div>
+                <div *ngIf="pan_soft_copy.errors.pattern">Pan Soft Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="uan_number.invalid && uan_number.touched" [class.has-success]="uan_number.valid">
+              <label class="control-label">UAN Number<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="uan_number" id="uan_number" name="uan_number">
+              <div class="help-block" *ngIf="!uan_number.valid && (uan_number.touched || uan_number.dirty)">
+                <div *ngIf="uan_number.errors.required">UAN Number is required</div>
+                <div *ngIf="uan_number.errors.pattern">UAN Number should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonDocumentDetails">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="pass_no.invalid && pass_no.touched" [class.has-success]="pass_no.valid">
+              <label class="control-label">Passport Number<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="pass_no" id="pass_no" name="pass_no" maxlength="30">
+              <div class="help-block" *ngIf="!pass_no.valid && (pass_no.touched || pass_no.dirty)">
+                <div *ngIf="pass_no.errors.required">Passport Number is required</div>
+                <div *ngIf="pass_no.errors.pattern">Passport Number should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="pass_exp_date.invalid && pass_exp_date.touched" [class.has-success]="pass_exp_date.valid">
+              <label class="control-label">Passport Expiry Date<span class="text-danger m-l-5">*</span></label>
+              <my-date-picker [options]="myDatePickerOptions1" name="pass_exp_date" formControlName="pass_exp_date" required></my-date-picker>
+              <!--<input class="form-control floating input-st" type="text" required formControlName="pass_exp_date" id="pass_exp_date" name="pass_exp_date">-->
+              <div class="help-block" *ngIf="!pass_exp_date.valid && (pass_exp_date.touched || pass_exp_date.dirty)">
+                <div *ngIf="pass_exp_date.errors.required">Passport Expiry Date is required</div>
+                <div *ngIf="pass_exp_date.errors.pattern">Passport Expiry Date should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row" *ngIf="isButtonDocumentDetails">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="pass_soft_copy.invalid && pass_soft_copy.touched" [class.has-success]="pass_soft_copy.valid">
+              <label class="control-label">Passport Softcopy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="file" required formControlName="pass_soft_copy" id="pass_soft_copy" name="pass_soft_copy" maxlength="30">
+              <div class="help-block" *ngIf="!pass_soft_copy.valid && (pass_soft_copy.touched || pass_soft_copy.dirty)">
+                <div *ngIf="pass_soft_copy.errors.required">Passport Softcopy is required</div>
+                <div *ngIf="pass_soft_copy.errors.pattern">Passport Softcopy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button class="btn btn-sm btn-primary btn-tab" (click)="educationDetails()">Education</button>
+          </div>
+        </div>
+      </div>
+      </div>
+       <div class="row" *ngIf="isButtonEducationalDetails">
+        <div class="col">
+          <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="x_std.invalid && x_std.touched" [class.has-success]="x_std.valid">
+              <label class="control-label">X std<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="x_std" id="x_std" name="x_std" maxlength="30">
+              <div class="help-block" *ngIf="!x_std.valid && (x_std.touched || x_std.dirty)">
+                <div *ngIf="x_std.errors.required">X std is required</div>
+                <div *ngIf="x_std.errors.pattern">X std should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="institution_name.invalid && institution_name.touched" [class.has-success]="institution_name.valid">
+              <label class="control-label">Institution Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="institution_name" id="institution_name" name="institution_name">
+              <div class="help-block" *ngIf="!institution_name.valid && (institution_name.touched || institution_name.dirty)">
+                <div *ngIf="institution_name.errors.required">Institution Name is required</div>
+                <div *ngIf="institution_name.errors.pattern">Institution Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="passedout_year.invalid && passedout_year.touched" [class.has-success]="passedout_year.valid">
+              <label class="control-label">Passed Out Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="passedout_year" id="passedout_year" name="passedout_year" maxlength="30">
+              <div class="help-block" *ngIf="!passedout_year.valid && (passedout_year.touched || passedout_year.dirty)">
+                <div *ngIf="passedout_year.errors.required">Passed Out Year is required</div>
+                <div *ngIf="passedout_year.errors.pattern">Passed Out Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="score.invalid && score.touched" [class.has-success]="score.valid">
+              <label class="control-label">Score (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="score" id="score" name="score">
+              <div class="help-block" *ngIf="!score.valid && (score.touched || score.dirty)">
+                <div *ngIf="score.errors.required">Score is required</div>
+                <div *ngIf="score.errors.pattern">Score should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="record_copy.invalid && record_copy.touched" [class.has-success]="record_copy.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy" id="record_copy" name="record_copy">
+              <div class="help-block" *ngIf="!record_copy.valid && (record_copy.touched || record_copy.dirty)">
+                <div *ngIf="record_copy.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonEducationalDetails">
+         <div class="col">
+          <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="x_std_2.invalid && x_std_2.touched" [class.has-success]="x_std_2.valid">
+              <label class="control-label">X std<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="x_std_2" id="x_std_2" name="x_std_2" maxlength="30">
+              <div class="help-block" *ngIf="!x_std_2.valid && (x_std_2.touched || x_std_2.dirty)">
+                <div *ngIf="x_std_2.errors.required">X std is required</div>
+                <div *ngIf="x_std_2.errors.pattern">X std should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="institution_name_2.invalid && institution_name_2.touched" [class.has-success]="institution_name_2.valid">
+              <label class="control-label">Institution Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="institution_name_2" id="institution_name_2" name="institution_name_2">
+              <div class="help-block" *ngIf="!institution_name_2.valid && (institution_name_2.touched || institution_name_2.dirty)">
+                <div *ngIf="institution_name_2.errors.required">Institution Name is required</div>
+                <div *ngIf="institution_name_2.errors.pattern">Institution Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="passedout_year_2.invalid && passedout_year_2.touched" [class.has-success]="passedout_year_2.valid">
+              <label class="control-label">Passed Out Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="passedout_year_2" id="passedout_year_2" name="passedout_year_2" maxlength="30">
+              <div class="help-block" *ngIf="!passedout_year_2.valid && (passedout_year_2.touched || passedout_year_2.dirty)">
+                <div *ngIf="passedout_year_2.errors.required">Passed Out Year is required</div>
+                <div *ngIf="passedout_year_2.errors.pattern">Passed Out Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="score_2.invalid && score_2.touched" [class.has-success]="score_2.valid">
+              <label class="control-label">score (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="score_2" id="score_2" name="score_2">
+              <div class="help-block" *ngIf="!score_2.valid && (score_2.touched || score_2.dirty)">
+                <div *ngIf="score_2.errors.required">score is required</div>
+                <div *ngIf="score_2.errors.pattern">Score should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="record_copy_2.invalid && record_copy_2.touched" [class.has-success]="record_copy_2.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_2" id="record_copy_2" name="record_copy_2">
+              <div class="help-block" *ngIf="!record_copy_2.valid && (record_copy_2.touched || record_copy_2.dirty)">
+                <div *ngIf="record_copy_2.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_2.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row" *ngIf="isButtonEducationalDetails">
+         <div class="col">
+          <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="x_std_3.invalid && x_std_3.touched" [class.has-success]="x_std_3.valid">
+              <label class="control-label">X std<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="x_std_3" id="x_std_3" name="x_std_3" maxlength="30">
+              <div class="help-block" *ngIf="!x_std_3.valid && (x_std_3.touched || x_std_3.dirty)">
+                <div *ngIf="x_std_3.errors.required">X std is required</div>
+                <div *ngIf="x_std_3.errors.pattern">X std should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="institution_name_3.invalid && institution_name_3.touched" [class.has-success]="institution_name_3.valid">
+              <label class="control-label">Institution Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="institution_name_3" id="institution_name_3" name="institution_name_3">
+              <div class="help-block" *ngIf="!institution_name_3.valid && (institution_name_3.touched || institution_name_3.dirty)">
+                <div *ngIf="institution_name_3.errors.required">Institution Name is required</div>
+                <div *ngIf="institution_name_3.errors.pattern">Institution Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="passedout_year_3.invalid && passedout_year_3.touched" [class.has-success]="passedout_year_3.valid">
+              <label class="control-label">Passed Out Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="passedout_year_3" id="passedout_year_3" name="passedout_year_3" maxlength="30">
+              <div class="help-block" *ngIf="!passedout_year_3.valid && (passedout_year_3.touched || passedout_year_3.dirty)">
+                <div *ngIf="passedout_year_3.errors.required">Passed Out Year is required</div>
+                <div *ngIf="passedout_year_3.errors.pattern">Passed Out Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="score_3.invalid && score_3.touched" [class.has-success]="score_3.valid">
+              <label class="control-label">score (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="score_3" id="score_3" name="score_3">
+              <div class="help-block" *ngIf="!score_3.valid && (score_3.touched || score_3.dirty)">
+                <div *ngIf="score_3.errors.required">score is required</div>
+                <div *ngIf="score_3.errors.pattern">Score should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="record_copy_3.invalid && record_copy_3.touched" [class.has-success]="record_copy_3.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_3" id="record_copy_3" name="record_copy_3">
+              <div class="help-block" *ngIf="!record_copy_3.valid && (record_copy_3.touched || record_copy_3.dirty)">
+                <div *ngIf="record_copy_3.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_3.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonEducationalDetails">
+         <div class="col">
+          <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="x_std_4.invalid && x_std_4.touched" [class.has-success]="x_std_4.valid">
+              <label class="control-label">X std<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="x_std_4" id="x_std_4" name="x_std_4" maxlength="30">
+              <div class="help-block" *ngIf="!x_std_4.valid && (x_std_4.touched || x_std_4.dirty)">
+                <div *ngIf="x_std_4.errors.required">X std is required</div>
+                <div *ngIf="x_std_4.errors.pattern">X std should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="institution_name_4.invalid && institution_name_4.touched" [class.has-success]="institution_name_4.valid">
+              <label class="control-label">Institution Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="institution_name_4" id="institution_name_4" name="institution_name_4">
+              <div class="help-block" *ngIf="!institution_name_4.valid && (institution_name_4.touched || institution_name_4.dirty)">
+                <div *ngIf="institution_name_4.errors.required">Institution Name is required</div>
+                <div *ngIf="institution_name_4.errors.pattern">Institution Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="passedout_year_4.invalid && passedout_year_4.touched" [class.has-success]="passedout_year_4.valid">
+              <label class="control-label">Passed Out Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="passedout_year_4" id="passedout_year_4" name="passedout_year_4" maxlength="30">
+              <div class="help-block" *ngIf="!passedout_year_4.valid && (passedout_year_4.touched || passedout_year_4.dirty)">
+                <div *ngIf="passedout_year_4.errors.required">Passed Out Year is required</div>
+                <div *ngIf="passedout_year_4.errors.pattern">Passed Out Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="score_4.invalid && score_4.touched" [class.has-success]="score_4.valid">
+              <label class="control-label">score (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="score_4" id="score_4" name="score_4">
+              <div class="help-block" *ngIf="!score_4.valid && (score_4.touched || score_4.dirty)">
+                <div *ngIf="score_4.errors.required">score is required</div>
+                <div *ngIf="score_4.errors.pattern">Score should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="record_copy_4.invalid && record_copy_4.touched" [class.has-success]="record_copy_4.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_4" id="record_copy_4" name="record_copy_4">
+              <div class="help-block" *ngIf="!record_copy_4.valid && (record_copy_4.touched || record_copy_4.dirty)">
+                <div *ngIf="record_copy_4.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_4.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isButtonEducationalDetails">
+         <div class="col">
+          <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="x_std_5.invalid && x_std_5.touched" [class.has-success]="x_std_5.valid">
+              <label class="control-label">X std<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="x_std_5" id="x_std_5" name="x_std_5" maxlength="30">
+              <div class="help-block" *ngIf="!x_std_5.valid && (x_std_5.touched || x_std_5.dirty)">
+                <div *ngIf="x_std_5.errors.required">X std is required</div>
+                <div *ngIf="x_std_5.errors.pattern">X std should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="institution_name_5.invalid && institution_name_5.touched" [class.has-success]="institution_name_5.valid">
+              <label class="control-label">Institution Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="institution_name_5" id="institution_name_5" name="institution_name_5">
+              <div class="help-block" *ngIf="!institution_name_5.valid && (institution_name_5.touched || institution_name_5.dirty)">
+                <div *ngIf="institution_name_5.errors.required">Institution Name is required</div>
+                <div *ngIf="institution_name_5.errors.pattern">Institution Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="passedout_year_5.invalid && passedout_year_5.touched" [class.has-success]="passedout_year_5.valid">
+              <label class="control-label">Passed Out Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="passedout_year_5" id="passedout_year_5" name="passedout_year_5" maxlength="30">
+              <div class="help-block" *ngIf="!passedout_year_5.valid && (passedout_year_5.touched || passedout_year_5.dirty)">
+                <div *ngIf="passedout_year_5.errors.required">Passed Out Year is required</div>
+                <div *ngIf="passedout_year_5.errors.pattern">Passed Out Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="score_5.invalid && score_5.touched" [class.has-success]="score_5.valid">
+              <label class="control-label">score (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="score_5" id="score_5" name="score_5">
+              <div class="help-block" *ngIf="!score_5.valid && (score_5.touched || score_5.dirty)">
+                <div *ngIf="score_5.errors.required">score is required</div>
+                <div *ngIf="score_5.errors.pattern">Score should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-2">
+            <div class="form-group" [class.has-error]="record_copy_5.invalid && record_copy_5.touched" [class.has-success]="record_copy_5.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_5" id="record_copy_5" name="record_copy_5">
+              <div class="help-block" *ngIf="!record_copy_5.valid && (record_copy_5.touched || record_copy_5.dirty)">
+                <div *ngIf="record_copy_5.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_5.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button class="btn btn-sm btn-primary btn-tab" (click)="technicalSkillsDetails()">Technical Skills</button>
+          </div>
+        </div>
+      </div>
+      </div>
+       <div class="row" *ngIf="isTechnicalSkillsDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="languages.invalid && languages.touched" [class.has-success]="languages.valid">
+              <label class="control-label">Languages<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="languages" id="languages" name="languages" maxlength="30">
+              <div class="help-block" *ngIf="!languages.valid && (languages.touched || languages.dirty)">
+                <div *ngIf="languages.errors.required">Languages is required</div>
+                <div *ngIf="languages.errors.pattern">Languages should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="databases.invalid && databases.touched" [class.has-success]="databases.valid">
+              <label class="control-label">Databases<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="databases" id="databases" name="databases">
+              <div class="help-block" *ngIf="!databases.valid && (databases.touched || databases.dirty)">
+                <div *ngIf="databases.errors.required">Databases is required</div>
+                <div *ngIf="databases.errors.pattern">Databases should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="platform.invalid && platform.touched" [class.has-success]="platform.valid">
+              <label class="control-label">Platform<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="platform" id="platform" name="platform" maxlength="30">
+              <div class="help-block" *ngIf="!platform.valid && (platform.touched || platform.dirty)">
+                <div *ngIf="platform.errors.required">Platform is required</div>
+                <div *ngIf="platform.errors.pattern">Platform should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="operating_system.invalid && operating_system.touched" [class.has-success]="operating_system.valid">
+              <label class="control-label">Operating System (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="operating_system" id="operating_system" name="operating_system">
+              <div class="help-block" *ngIf="!operating_system.valid && (operating_system.touched || operating_system.dirty)">
+                <div *ngIf="operating_system.errors.required">Operating System is required</div>
+                <div *ngIf="operating_system.errors.pattern">Operating System should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isTechnicalSkillsDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="languages2.invalid && languages2.touched" [class.has-success]="languages2.valid">
+              <label class="control-label">Languages<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="languages2" id="languages2" name="languages2" maxlength="30">
+              <div class="help-block" *ngIf="!languages2.valid && (languages2.touched || languages2.dirty)">
+                <div *ngIf="languages2.errors.required">Languages is required</div>
+                <div *ngIf="languages2.errors.pattern">Languages should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="database2.invalid && database2.touched" [class.has-success]="database2.valid">
+              <label class="control-label">Databases<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="database2" id="database2" name="database2">
+              <div class="help-block" *ngIf="!database2.valid && (database2.touched || database2.dirty)">
+                <div *ngIf="database2.errors.required">Databases is required</div>
+                <div *ngIf="database2.errors.pattern">Databases should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="platform2.invalid && platform2.touched" [class.has-success]="platform2.valid">
+              <label class="control-label">Platform<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="platform2" id="platform2" name="platform2" maxlength="30">
+              <div class="help-block" *ngIf="!platform2.valid && (platform2.touched || platform2.dirty)">
+                <div *ngIf="platform2.errors.required">Platform is required</div>
+                <div *ngIf="platform2.errors.pattern">Platform should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="operating_system2.invalid && operating_system2.touched" [class.has-success]="operating_system2.valid">
+              <label class="control-label">Operating System (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="operating_system2" id="operating_system2" name="operating_system2">
+              <div class="help-block" *ngIf="!operating_system2.valid && (operating_system2.touched || operating_system2.dirty)">
+                <div *ngIf="operating_system2.errors.required">Operating System is required</div>
+                <div *ngIf="operating_system2.errors.pattern">Operating System should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row" *ngIf="isTechnicalSkillsDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="languages3.invalid && languages3.touched" [class.has-success]="languages3.valid">
+              <label class="control-label">Languages<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="languages3" id="languages3" name="languages3" maxlength="30">
+              <div class="help-block" *ngIf="!languages3.valid && (languages3.touched || languages3.dirty)">
+                <div *ngIf="languages3.errors.required">Languages is required</div>
+                <div *ngIf="languages3.errors.pattern">Languages should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="database3.invalid && database3.touched" [class.has-success]="database3.valid">
+              <label class="control-label">Databases<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="database3" id="database3" name="database3">
+              <div class="help-block" *ngIf="!database3.valid && (database3.touched || database3.dirty)">
+                <div *ngIf="database3.errors.required">Databases is required</div>
+                <div *ngIf="database3.errors.pattern">Databases should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="platform4.invalid && platform3.touched" [class.has-success]="platform3.valid">
+              <label class="control-label">Platform<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="platform3" id="platform3" name="platform3" maxlength="30">
+              <div class="help-block" *ngIf="!platform3.valid && (platform3.touched || platform3.dirty)">
+                <div *ngIf="platform3.errors.required">Platform is required</div>
+                <div *ngIf="platform3.errors.pattern">Platform should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="operating_system3.invalid && operating_system3.touched" [class.has-success]="operating_system3.valid">
+              <label class="control-label">Operating System (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="operating_system3" id="operating_system3" name="operating_system3">
+              <div class="help-block" *ngIf="!operating_system3.valid && (operating_system3.touched || operating_system3.dirty)">
+                <div *ngIf="operating_system3.errors.required">Operating System is required</div>
+                <div *ngIf="operating_system3.errors.pattern">Operating System should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isTechnicalSkillsDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="languages4.invalid && languages4.touched" [class.has-success]="languages4.valid">
+              <label class="control-label">Languages<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="languages4" id="languages4" name="languages4" maxlength="30">
+              <div class="help-block" *ngIf="!languages4.valid && (languages4.touched || languages4.dirty)">
+                <div *ngIf="languages4.errors.required">Languages is required</div>
+                <div *ngIf="languages4.errors.pattern">Languages should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="database4.invalid && database4.touched" [class.has-success]="database4.valid">
+              <label class="control-label">Databases<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="database4" id="database4" name="database4">
+              <div class="help-block" *ngIf="!database4.valid && (database4.touched || database4.dirty)">
+                <div *ngIf="database4.errors.required">Databases is required</div>
+                <div *ngIf="database4.errors.pattern">Databases should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="platform4.invalid && platform4.touched" [class.has-success]="platform4.valid">
+              <label class="control-label">Platform<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="platform4" id="platform4" name="platform4" maxlength="30">
+              <div class="help-block" *ngIf="!platform4.valid && (platform4.touched || platform4.dirty)">
+                <div *ngIf="platform4.errors.required">Platform is required</div>
+                <div *ngIf="platform4.errors.pattern">Platform should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="operating_system4.invalid && operating_system4.touched" [class.has-success]="operating_system4.valid">
+              <label class="control-label">Operating System (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="operating_system4" id="operating_system4" name="operating_system4">
+              <div class="help-block" *ngIf="!operating_system4.valid && (operating_system4.touched || operating_system4.dirty)">
+                <div *ngIf="operating_system4.errors.required">Operating System is required</div>
+                <div *ngIf="operating_system4.errors.pattern">Operating System should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isTechnicalSkillsDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="languages5.invalid && languages5.touched" [class.has-success]="languages5.valid">
+              <label class="control-label">Languages<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="languages5" id="languages5" name="languages5" maxlength="30">
+              <div class="help-block" *ngIf="!languages5.valid && (languages5.touched || languages5.dirty)">
+                <div *ngIf="languages5.errors.required">Languages is required</div>
+                <div *ngIf="languages5.errors.pattern">Languages should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="database5.invalid && database5.touched" [class.has-success]="database5.valid">
+              <label class="control-label">Databases<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="database5" id="database5" name="database5">
+              <div class="help-block" *ngIf="!database5.valid && (database5.touched || database5.dirty)">
+                <div *ngIf="database5.errors.required">Databases is required</div>
+                <div *ngIf="database5.errors.pattern">Databases should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="platform5.invalid && platform5.touched" [class.has-success]="platform5.valid">
+              <label class="control-label">Platform<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="platform5" id="platform5" name="platform5" maxlength="30">
+              <div class="help-block" *ngIf="!platform5.valid && (platform5.touched || platform5.dirty)">
+                <div *ngIf="platform5.errors.required">Platform is required</div>
+                <div *ngIf="platform5.errors.pattern">Platform should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="operating_system5.invalid && operating_system5.touched" [class.has-success]="operating_system5.valid">
+              <label class="control-label">Operating System (%)<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="operating_system5" id="operating_system5" name="operating_system5">
+              <div class="help-block" *ngIf="!operating_system5.valid && (operating_system5.touched || operating_system5.dirty)">
+                <div *ngIf="operating_system5.errors.required">Operating System is required</div>
+                <div *ngIf="operating_system5.errors.pattern">Operating System should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button class="btn btn-sm btn-primary btn-tab" (click)="certificationDetails()">Certifications</button>
+          </div>
+        </div>
+      </div>
+      </div>
+       <div class="row" *ngIf="isCertificationDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="certification.invalid && certification.touched" [class.has-success]="certification.valid">
+              <label class="control-label">Certification Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="certification" id="certification" name="certification" maxlength="30">
+              <div class="help-block" *ngIf="!certification.valid && (certification.touched || certification.dirty)">
+                <div *ngIf="certification.errors.required">Certification Name is required</div>
+                <div *ngIf="certification.errors.pattern">Certification Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="year.invalid && year.touched" [class.has-success]="year.valid">
+              <label class="control-label">Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="year" id="year" name="year">
+              <div class="help-block" *ngIf="!year.valid && (year.touched || year.dirty)">
+                <div *ngIf="year.errors.required">Year is required</div>
+                <div *ngIf="year.errors.pattern">Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="valid_till.invalid && valid_till.touched" [class.has-success]="valid_till.valid">
+              <label class="control-label">Valid Till<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="valid_till" id="valid_till" name="valid_till" maxlength="30">
+              <div class="help-block" *ngIf="!valid_till.valid && (valid_till.touched || valid_till.dirty)">
+                <div *ngIf="valid_till.errors.required">Valid Till is required</div>
+                <div *ngIf="valid_till.errors.pattern">Valid Till should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="record_copy_cert.invalid && record_copy_cert.touched" [class.has-success]="record_copy_cert.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_cert" id="record_copy_cert" name="record_copy_cert">
+              <div class="help-block" *ngIf="!record_copy_cert.valid && (record_copy_cert.touched || record_copy_cert.dirty)">
+                <div *ngIf="record_copy_cert.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_cert.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     <div class="row" *ngIf="isCertificationDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="certification1.invalid && certification1.touched" [class.has-success]="certification1.valid">
+              <label class="control-label">Certification Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="certification1" id="certification1" name="certification1" maxlength="30">
+              <div class="help-block" *ngIf="!certification1.valid && (certification1.touched || certification1.dirty)">
+                <div *ngIf="certification1.errors.required">Certification Name is required</div>
+                <div *ngIf="certification1.errors.pattern">Certification Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="year1.invalid && year1.touched" [class.has-success]="year1.valid">
+              <label class="control-label">Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="year1" id="year1" name="year1">
+              <div class="help-block" *ngIf="!year1.valid && (year1.touched || year1.dirty)">
+                <div *ngIf="year1.errors.required">Year is required</div>
+                <div *ngIf="year1.errors.pattern">Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="valid_till1.invalid && valid_till1.touched" [class.has-success]="valid_till1.valid">
+              <label class="control-label">Valid Till<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="valid_till1" id="valid_till1" name="valid_till1" maxlength="30">
+              <div class="help-block" *ngIf="!valid_till1.valid && (valid_till1.touched || valid_till1.dirty)">
+                <div *ngIf="valid_till1.errors.required">Valid Till is required</div>
+                <div *ngIf="valid_till1.errors.pattern">Valid Till should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="record_copy_cert1.invalid && record_copy_cert1.touched" [class.has-success]="record_copy_cert1.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_cert1" id="record_copy_cert1" name="record_copy_cert1">
+              <div class="help-block" *ngIf="!record_copy_cert1.valid && (record_copy_cert1.touched || record_copy_cert1.dirty)">
+                <div *ngIf="record_copy_cert1.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_cert1.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isCertificationDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="certification2.invalid && certification2.touched" [class.has-success]="certification2.valid">
+              <label class="control-label">Certification Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="certification2" id="certification2" name="certification2" maxlength="30">
+              <div class="help-block" *ngIf="!certification2.valid && (certification2.touched || certification2.dirty)">
+                <div *ngIf="certification2.errors.required">Certification Name is required</div>
+                <div *ngIf="certification2.errors.pattern">Certification Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="year2.invalid && year2.touched" [class.has-success]="year2.valid">
+              <label class="control-label">year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="year2" id="year2" name="year2">
+              <div class="help-block" *ngIf="!year2.valid && (year2.touched || year2.dirty)">
+                <div *ngIf="year2.errors.required">Year is required</div>
+                <div *ngIf="year2.errors.pattern">Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="valid_till2.invalid && valid_till2.touched" [class.has-success]="valid_till2.valid">
+              <label class="control-label">Valid Till<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="valid_till2" id="valid_till2" name="valid_till2" maxlength="30">
+              <div class="help-block" *ngIf="!valid_till2.valid && (valid_till2.touched || valid_till2.dirty)">
+                <div *ngIf="valid_till2.errors.required">Valid Till is required</div>
+                <div *ngIf="valid_till2.errors.pattern">Valid Till should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="record_copy_cert2.invalid && record_copy_cert2.touched" [class.has-success]="record_copy_cert2.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_cert2" id="record_copy_cert2" name="record_copy_cert2">
+              <div class="help-block" *ngIf="!record_copy_cert2.valid && (record_copy_cert2.touched || record_copy_cert2.dirty)">
+                <div *ngIf="record_copy_cert2.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_cert2.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="row" *ngIf="isCertificationDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="certification3.invalid && certification3.touched" [class.has-success]="certification3.valid">
+              <label class="control-label">Certification Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="certification3" id="certification3" name="certification3" maxlength="30">
+              <div class="help-block" *ngIf="!certification3.valid && (certification3.touched || certification3.dirty)">
+                <div *ngIf="certification3.errors.required">Certification Name is required</div>
+                <div *ngIf="certification3.errors.pattern">Certification Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="year3.invalid && year3.touched" [class.has-success]="year3.valid">
+              <label class="control-label">Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="year3" id="year3" name="year3">
+              <div class="help-block" *ngIf="!year3.valid && (year3.touched || year3.dirty)">
+                <div *ngIf="year3.errors.required">Year is required</div>
+                <div *ngIf="year3.errors.pattern">Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="valid_till3.invalid && valid_till3.touched" [class.has-success]="valid_till3.valid">
+              <label class="control-label">Valid Till<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="valid_till3" id="valid_till3" name="valid_till3" maxlength="30">
+              <div class="help-block" *ngIf="!valid_till3.valid && (valid_till3.touched || valid_till3.dirty)">
+                <div *ngIf="valid_till3.errors.required">Valid Till is required</div>
+                <div *ngIf="valid_till3.errors.pattern">Valid Till should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="record_copy_cert3.invalid && record_copy_cert3.touched" [class.has-success]="record_copy_cert3.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_cert3" id="record_copy_cert3" name="record_copy_cert3">
+              <div class="help-block" *ngIf="!record_copy_cert3.valid && (record_copy_cert3.touched || record_copy_cert3.dirty)">
+                <div *ngIf="record_copy_cert3.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_cert3.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isCertificationDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="certification4.invalid && certification4.touched" [class.has-success]="certification4.valid">
+              <label class="control-label">Certification Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="certification4" id="certification4" name="certification4" maxlength="30">
+              <div class="help-block" *ngIf="!certification4.valid && (certification4.touched || certification4.dirty)">
+                <div *ngIf="certification4.errors.required">Certification Name is required</div>
+                <div *ngIf="certification4.errors.pattern">Certification Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="year4.invalid && year4.touched" [class.has-success]="year4.valid">
+              <label class="control-label">Year<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="year4" id="year4" name="year4">
+              <div class="help-block" *ngIf="!year4.valid && (year4.touched || year4.dirty)">
+                <div *ngIf="year4.errors.required">Year is required</div>
+                <div *ngIf="year4.errors.pattern">Year should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="valid_till4.invalid && valid_till4.touched" [class.has-success]="valid_till4.valid">
+              <label class="control-label">Valid Till<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="valid_till4" id="valid_till4" name="valid_till4" maxlength="30">
+              <div class="help-block" *ngIf="!valid_till4.valid && (valid_till4.touched || valid_till4.dirty)">
+                <div *ngIf="valid_till4.errors.required">Valid Till is required</div>
+                <div *ngIf="valid_till4.errors.pattern">Valid Till should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="record_copy_cert4.invalid && record_copy_cert4.touched" [class.has-success]="record_copy_cert4.valid">
+              <label class="control-label">Record Copy<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_cert4" id="record_copy_cert4" name="record_copy_cert4">
+              <div class="help-block" *ngIf="!record_copy_cert4.valid && (record_copy_cert4.touched || record_copy_cert4.dirty)">
+                <div *ngIf="record_copy_cert4.errors.required">Record Copy is required</div>
+                <div *ngIf="record_copy_cert4.errors.pattern">Record Copy should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+      <div class="col">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button class="btn btn-sm btn-primary btn-tab" (click)="preEmpDetails()">Previous Employment</button>
+          </div>
+        </div>
+      </div>
+      </div>
+       <div class="row" *ngIf="isPreEmpDetails">
+        <div class="col">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="name_addr.invalid && name_addr.touched" [class.has-success]="name_addr.valid">
+                      <label class="control-label">Name and Address<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="name_addr" id="name_addr" name="name_addr" maxlength="30">
+                      <div class="help-block" *ngIf="!name_addr.valid && (name_addr.touched || name_addr.dirty)">
+                        <div *ngIf="name_addr.errors.required">Name and Address is required</div>
+                        <div *ngIf="name_addr.errors.pattern">Name and Address should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="doj.invalid && doj.touched" [class.has-success]="doj.valid">
+                      <label class="control-label">Date of Joining<span class="text-danger m-l-5">*</span></label>
+                        <my-date-picker [options]="myDatePickerOptions2" name="doj" formControlName="doj" required></my-date-picker>
+                      <!--<input class="form-control floating col-half-offset" type="text" required formControlName="doj" id="doj" name="doj">-->
+                      <div class="help-block" *ngIf="!doj.valid && (doj.touched || doj.dirty)">
+                        <div *ngIf="doj.errors.required">Date of Joining is required</div>
+                        <div *ngIf="doj.errors.pattern">Date of Joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation.invalid && designation.touched" [class.has-success]="designation.valid">
+                      <label class="control-label">Employee Designation<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation" id="designation" name="designation" maxlength="30">
+                      <div class="help-block" *ngIf="!designation.valid && (designation.touched || designation.dirty)">
+                        <div *ngIf="designation.errors.required">Designation is required</div>
+                        <div *ngIf="designation.errors.pattern">Designation should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_joining.invalid && salary_on_joining.touched" [class.has-success]="salary_on_joining.valid">
+                      <label class="control-label">Salary on joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="salary_on_joining" id="salary_on_joining" name="salary_on_joining">
+                      <div class="help-block" *ngIf="!salary_on_joining.valid && (salary_on_joining.touched || salary_on_joining.dirty)">
+                        <div *ngIf="salary_on_joining.errors.required">Salary on joining is required</div>
+                        <div *ngIf="salary_on_joining.errors.pattern">Salary on joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="date_of_relieving.invalid && date_of_relieving.touched" [class.has-success]="date_of_relieving.valid">
+                      <label class="control-label">Date of Relieving<span class="text-danger m-l-5">*</span></label>
+                     <my-date-picker [options]="myDatePickerOptions2" name="date_of_relieving" formControlName="date_of_relieving" required></my-date-picker>
+                     <!--<input class="form-control floating col-half-offset" type="text" required formControlName="date_of_relieving" id="date_of_relieving" name="date_of_relieving" maxlength="30">-->
+                      <div class="help-block" *ngIf="!date_of_relieving.valid && (date_of_relieving.touched || date_of_relieving.dirty)">
+                        <div *ngIf="date_of_relieving.errors.required">Date of Relieving is required</div>
+                        <div *ngIf="date_of_relieving.errors.pattern">Date of Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation_on_relieving.invalid && designation_on_relieving.touched" [class.has-success]="designation_on_relieving.valid">
+                      <label class="control-label">Desgnation on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <my-date-picker [options]="myDatePickerOptions2" name="designation_on_relieving" formControlName="designation_on_relieving" required></my-date-picker>
+                      <!--<input class="form-control floating col-half-offset" type="text" required formControlName="designation_on_relieving" id="designation_on_relieving" name="designation_on_relieving">-->
+                      <div class="help-block" *ngIf="!designation_on_relieving.valid && (designation_on_relieving.touched || designation_on_relieving.dirty)">
+                        <div *ngIf="designation_on_relieving.errors.required">Desgnation on Relieving is required</div>
+                        <div *ngIf="designation_on_relieving.errors.pattern">Desgnation on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_relieving.invalid && salary_on_relieving.touched" [class.has-success]="salary_on_relieving.valid">
+                      <label class="control-label">Salary on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="salary_on_relieving" id="salary_on_relieving" name="salary_on_relieving" maxlength="30">
+                      <div class="help-block" *ngIf="!salary_on_relieving.valid && (salary_on_relieving.touched || salary_on_relieving.dirty)">
+                        <div *ngIf="salary_on_relieving.errors.required">Salary on Relieving is required</div>
+                        <div *ngIf="salary_on_relieving.errors.pattern">Salary on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="record_copy_emp.invalid && record_copy_emp.touched" [class.has-success]="record_copy_emp.valid">
+                      <label class="control-label">Employee Record Copy<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_emp" id="record_copy_emp" name="record_copy_emp">
+                      <div class="help-block" *ngIf="!record_copy_emp.valid && (record_copy_emp.touched || record_copy_emp.dirty)">
+                        <div *ngIf="record_copy_emp.errors.required">Record Copy is required</div>
+                        <div *ngIf="record_copy_emp.errors.pattern">Record Copy should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="isPreEmpDetails">
+        <div class="col">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="name_addr1.invalid && name_addr1.touched" [class.has-success]="name_addr1.valid">
+                      <label class="control-label">Name and Address<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="name_addr1" id="name_addr1" name="name_addr1" maxlength="30">
+                      <div class="help-block" *ngIf="!name_addr1.valid && (name_addr1.touched || name_addr1.dirty)">
+                        <div *ngIf="name_addr1.errors.required">Name and Address is required</div>
+                        <div *ngIf="name_addr1.errors.pattern">Name and Address should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="doj1.invalid && doj1.touched" [class.has-success]="doj1.valid">
+                      <label class="control-label">Date of Joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="doj1" id="doj1" name="doj1">
+                      <div class="help-block" *ngIf="!doj1.valid && (doj1.touched || doj1.dirty)">
+                        <div *ngIf="doj1.errors.required">Date of Joining is required</div>
+                        <div *ngIf="doj1.errors.pattern">Date of Joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation1.invalid && designation1.touched" [class.has-success]="designation1.valid">
+                      <label class="control-label">Employee Designation<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation1" id="designation1" name="designation1" maxlength="30">
+                      <div class="help-block" *ngIf="!designation1.valid && (designation1.touched || designation1.dirty)">
+                        <div *ngIf="designation1.errors.required">Designation is required</div>
+                        <div *ngIf="designation1.errors.pattern">Designation should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_joining1.invalid && salary_on_joining1.touched" [class.has-success]="salary_on_joining1.valid">
+                      <label class="control-label">Salary on joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="salary_on_joining1" id="salary_on_joining1" name="salary_on_joining1">
+                      <div class="help-block" *ngIf="!salary_on_joining1.valid && (salary_on_joining1.touched || salary_on_joining1.dirty)">
+                        <div *ngIf="salary_on_joining1.errors.required">Salary on joining is required</div>
+                        <div *ngIf="salary_on_joining1.errors.pattern">Salary on joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="date_of_relieving1.invalid && date_of_relieving1.touched" [class.has-success]="date_of_relieving1.valid">
+                      <label class="control-label">Date of Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="date_of_relieving1" id="date_of_relieving1" name="date_of_relieving1" maxlength="30">
+                      <div class="help-block" *ngIf="!date_of_relieving1.valid && (date_of_relieving1.touched || date_of_relieving1.dirty)">
+                        <div *ngIf="date_of_relieving1.errors.required">Date of Relieving is required</div>
+                        <div *ngIf="date_of_relieving1.errors.pattern">Date of Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation_on_relieving1.invalid && designation_on_relieving1.touched" [class.has-success]="designation_on_relieving1.valid">
+                      <label class="control-label">Desgnation on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation_on_relieving1" id="designation_on_relieving1" name="designation_on_relieving1">
+                      <div class="help-block" *ngIf="!designation_on_relieving1.valid && (designation_on_relieving1.touched || designation_on_relieving1.dirty)">
+                        <div *ngIf="designation_on_relieving1.errors.required">Desgnation on Relieving is required</div>
+                        <div *ngIf="designation_on_relieving1.errors.pattern">Desgnation on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_relieving1.invalid && salary_on_relieving1.touched" [class.has-success]="salary_on_relieving1.valid">
+                      <label class="control-label">Salary on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="salary_on_relieving1" id="salary_on_relieving1" name="salary_on_relieving1" maxlength="30">
+                      <div class="help-block" *ngIf="!salary_on_relieving1.valid && (salary_on_relieving1.touched || salary_on_relieving1.dirty)">
+                        <div *ngIf="salary_on_relieving1.errors.required">Salary on Relieving is required</div>
+                        <div *ngIf="salary_on_relieving1.errors.pattern">Salary on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="record_copy_emp1.invalid && record_copy_emp1.touched" [class.has-success]="record_copy_emp1.valid">
+                      <label class="control-label">Employee Record Copy<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_emp1" id="record_copy_emp1" name="record_copy_emp1">
+                      <div class="help-block" *ngIf="!record_copy_emp1.valid && (record_copy_emp1.touched || record_copy_emp1.dirty)">
+                        <div *ngIf="record_copy_emp1.errors.required">Record Copy is required</div>
+                        <div *ngIf="record_copy_emp1.errors.pattern">Record Copy should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="isPreEmpDetails">
+        <div class="col">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="name_addr2.invalid && name_addr2.touched" [class.has-success]="name_addr2.valid">
+                      <label class="control-label">Name and Address<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="name_addr2" id="name_addr2" name="name_addr2" maxlength="30">
+                      <div class="help-block" *ngIf="!name_addr2.valid && (name_addr2.touched || name_addr2.dirty)">
+                        <div *ngIf="name_addr2.errors.required">Name and Address is required</div>
+                        <div *ngIf="name_addr2.errors.pattern">Name and Address should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="doj2.invalid && doj2.touched" [class.has-success]="doj2.valid">
+                      <label class="control-label">Date of Joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="doj2" id="doj2" name="doj2">
+                      <div class="help-block" *ngIf="!doj2.valid && (doj2.touched || doj2.dirty)">
+                        <div *ngIf="doj2.errors.required">Date of Joining is required</div>
+                        <div *ngIf="doj2.errors.pattern">Date of Joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation2.invalid && designation2.touched" [class.has-success]="designation2.valid">
+                      <label class="control-label">Employee Designation<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation2" id="designation2" name="designation2" maxlength="30">
+                      <div class="help-block" *ngIf="!designation2.valid && (designation2.touched || designation2.dirty)">
+                        <div *ngIf="designation2.errors.required">Designation is required</div>
+                        <div *ngIf="designation2.errors.pattern">Designation should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_joining2.invalid && salary_on_joining2.touched" [class.has-success]="salary_on_joining2.valid">
+                      <label class="control-label">Salary on joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="salary_on_joining2" id="salary_on_joining2" name="salary_on_joining2">
+                      <div class="help-block" *ngIf="!salary_on_joining2.valid && (salary_on_joining2.touched || salary_on_joining2.dirty)">
+                        <div *ngIf="salary_on_joining2.errors.required">Salary on joining is required</div>
+                        <div *ngIf="salary_on_joining2.errors.pattern">Salary on joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="date_of_relieving2.invalid && date_of_relieving2.touched" [class.has-success]="date_of_relieving2.valid">
+                      <label class="control-label">Date of Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="date_of_relieving2" id="date_of_relieving2" name="date_of_relieving2" maxlength="30">
+                      <div class="help-block" *ngIf="!date_of_relieving2.valid && (date_of_relieving2.touched || date_of_relieving2.dirty)">
+                        <div *ngIf="date_of_relieving2.errors.required">Date of Relieving is required</div>
+                        <div *ngIf="date_of_relieving2.errors.pattern">Date of Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation_on_relieving2.invalid && designation_on_relieving2.touched" [class.has-success]="designation_on_relieving2.valid">
+                      <label class="control-label">Desgnation on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation_on_relieving2" id="designation_on_relieving2" name="designation_on_relieving2">
+                      <div class="help-block" *ngIf="!designation_on_relieving2.valid && (designation_on_relieving2.touched || designation_on_relieving2.dirty)">
+                        <div *ngIf="designation_on_relieving2.errors.required">Desgnation on Relieving is required</div>
+                        <div *ngIf="designation_on_relieving2.errors.pattern">Desgnation on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_relieving2.invalid && salary_on_relieving2.touched" [class.has-success]="salary_on_relieving2.valid">
+                      <label class="control-label">Salary on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="salary_on_relieving2" id="salary_on_relieving2" name="salary_on_relieving2" maxlength="30">
+                      <div class="help-block" *ngIf="!salary_on_relieving2.valid && (salary_on_relieving2.touched || salary_on_relieving2.dirty)">
+                        <div *ngIf="salary_on_relieving2.errors.required">Salary on Relieving is required</div>
+                        <div *ngIf="salary_on_relieving2.errors.pattern">Salary on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="record_copy_emp2.invalid && record_copy_emp2.touched" [class.has-success]="record_copy_emp2.valid">
+                      <label class="control-label">Employee Record Copy<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_emp2" id="record_copy_emp2" name="record_copy_emp2">
+                      <div class="help-block" *ngIf="!record_copy_emp2.valid && (record_copy_emp2.touched || record_copy_emp2.dirty)">
+                        <div *ngIf="record_copy_emp2.errors.required">Record Copy is required</div>
+                        <div *ngIf="record_copy_emp2.errors.pattern">Record Copy should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="isPreEmpDetails">
+        <div class="col">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="name_addr3.invalid && name_addr3.touched" [class.has-success]="name_addr3.valid">
+                      <label class="control-label">Name and Address<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="name_addr3" id="name_addr3" name="name_addr3" maxlength="30">
+                      <div class="help-block" *ngIf="!name_addr3.valid && (name_addr3.touched || name_addr3.dirty)">
+                        <div *ngIf="name_addr3.errors.required">Name and Address is required</div>
+                        <div *ngIf="name_addr3.errors.pattern">Name and Address should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="doj3.invalid && doj3.touched" [class.has-success]="doj3.valid">
+                      <label class="control-label">Date of Joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="doj3" id="doj3" name="doj3">
+                      <div class="help-block" *ngIf="!doj3.valid && (doj3.touched || doj3.dirty)">
+                        <div *ngIf="doj3.errors.required">Date of Joining is required</div>
+                        <div *ngIf="doj3.errors.pattern">Date of Joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation3.invalid && designation3.touched" [class.has-success]="designation3.valid">
+                      <label class="control-label">Employee Designation<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation3" id="designation3" name="designation3" maxlength="30">
+                      <div class="help-block" *ngIf="!designation3.valid && (designation3.touched || designation3.dirty)">
+                        <div *ngIf="designation3.errors.required">Designation is required</div>
+                        <div *ngIf="designation3.errors.pattern">Designation should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_joining3.invalid && salary_on_joining3.touched" [class.has-success]="salary_on_joining3.valid">
+                      <label class="control-label">Salary on joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="salary_on_joining3" id="salary_on_joining3" name="salary_on_joining3">
+                      <div class="help-block" *ngIf="!salary_on_joining3.valid && (salary_on_joining3.touched || salary_on_joining3.dirty)">
+                        <div *ngIf="salary_on_joining3.errors.required">Salary on joining is required</div>
+                        <div *ngIf="salary_on_joining3.errors.pattern">Salary on joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="date_of_relieving3.invalid && date_of_relieving3.touched" [class.has-success]="date_of_relieving3.valid">
+                      <label class="control-label">Date of Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="date_of_relieving3" id="date_of_relieving3" name="date_of_relieving3" maxlength="30">
+                      <div class="help-block" *ngIf="!date_of_relieving3.valid && (date_of_relieving3.touched || date_of_relieving3.dirty)">
+                        <div *ngIf="date_of_relieving3.errors.required">Date of Relieving is required</div>
+                        <div *ngIf="date_of_relieving3.errors.pattern">Date of Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation_on_relieving3.invalid && designation_on_relieving3.touched" [class.has-success]="designation_on_relieving3.valid">
+                      <label class="control-label">Desgnation on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation_on_relieving3" id="designation_on_relieving3" name="designation_on_relieving3">
+                      <div class="help-block" *ngIf="!designation_on_relieving3.valid && (designation_on_relieving3.touched || designation_on_relieving3.dirty)">
+                        <div *ngIf="designation_on_relieving3.errors.required">Desgnation on Relieving is required</div>
+                        <div *ngIf="designation_on_relieving3.errors.pattern">Desgnation on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_relieving3.invalid && salary_on_relieving3.touched" [class.has-success]="salary_on_relieving3.valid">
+                      <label class="control-label">Salary on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="salary_on_relieving3" id="salary_on_relieving3" name="salary_on_relieving3" maxlength="30">
+                      <div class="help-block" *ngIf="!salary_on_relieving3.valid && (salary_on_relieving3.touched || salary_on_relieving3.dirty)">
+                        <div *ngIf="salary_on_relieving3.errors.required">Salary on Relieving is required</div>
+                        <div *ngIf="salary_on_relieving3.errors.pattern">Salary on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="record_copy_emp3.invalid && record_copy_emp3.touched" [class.has-success]="record_copy_emp3.valid">
+                      <label class="control-label">Employee Record Copy<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_emp3" id="record_copy_emp3" name="record_copy_emp3">
+                      <div class="help-block" *ngIf="!record_copy_emp3.valid && (record_copy_emp3.touched || record_copy_emp3.dirty)">
+                        <div *ngIf="record_copy_emp3.errors.required">Record Copy is required</div>
+                        <div *ngIf="record_copy_emp3.errors.pattern">Record Copy should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="isPreEmpDetails">
+        <div class="col">
+          <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="name_addr4.invalid && name_addr4.touched" [class.has-success]="name_addr4.valid">
+                      <label class="control-label">Name and Address<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="name_addr4" id="name_addr4" name="name_addr4" maxlength="30">
+                      <div class="help-block" *ngIf="!name_addr4.valid && (name_addr4.touched || name_addr4.dirty)">
+                        <div *ngIf="name_addr4.errors.required">Name and Address is required</div>
+                        <div *ngIf="name_addr4.errors.pattern">Name and Address should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="doj4.invalid && doj4.touched" [class.has-success]="doj4.valid">
+                      <label class="control-label">Date of Joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="doj4" id="doj4" name="doj4">
+                      <div class="help-block" *ngIf="!doj4.valid && (doj4.touched || doj4.dirty)">
+                        <div *ngIf="doj4.errors.required">Date of Joining is required</div>
+                        <div *ngIf="doj4.errors.pattern">Date of Joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation4.invalid && designation4.touched" [class.has-success]="designation4.valid">
+                      <label class="control-label">Employee Designation<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation4" id="designation4" name="designation4" maxlength="30">
+                      <div class="help-block" *ngIf="!designation4.valid && (designation4.touched || designation4.dirty)">
+                        <div *ngIf="designation4.errors.required">Designation is required</div>
+                        <div *ngIf="designation4.errors.pattern">Designation should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_joining4.invalid && salary_on_joining4.touched" [class.has-success]="salary_on_joining4.valid">
+                      <label class="control-label">Salary on joining<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="salary_on_joining4" id="salary_on_joining4" name="salary_on_joining4">
+                      <div class="help-block" *ngIf="!salary_on_joining4.valid && (salary_on_joining4.touched || salary_on_joining4.dirty)">
+                        <div *ngIf="salary_on_joining4.errors.required">Salary on joining is required</div>
+                        <div *ngIf="salary_on_joining4.errors.pattern">Salary on joining should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="date_of_relieving4.invalid && date_of_relieving4.touched" [class.has-success]="date_of_relieving4.valid">
+                      <label class="control-label">Date of Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="date_of_relieving4" id="date_of_relieving4" name="date_of_relieving4" maxlength="30">
+                      <div class="help-block" *ngIf="!date_of_relieving4.valid && (date_of_relieving4.touched || date_of_relieving4.dirty)">
+                        <div *ngIf="date_of_relieving4.errors.required">Date of Relieving is required</div>
+                        <div *ngIf="date_of_relieving4.errors.pattern">Date of Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="designation_on_relieving4.invalid && designation_on_relieving4.touched" [class.has-success]="designation_on_relieving4.valid">
+                      <label class="control-label">Desgnation on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="designation_on_relieving4" id="designation_on_relieving4" name="designation_on_relieving4">
+                      <div class="help-block" *ngIf="!designation_on_relieving4.valid && (designation_on_relieving4.touched || designation_on_relieving4.dirty)">
+                        <div *ngIf="designation_on_relieving4.errors.required">Desgnation on Relieving is required</div>
+                        <div *ngIf="designation_on_relieving4.errors.pattern">Desgnation on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="salary_on_relieving4.invalid && salary_on_relieving4.touched" [class.has-success]="salary_on_relieving4.valid">
+                      <label class="control-label">Salary on Relieving<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="text" required formControlName="salary_on_relieving4" id="salary_on_relieving4" name="salary_on_relieving4" maxlength="30">
+                      <div class="help-block" *ngIf="!salary_on_relieving4.valid && (salary_on_relieving4.touched || salary_on_relieving4.dirty)">
+                        <div *ngIf="salary_on_relieving4.errors.required">Salary on Relieving is required</div>
+                        <div *ngIf="salary_on_relieving4.errors.pattern">Salary on Relieving should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group" [class.has-error]="record_copy_emp4.invalid && record_copy_emp4.touched" [class.has-success]="record_copy_emp4.valid">
+                      <label class="control-label">Employee Record Copy<span class="text-danger m-l-5">*</span></label>
+                      <input class="form-control floating col-half-offset" type="file" required formControlName="record_copy_emp4" id="record_copy_emp4" name="record_copy_emp4">
+                      <div class="help-block" *ngIf="!record_copy_emp4.valid && (record_copy_emp4.touched || record_copy_emp4.dirty)">
+                        <div *ngIf="record_copy_emp4.errors.required">Record Copy is required</div>
+                        <div *ngIf="record_copy_emp4.errors.pattern">Record Copy should be characters</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="row">
+      <div class="col">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <button class="btn btn-sm btn-primary btn-tab" (click)="familyDetails()">Family Details</button>
+          </div>
+        </div>
+      </div>
+      </div>
+       <div class="row" *ngIf="isFamilyDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="name.invalid && name.touched" [class.has-success]="name.valid">
+              <label class="control-label">Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="name" id="name" name="name" maxlength="30">
+              <div class="help-block" *ngIf="!name.valid && (name.touched || name.dirty)">
+                <div *ngIf="name.errors.required">Name is required</div>
+                <div *ngIf="name.errors.pattern">Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="relationship.invalid && relationship.touched" [class.has-success]="relationship.valid">
+              <label class="control-label">Relationship<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="relationship" id="relationship" name="relationship">
+              <div class="help-block" *ngIf="!relationship.valid && (relationship.touched || relationship.dirty)">
+                <div *ngIf="relationship.errors.required">relationship is required</div>
+                <div *ngIf="relationship.errors.pattern">Relationship should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="dob.invalid && dob.touched" [class.has-success]="dob.valid">
+              <label class="control-label">DOB<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="dob" id="dob" name="dob" maxlength="30">
+              <div class="help-block" *ngIf="!dob.valid && (dob.touched || dob.dirty)">
+                <div *ngIf="dob.errors.required">DOB is required</div>
+                <div *ngIf="dob.errors.pattern">DOB should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="occupation.invalid && occupation.touched" [class.has-success]="occupation.valid">
+              <label class="control-label">Occupation<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="occupation" id="occupation" name="occupation">
+              <div class="help-block" *ngIf="!occupation.valid && (occupation.touched || occupation.dirty)">
+                <div *ngIf="occupation.errors.required">Occupation is required</div>
+                <div *ngIf="occupation.errors.pattern">Occupation should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="isFamilyDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="name1.invalid && name1.touched" [class.has-success]="name1.valid">
+              <label class="control-label">Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="name1" id="name1" name="name1" maxlength="30">
+              <div class="help-block" *ngIf="!name1.valid && (name1.touched || name1.dirty)">
+                <div *ngIf="name1.errors.required">Name is required</div>
+                <div *ngIf="name1.errors.pattern">Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="relationship1.invalid && relationship1.touched" [class.has-success]="relationship1.valid">
+              <label class="control-label">Relationship<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="relationship1" id="relationship1" name="relationship1">
+              <div class="help-block" *ngIf="!relationship1.valid && (relationship1.touched || relationship1.dirty)">
+                <div *ngIf="relationship1.errors.required">relationship is required</div>
+                <div *ngIf="relationship1.errors.pattern">Relationship should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="dob1.invalid && dob1.touched" [class.has-success]="dob1.valid">
+              <label class="control-label">DOB<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="dob1" id="dob1" name="dob1" maxlength="30">
+              <div class="help-block" *ngIf="!dob1.valid && (dob1.touched || dob1.dirty)">
+                <div *ngIf="dob1.errors.required">DOB is required</div>
+                <div *ngIf="dob1.errors.pattern">DOB should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="occupation1.invalid && occupation1.touched" [class.has-success]="occupation1.valid">
+              <label class="control-label">Occupation<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="occupation1" id="occupation1" name="occupation1">
+              <div class="help-block" *ngIf="!occupation1.valid && (occupation1.touched || occupation1.dirty)">
+                <div *ngIf="occupation1.errors.required">Occupation is required</div>
+                <div *ngIf="occupation1.errors.pattern">Occupation should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     <div class="row" *ngIf="isFamilyDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="name2.invalid && name2.touched" [class.has-success]="name2.valid">
+              <label class="control-label">Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="name2" id="name2" name="name2" maxlength="30">
+              <div class="help-block" *ngIf="!name2.valid && (name2.touched || name2.dirty)">
+                <div *ngIf="name2.errors.required">Name is required</div>
+                <div *ngIf="name2.errors.pattern">Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="relationship2.invalid && relationship2.touched" [class.has-success]="relationship2.valid">
+              <label class="control-label">Relationship<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="relationship2" id="relationship2" name="relationship2">
+              <div class="help-block" *ngIf="!relationship2.valid && (relationship2.touched || relationship2.dirty)">
+                <div *ngIf="relationship2.errors.required">relationship is required</div>
+                <div *ngIf="relationship2.errors.pattern">Relationship should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="dob2.invalid && dob2.touched" [class.has-success]="dob2.valid">
+              <label class="control-label">DOB<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="dob2" id="dob2" name="dob2" maxlength="30">
+              <div class="help-block" *ngIf="!dob2.valid && (dob2.touched || dob2.dirty)">
+                <div *ngIf="dob2.errors.required">DOB is required</div>
+                <div *ngIf="dob2.errors.pattern">DOB should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="occupation2.invalid && occupation2.touched" [class.has-success]="occupation2.valid">
+              <label class="control-label">Occupation<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="occupation2" id="occupation2" name="occupation2">
+              <div class="help-block" *ngIf="!occupation2.valid && (occupation2.touched || occupation2.dirty)">
+                <div *ngIf="occupation2.errors.required">Occupation is required</div>
+                <div *ngIf="occupation2.errors.pattern">Occupation should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     <div class="row" *ngIf="isFamilyDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="name3.invalid && name3.touched" [class.has-success]="name3.valid">
+              <label class="control-label">Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="name3" id="name3" name="name3" maxlength="30">
+              <div class="help-block" *ngIf="!name3.valid && (name3.touched || name3.dirty)">
+                <div *ngIf="name3.errors.required">Name is required</div>
+                <div *ngIf="name3.errors.pattern">Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="relationship3.invalid && relationship3.touched" [class.has-success]="relationship3.valid">
+              <label class="control-label">Relationship<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="relationship3" id="relationship3" name="relationship3">
+              <div class="help-block" *ngIf="!relationship3.valid && (relationship3.touched || relationship3.dirty)">
+                <div *ngIf="relationship3.errors.required">relationship is required</div>
+                <div *ngIf="relationship3.errors.pattern">Relationship should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="dob3.invalid && dob3.touched" [class.has-success]="dob3.valid">
+              <label class="control-label">DOB<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="dob3" id="dob3" name="dob3" maxlength="30">
+              <div class="help-block" *ngIf="!dob3.valid && (dob3.touched || dob3.dirty)">
+                <div *ngIf="dob3.errors.required">DOB is required</div>
+                <div *ngIf="dob3.errors.pattern">DOB should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="occupation3.invalid && occupation3.touched" [class.has-success]="occupation3.valid">
+              <label class="control-label">Occupation<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="occupation3" id="occupation3" name="occupation3">
+              <div class="help-block" *ngIf="!occupation3.valid && (occupation3.touched || occupation3.dirty)">
+                <div *ngIf="occupation3.errors.required">Occupation is required</div>
+                <div *ngIf="occupation3.errors.pattern">Occupation should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     <div class="row" *ngIf="isFamilyDetails">
+        <div class="col">
+          <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="name4.invalid && name4.touched" [class.has-success]="name4.valid">
+              <label class="control-label">Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="name4" id="name4" name="name4" maxlength="30">
+              <div class="help-block" *ngIf="!name4.valid && (name4.touched || name4.dirty)">
+                <div *ngIf="name4.errors.required">Name is required</div>
+                <div *ngIf="name4.errors.pattern">Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="relationship4.invalid && relationship4.touched" [class.has-success]="relationship4.valid">
+              <label class="control-label">Relationship<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="relationship4" id="relationship4" name="relationship4">
+              <div class="help-block" *ngIf="!relationship4.valid && (relationship4.touched || relationship4.dirty)">
+                <div *ngIf="relationship4.errors.required">relationship is required</div>
+                <div *ngIf="relationship4.errors.pattern">Relationship should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="dob4.invalid && dob4.touched" [class.has-success]="dob4.valid">
+              <label class="control-label">DOB<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="dob4" id="dob4" name="dob4" maxlength="30">
+              <div class="help-block" *ngIf="!dob4.valid && (dob4.touched || dob4.dirty)">
+                <div *ngIf="dob4.errors.required">DOB is required</div>
+                <div *ngIf="dob4.errors.pattern">DOB should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-3">
+            <div class="form-group" [class.has-error]="occupation4.invalid && occupation4.touched" [class.has-success]="occupation4.valid">
+              <label class="control-label">Occupation<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating col-half-offset" type="text" required formControlName="occupation4" id="occupation4" name="occupation4">
+              <div class="help-block" *ngIf="!occupation4.valid && (occupation4.touched || occupation4.dirty)">
+                <div *ngIf="occupation4.errors.required">Occupation is required</div>
+                <div *ngIf="occupation4.errors.pattern">Occupation should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="school_name.invalid && school_name.touched" [class.has-success]="school_name.valid">
+              <label class="control-label">School Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="school_name" id="school_name" name="school_name" maxlength="30">
+              <div class="help-block" *ngIf="!school_name.valid && (school_name.touched || school_name.dirty)">
+                <div *ngIf="school_name.errors.required">School Name is required</div>
+                <div *ngIf="school_name.errors.pattern">School Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="school_passed_out.invalid && school_passed_out.touched" [class.has-success]="school_passed_out.valid">
+              <label class="control-label">School Passed Out<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="school_passed_out" id="school_passed_out" name="school_passed_out">
+              <div class="help-block" *ngIf="!school_passed_out.valid && (school_passed_out.touched || school_passed_out.dirty)">
+                <div *ngIf="school_passed_out.errors.required">School Passed Out is required</div>
+                <div *ngIf="school_passed_out.errors.pattern">School Passed Out should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="college_name.invalid && college_name.touched" [class.has-success]="college_name.valid">
+              <label class="control-label">College Name<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="college_name" id="college_name" name="college_name" maxlength="30">
+              <div class="help-block" *ngIf="!college_name.valid && (college_name.touched || college_name.dirty)">
+                <div *ngIf="college_name.errors.required">College Name is required</div>
+                <div *ngIf="college_name.errors.pattern">College Name should be characters</div>
+              </div>
+            </div>
+          </div>
+           <div class="col-sm-6">
+            <div class="form-group" [class.has-error]="college_passed_out.invalid && college_passed_out.touched" [class.has-success]="college_passed_out.valid">
+              <label class="control-label">College Passed Out<span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="college_passed_out" id="college_passed_out" name="college_passed_out">
+              <div class="help-block" *ngIf="!college_passed_out.valid && (college_passed_out.touched || college_passed_out.dirty)">
+                <div *ngIf="college_passed_out.errors.required">College Passed Out is required</div>
+                <div *ngIf="college_passed_out.errors.pattern">College Passed Out should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="m-t-20 text-center">
+        <div class="alert alert-info m-t-10">
+          <strong>Warning!</strong> Must Fill all Mandatory Fields.
+        </div>
+        <button class="btn btn-primary create-btn" type="button" (click)="addSubmit()">Create Employee</button>
+      </div>
+    </form>
+  </div>
+</div>

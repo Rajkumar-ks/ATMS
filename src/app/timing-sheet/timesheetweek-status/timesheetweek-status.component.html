@@ -1,0 +1,72 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-sm-8">
+        <h4 class="page-title">Time Sheet</h4>
+      </div>
+      <div class="col-sm-4 text-right m-b-30">
+      </div>
+    </div>
+    <a href="javascript:" class="btn btn-primary rounded" (click)="addTimesheet()"><i class="fa fa-plus"></i>
+      Add Timesheet</a>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive table-responsive-inherit">
+          <table class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead>
+              <tr>
+                <th style="width: 20%">
+                  <mfDefaultSorter by="firstName">Employee</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="date">Date</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="project">Activity Name</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="project">Project Code</mfDefaultSorter>
+                </th>
+                <th style="width: 10%" class="text-center">
+                  <mfDefaultSorter by="activityname">Project Name</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="hours_assigned">Assigned Hours</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="hours_remaining">Hours</mfDefaultSorter>
+                </th>
+                <th style="width: 10%" class="text-center">
+                  <mfDefaultSorter by="description">Description</mfDefaultSorter>
+                </th>
+                <th style="width: 10%" class="text-center">
+                  <mfDefaultSorter by="rejectionremarks">Rejection Remarks</mfDefaultSorter>
+                </th>
+                <th style="width:5%">
+                  <mfDefaultSorter by="action">Status</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let employee of timesheetweekdetails">
+                <td>
+                  <a href="javascript:" class="avatar">{{employee.employeeName.split('')[0]}}</a> 
+                  <h2><a href="javascript:" (click)="rejectEdit(employee)">{{employee.employeeName}}</a></h2>
+                </td>
+                <td>{{employee.date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{employee.projectname}}</td>
+                <td>{{employee.projectcode}}</td>
+                <td>{{employee.activityname}}</td>
+                <td>{{employee.assignedhours}}</td>
+                <td>{{employee.hours}}</td>
+                <td>{{employee.description}}</td>
+                <td>{{employee.rejectionremarks}}</td>
+                <td>{{employee.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>

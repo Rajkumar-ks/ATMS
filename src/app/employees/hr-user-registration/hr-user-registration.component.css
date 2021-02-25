@@ -1,0 +1,38 @@
+.input-box{
+    margin-left:195px;
+}
+.input-st{
+    border-radius: 5px;
+    height: 30px;
+    width: 358px;
+}
+
+form{
+    margin-left: 143px;
+    margin-right: -270px;
+}
+.replace-radio{
+    margin-left: -20px;
+    margin-top: 13px;
+}
+img{
+    margin-left: 48%;
+    margin-top: -33px; 
+    border-radius:70px; 
+    height:107px;
+}
+h4{
+    margin-left: 226px;
+}
+.create-btn{
+    margin-right: 379px;
+}
+.ng-autocomplete{
+    width:358px;
+}
+.img-file{
+    margin-left: 559px;
+    margin-top: 20px;
+    width:185px;
+}
+

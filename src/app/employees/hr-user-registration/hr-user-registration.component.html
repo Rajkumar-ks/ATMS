@@ -1,0 +1,331 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+   <h4>Add Employee</h4>
+   
+    <form class="m-b-30 input-box" [formGroup]="form" novalidate>
+      <img [src]="testimgresult" alt="img"/>
+      <input class="img-file" formControlName="prof_img" id="prof_img" name="prof_img" type="file" size="60" (change)="onFileSelect($event)" />
+      <div class="row">
+        <div class="col">
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="f_name.invalid && f_name.touched" [class.has-success]="f_name.valid">
+              <label class="control-label">First Name <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="f_name" id="f_name" name="f_name" maxlength="30">
+              <div class="help-block" *ngIf="!f_name.valid && (f_name.touched || f_name.dirty)">
+                <div *ngIf="f_name.errors.required">First Name is required</div>
+                <div *ngIf="f_name.errors.pattern">First Name should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="l_name.invalid && l_name.touched" [class.has-success]="l_name.valid">
+              <label class="control-label">Last Name <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="l_name" id="l_name" name="l_name" maxlength="30">
+              <div class="help-block" *ngIf="!l_name.valid && (l_name.touched || l_name.dirty)">
+                <div *ngIf="l_name.errors.required">Last Name is required</div>
+                <div *ngIf="l_name.errors.pattern">Last Name should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="business_unit.invalid && business_unit.touched" [class.has-success]="business_unit.valid">
+              <label class="control-label">Business Unit <span class="text-danger m-l-5">*</span></label>
+               <select class="select form-control input-st" formControlName="business_unit" id="business_unit" name="business_unit" required>
+                  <option value="">Select Business Unit...</option>
+                  <option *ngFor="let unit of business_unit_arr" [value]="unit[0]">
+                    {{unit[1]}}
+                  </option>
+              </select>
+              <div class="help-block" *ngIf="!business_unit.valid && (business_unit.touched || business_unit.dirty)">
+                <div *ngIf="business_unit.errors.required">Business Unit is required</div>
+                <div *ngIf="business_unit.errors.pattern">Business Unit should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="resource_type.invalid && resource_type.touched" [class.has-success]="resource_type.valid">
+              <label class="control-label">Resource Type <span class="text-danger m-l-5">*</span></label>
+               <select class="select form-control input-st" formControlName="resource_type" id="resource_type" name="resource_type" required>
+                  <option value="">Resource Type</option>
+                  <option *ngFor="let unit of resource_type_Arr" [value]="unit[0]">
+                      {{unit[1]}}
+                  </option>
+                 
+              </select>
+              <div class="help-block" *ngIf="!resource_type.valid && (resource_type.touched || resource_type.dirty)">
+                <div *ngIf="resource_type.errors.required">Resource Type is required</div>
+                <div *ngIf="resource_type.errors.pattern">Resource Type should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="designation.invalid && designation.touched" [class.has-success]="designation.valid">
+              
+              <label class="control-label">Designation <span class="text-danger m-l-5">*</span></label>
+              
+              <div class="ng-autocomplete">
+                <ng-autocomplete 
+                  [data]="data"
+                  formControlName = "designation"
+                  [searchKeyword]="keyword"
+                  (selected)='selectEvent($event)'
+                  (inputChanged)='onChangeSearch($event)'
+                  (inputFocused)='onFocused($event)'
+                  [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate">                                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+
+              <!--<input class="form-control floating input-st" type="text" required formControlName="designation" id="designation" name="designation" maxlength="30">-->
+              <div class="help-block" *ngIf="!designation.valid && (designation.touched || designation.dirty)">
+                <div *ngIf="designation.errors.required">Designation is required</div>
+                <div *ngIf="designation.errors.pattern">Designation should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="role_type.invalid && role_type.touched" [class.has-success]="role_type.valid">
+              <label class="control-label">Role Type <span class="text-danger m-l-5">*</span></label>
+               <select class="select form-control input-st" formControlName="role_type" id="role_type" name="role_type" required>
+                  <option value="">Select Role Type...</option>
+                  <option *ngFor="let unit of role_type_arr" [value]="unit[0]">
+                    {{unit[1]}}
+                  </option>
+              </select>
+              <div class="help-block" *ngIf="!role_type.valid && (role_type.touched || role_type.dirty)">
+                <div *ngIf="role_type.errors.required">Role Type is required</div>
+                <div *ngIf="role_type.errors.pattern">Role Type should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+         <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="level.invalid && level.touched" [class.has-success]="level.valid">
+              <label class="control-label">level <span class="text-danger m-l-5">*</span></label>
+               <select class="select form-control input-st" formControlName="level" id="level" name="level" required>
+                  <option value="">Select level...</option>
+                  <option *ngFor="let unit of level_type_arr" [value]="unit[0]">
+                    {{unit[1]}}
+                  </option>
+              </select>
+              <div class="help-block" *ngIf="!level.valid && (level.touched || level.dirty)">
+                <div *ngIf="level.errors.required">level is required</div>
+                <div *ngIf="level.errors.pattern">level should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="job_location.invalid && job_location.touched" [class.has-success]="job_location.valid">
+              <label class="control-label">Job Location <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="job_location" id="job_location" name="job_location" maxlength="30">
+              <div class="help-block" *ngIf="!job_location.valid && (job_location.touched || job_location.dirty)">
+                <div *ngIf="job_location.errors.required">Job Location is required</div>
+                <div *ngIf="job_location.errors.pattern">Job Location should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+         <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="state.invalid && state.touched" [class.has-success]="state.valid">
+              <label class="control-label">State <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="state" id="state" name="state" maxlength="30">
+              <div class="help-block" *ngIf="!state.valid && (state.touched || state.dirty)">
+                <div *ngIf="state.errors.required">State is required</div>
+                <div *ngIf="state.errors.pattern">State should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="country.invalid && country.touched" [class.has-success]="country.valid">
+              <label class="control-label">Country <span class="text-danger m-l-5">*</span></label>
+               <select class="select form-control input-st" formControlName="country" id="country" name="country" required>
+                  <option value="">Select Country...</option>
+                   <option value="11">India</option>
+              </select>
+              <div class="help-block" *ngIf="!country.valid && (country.touched || country.dirty)">
+                <div *ngIf="country.errors.required">Country is required</div>
+                <div *ngIf="country.errors.pattern">Country should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+          <div class="col">
+              <div class="col-sm-4">
+                <div class="form-group" [class.has-error]="gender.invalid && gender.touched" [class.has-success]="gender.valid">
+                  <label class="control-label">Gender <span class="text-danger m-l-5">*</span></label>
+                  <select class="select form-control input-st" formControlName="gender" id="gender" name="gender" required>
+                    <option value="">Select Country...</option>
+                     <option value="12">Male</option>
+                    <option value="13">Female</option>
+                  </select>
+                  <div class="help-block" *ngIf="!gender.valid && (gender.touched || gender.dirty)">
+                    <div *ngIf="gender.errors.required">Gender is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="dob.invalid && dob.touched" [class.has-success]="dob.valid">
+                      <label class="control-label">Date of Birth<span class="text-danger">*</span></label>
+                      <span><my-date-picker class="input-st" [options]="myDatePickerOptions1" name="dob" formControlName="dob" required></my-date-picker></span>
+                      <div class="help-block" *ngIf="!dob.valid && (dob.touched || dob.dirty)">
+                          <div *ngIf="dob.errors.required">Date of Birth is required</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col">
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="personal_mail.invalid && personal_mail.touched" [class.has-success]="personal_mail.valid">
+              <label class="control-label">Personal Mail Id <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="personal_mail" id="personal_mail" name="personal_mail" maxlength="30">
+              <div class="help-block" *ngIf="!personal_mail.valid && (personal_mail.touched || personal_mail.dirty)">
+                <div *ngIf="personal_mail.errors.required">Personal Mail Id is required</div>
+                <div *ngIf="personal_mail.errors.pattern">Personal Mail Id should be valid</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="official_mail.invalid && official_mail.touched" [class.has-success]="official_mail.valid">
+              <label class="control-label">Official Mail Id <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" required formControlName="official_mail" id="official_mail" name="official_mail" maxlength="30">
+              <div class="help-block" *ngIf="!official_mail.valid && (official_mail.touched || official_mail.dirty)">
+                <div *ngIf="official_mail.errors.required">Official Mail Id is required</div>
+                <div *ngIf="official_mail.errors.pattern">Official Mail Id should be valid</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="pan_number.invalid && pan_number.touched" [class.has-success]="pan_number.valid">
+              <label class="control-label">Pan Number <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" (keypress)="numberOnly($event)" required formControlName="pan_number" id="pan_number" name="pan_number" maxlength="30">
+              <div class="help-block" *ngIf="!pan_number.valid && (pan_number.touched || pan_number.dirty)">
+                <div *ngIf="pan_number.errors.required">Pan Number is required</div>
+                <div *ngIf="pan_number.errors.pattern">Pan Number should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="aadhar_number.invalid && aadhar_number.touched" [class.has-success]="aadhar_number.valid">
+              <label class="control-label">Aadhar Id <span class="text-danger m-l-5">*</span></label>
+              <input class="form-control floating input-st" type="text" (keypress)="numberOnly($event)" required formControlName="aadhar_number" id="aadhar_number" name="aadhar_number" maxlength="30">
+              <div class="help-block" *ngIf="!aadhar_number.valid && (aadhar_number.touched || aadhar_number.dirty)">
+                <div *ngIf="aadhar_number.errors.required">Aadhar Id is required</div>
+                <div *ngIf="aadhar_number.errors.pattern">Aadhar Id should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col">
+          <div class="col-sm-4">
+            <div class="form-group" [class.has-error]="resource_type_request.invalid && resource_type_request.touched" [class.has-success]="resource_type_request.valid">
+              <label class="control-label">Resource Type Request <span class="text-danger m-l-5">*</span></label>
+                 <div class="radio">
+                    <label><input type="radio" formControlName="resource_type_request" name="resource_type_request" value="New" (change)="enableNew()">New</label>
+                  </div>
+                  <div class="radio">
+                    <label><input type="radio" formControlName="resource_type_request" name="resource_type_request" value="Replace" (change)="enableReplace()">Replace</label>
+                  </div>
+              <div class="help-block" *ngIf="!resource_type_request.valid && (resource_type_request.touched || resource_type_request.dirty)">
+                <div *ngIf="resource_type_request.errors.required">Resource Type Request is required</div>
+                <div *ngIf="resource_type_request.errors.pattern">Resource Type Request should be characters</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4" *ngIf="isEmployeeId">
+            <div class="form-group" [class.has-error]="emp_id.invalid && emp_id.touched" [class.has-success]="emp_id.valid">
+              <label class="control-label">Employee Id <span class="text-danger m-l-5">*</span></label>
+              <!--<input class="form-control floating input-st" type="text" required formControlName="emp_id" id="emp_id" name="emp_id" maxlength="30">-->
+              
+              <div class="ng-autocomplete">
+                <ng-autocomplete 
+                  formControlName = "emp_id"
+                  [data]="idData"
+                  [searchKeyword]="keywordId"
+                  (selected)='selectEvent($event)'
+                  (inputChanged)='onChangeSearch($event)'
+                  (inputFocused)='onFocused($event)'
+                  [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate">                                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+
+              <div class="help-block" *ngIf="!emp_id.valid && (emp_id.touched || emp_id.dirty)">
+                <div *ngIf="emp_id.errors.required">Employee Id is required</div>
+                <div *ngIf="emp_id.errors.pattern">Employee Id should be characters</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <div class="row">
+          <div class="col">
+              <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="doj.invalid && doj.touched" [class.has-success]="doj.valid">
+                      <label class="control-label">Date of Joining<span class="text-danger">*</span></label>
+                      <my-date-picker class="input-st" [options]="myDatePickerOptions2" name="doj" formControlName="doj" required></my-date-picker>
+                      <div class="help-block" *ngIf="!doj.valid && (doj.touched || doj.dirty)">
+                          <div *ngIf="doj.errors.required">Date of Joining is required</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="reporting_manager.invalid && reporting_manager.touched" [class.has-success]="reporting_manager.valid">
+                <label class="control-label">Reporting Manager <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-st" type="text" required formControlName="reporting_manager" id="reporting_manager" name="reporting_manager" maxlength="30">
+                <div class="help-block" *ngIf="!reporting_manager.valid && (reporting_manager.touched || reporting_manager.dirty)">
+                  <div *ngIf="reporting_manager.errors.required">Reporting Manager is required</div>
+                  <div *ngIf="reporting_manager.errors.pattern">Reporting Manager should be characters</div>
+                </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      <div class="m-t-20 text-center">
+        <div class="alert alert-info m-t-10">
+          <strong>Warning!</strong> Must Fill all Mandatory Fields.
+        </div>
+        <button class="btn btn-primary create-btn" type="button" (click)="addSubmit()">Create Employee</button>
+      </div>
+    </form>
+  </div>
+</div>

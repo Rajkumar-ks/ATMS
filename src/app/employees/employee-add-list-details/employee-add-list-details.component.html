@@ -1,0 +1,541 @@
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-md-9">
+      <h4 class="modal-title" id="header">View / Edit Employee Details</h4>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary" id="back" type="button" routerLink="/employees/add-employee" style="margin-left: 82%;">X</button>
+    </div>
+  </div>
+  <div class="row m-t-20">
+    <div class="col-md-12">
+      <form class="m-b-30" id="form-employee" [formGroup]="form" autocomplete="off">
+         
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="BasicDetails()">Basic Details</button>
+           
+            <div *ngIf="isBasicDetails" id="input-emp-e">
+           
+            <div class="row row-style">
+              <div class="col">
+                <div class="col-sm-3">
+                  <div class="form-group" [class.has-error]="city.invalid && city.touched" [class.has-success]="city.valid">
+                    <mat-form-field class="example-full-width col-sm-3" appearance="fill">
+                      <mat-label >City</mat-label>
+                      <input matInput formControlName="city" pattern="^[a-zA-Z ]*$" [(ngModel)]="employeeDetails[0]['city']">
+                      <mat-error class="help-block" *ngIf="!city.valid && (city.touched || city.dirty)">
+                        <mat-error *ngIf="city.errors.required">City is required</mat-error>
+                        <mat-error *ngIf="city.errors.pattern">City should be characters</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group" [class.has-error]="ph_no.invalid && ph_no.touched" [class.has-success]="ph_no.valid">
+                    <mat-form-field class="example-full-width col-sm-3" appearance="fill">
+                      <mat-label >Phone Number</mat-label>
+                      <input matInput formControlName="ph_no" pattern="(\d{10})" [(ngModel)]="employeeDetails[0]['ph_no']">
+                      <mat-error class="help-block" *ngIf="!ph_no.valid && (ph_no.touched || ph_no.dirty)">
+                        <mat-error *ngIf="ph_no.errors.required">Phone Number is required</mat-error>
+                        <mat-error *ngIf="ph_no.errors.pattern">Phone Number should be Valid</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group" [class.has-error]="perm_addr.invalid && perm_addr.touched" [class.has-success]="perm_addr.valid">
+                    <mat-form-field class="example-full-width col-sm-3" appearance="fill">
+                      <mat-label >Permanent Address</mat-label>
+                      <input matInput formControlName="perm_addr" required [(ngModel)]="employeeDetails[0]['perm_addr']">
+                      <mat-error class="help-block" *ngIf="!perm_addr.valid && (perm_addr.touched || perm_addr.dirty)">
+                        <mat-error *ngIf="perm_addr.errors.required">Permanent Address is required</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group" [class.has-error]="temp_addr.invalid && temp_addr.touched" [class.has-success]="temp_addr.valid">
+                    <mat-form-field class="example-full-width col-sm-3" appearance="fill">
+                      <mat-label >Temporary Address</mat-label>
+                      <input matInput formControlName="temp_addr" required [(ngModel)]="employeeDetails[0]['temp_addr']">
+                      <mat-error class="help-block" *ngIf="!temp_addr.valid && (temp_addr.touched || temp_addr.dirty)">
+                        <mat-error *ngIf="temp_addr.errors.required">Temporary Address is required</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row row-style">
+              <div class="col">
+                <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="emr_contact_per_name.invalid && emr_contact_per_name.touched" [class.has-success]="emr_contact_per_name.valid">
+                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                      <mat-label >Emergency Contact Person Name</mat-label>
+                      <input matInput formControlName="emr_contact_per_name" pattern="^[a-zA-Z ]*$" required [(ngModel)]="employeeDetails[0]['emr_contact_per_name']">
+                      <mat-error class="help-block" *ngIf="!emr_contact_per_name.valid && (emr_contact_per_name.touched || emr_contact_per_name.dirty)">
+                        <mat-error *ngIf="emr_contact_per_name.errors.required">Name is required</mat-error>
+                        <mat-error *ngIf="emr_contact_per_name.errors.pattern">Name should be characters</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="emr_contact_per_ph_no.invalid && emr_contact_per_ph_no.touched" [class.has-success]="emr_contact_per_ph_no.valid">
+                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                      <mat-label >Emergency Contact Person Number</mat-label>
+                      <input matInput formControlName="emr_contact_per_ph_no" pattern="(\d{10})" required [(ngModel)]="employeeDetails[0]['emr_contact_per_ph_no']">
+                      <mat-error class="help-block" *ngIf="!emr_contact_per_ph_no.valid && (emr_contact_per_ph_no.touched || emr_contact_per_ph_no.dirty)">
+                        <mat-error *ngIf="emr_contact_per_ph_no.errors.required">Contact Person Number is required</mat-error>
+                        <mat-error *ngIf="emr_contact_per_ph_no.errors.pattern">Contact Person Number should be Valid</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="blood_grp.invalid && blood_grp.touched" [class.has-success]="blood_grp.valid">
+                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                      <mat-label >Blood Group</mat-label>
+                      <input matInput formControlName="blood_grp" pattern="^(A|B|AB|A1|A1B|B1|O|a|b|ab|a1b|o)[+-]$" required [(ngModel)]="employeeDetails[0]['blood_grp']">
+                      <mat-error class="help-block" *ngIf="!blood_grp.valid && (blood_grp.touched || blood_grp.dirty)">
+                        <mat-error *ngIf="blood_grp.errors.required">Blood Group is required</mat-error>
+                        <mat-error *ngIf="blood_grp.errors.pattern">Blood Group should be Valid</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="BankDetails()"> Bank Details</button>
+            
+            <div formArrayName="bank_details" *ngIf="isBankDetails">
+              <div class="row row-style" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i">
+                <div class="col">
+                  <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="bank.get('name_asper_bank').invalid && bank.get('name_asper_bank').touched" [class.has-success]="bank.get('name_asper_bank').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Account Holder</mat-label>
+                        <input matInput formControlName="name_asper_bank" id="{{ 'name_asper_bank' + i }}" [(ngModel)]="employeeDetails[0]['name_asper_bank']">
+                        <mat-error class="help-block" *ngIf="!bank.get('name_asper_bank').valid && (bank.get('name_asper_bank').touched || bank.get('name_asper_bank').dirty)">
+                          <mat-error *ngIf="bank.get('name_asper_bank').errors.required">Account Holder is required</mat-error>
+                          <mat-error *ngIf="bank.get('name_asper_bank').errors.pattern">Account Holder should be characters</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="bank.get('acc_no').invalid && bank.get('acc_no').touched" [class.has-success]="bank.get('acc_no').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Account Number</mat-label>
+                        <input matInput formControlName="acc_no" pattern="^(0|[1-9][0-9]*)$" [(ngModel)]="employeeDetails[0]['Acc_no']" required>
+                        <mat-error class="help-block" *ngIf="!bank.get('acc_no').valid && (bank.get('acc_no').touched || bank.get('acc_no').dirty)">
+                          <mat-error *ngIf="bank.get('acc_no').errors.required">Account Number is required</mat-error>
+                          <mat-error *ngIf="bank.get('acc_no').errors.pattern">Account Number should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="bank.get('bank_name').invalid && bank.get('bank_name').touched" [class.has-success]="bank.get('bank_name').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Bank Name</mat-label>
+                        <input matInput formControlName="bank_name" pattern="^[a-zA-Z ]*$" [(ngModel)]="employeeDetails[0]['Bank_name']" required>
+                        <mat-error class="help-block" *ngIf="!bank.get('bank_name').valid && (bank.get('bank_name').touched || bank.get('bank_name').dirty)">
+                          <mat-error *ngIf="bank.get('bank_name').errors.required">Bank Name is required</mat-error>
+                          <mat-error *ngIf="bank.get('bank_name').errors.pattern">Bank Name should be Charachers</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row row-style" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i" style="padding:1%;">
+                <div class="col">
+                  <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="bank.get('ifsc_code').invalid && bank.get('ifsc_code').touched" [class.has-success]="bank.get('ifsc_code').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >IFSC Code</mat-label>
+                        <input matInput formControlName="ifsc_code" [(ngModel)]="employeeDetails[0]['ifsc_code']" required>
+                        <mat-error class="help-block" *ngIf="!bank.get('ifsc_code').valid && (bank.get('ifsc_code').touched || bank.get('ifsc_code').dirty)">
+                          <mat-error *ngIf="bank.get('ifsc_code').errors.required">IFSC Code is required</mat-error>
+                          <mat-error *ngIf="bank.get('ifsc_code').errors.pattern">IFSC Code should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">     
+                    <div class="form-group" [class.has-error]="bank.get('branch').invalid && bank.get('branch').touched" [class.has-success]="bank.get('branch').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Branch Name</mat-label>
+                        <input matInput formControlName="branch" pattern="^[a-zA-Z ]*$" [(ngModel)]="employeeDetails[0]['branch']" required>
+                        <mat-error class="help-block" *ngIf="!bank.get('branch').valid && (bank.get('branch').touched || bank.get('branch').dirty)">
+                          <mat-error *ngIf="bank.get('branch').errors.required">Branch Name is required</mat-error>
+                          <mat-error *ngIf="bank.get('branch').errors.pattern">Branch Name should be Charachers</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group" [class.has-error]="bank.get('acc_type').invalid && bank.get('acc_type').touched" [class.has-success]="bank.get('acc_type').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Account Type</mat-label>
+                        <input matInput formControlName="acc_type" pattern="^[a-zA-Z ]*$" [(ngModel)]="employeeDetails[0]['Acc_type']" required>
+                        <mat-error class="help-block" *ngIf="!bank.get('acc_type').valid && (bank.get('acc_type').touched || bank.get('acc_type').dirty)">
+                          <mat-error *ngIf="bank.get('acc_type').errors.required">Account Type is required</mat-error>
+                          <mat-error *ngIf="bank.get('acc_type').errors.pattern">Account Type should be Charachers</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row row-style" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i">
+                <div class="col">
+                  <div class="col-sm-12">
+                    <div class="form-group col-sm-4">
+                      <label for="input-file-id" class="md-button md-raised md-primary">Cheque Copy</label>
+                      <input class="ng-hide" id="input-file-id" formControlName="check_copy" type="file" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="documentDetails()" style="margin-top: 1%;">Document Details</button>
+            <div *ngIf="this.isDocumentDetails" id="input-emp-e">
+            <div class="row row-style">
+              <div class="col">
+                <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="addhar_num.invalid && addhar_num.touched" [class.has-success]="addhar_num.valid">
+                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                      <mat-label >Addhar Number</mat-label>
+                      <input matInput formControlName="addhar_num" pattern="^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$" placeholder="Addhar Number" [(ngModel)]="employeeDetails[0]['addhar_num']" required>
+                      <mat-error class="help-block" *ngIf="!addhar_num.valid && (addhar_num.touched || addhar_num.dirty)">
+                        <mat-error *ngIf="addhar_num.errors.required">Addhar Number is required</mat-error>
+                        <mat-error *ngIf="addhar_num.errors.pattern">Addhar Number should be Valid</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="uan_num.invalid && uan_num.touched" [class.has-success]="uan_num.valid">
+                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                      <mat-label >PF Number</mat-label>
+                      <input matInput formControlName="uan_num" placeholder="PF Number" [(ngModel)]="employeeDetails[0]['uan_num']" required>
+                      <mat-error class="help-block" *ngIf="!uan_num.valid && (uan_num.touched || uan_num.dirty)">
+                        <mat-error *ngIf="uan_num.errors.required">PF Number is required</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group" [class.has-error]="passport_num.invalid && passport_num.touched" [class.has-success]="passport_num.valid">
+                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                      <mat-label >Passport Number</mat-label>
+                      <input matInput formControlName="passport_num" placeholder="Passport Number" [(ngModel)]="employeeDetails[0]['passport_num']" required>
+                      <mat-error class="help-block" *ngIf="!passport_num.valid && (passport_num.touched || passport_num.dirty)">
+                        <mat-error *ngIf="passport_num.errors.required">Passport Number is required</mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row row-style">
+              <div class="col">
+                <div class="form-group col-sm-4">
+                  <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                    <mat-label>Choose a Passport Expiry Date</mat-label>
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker1" [(ngModel)]="passportExpireDate" formControlName="passport_exp_date">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>  
+                </div>
+                <div class="form-group col-sm-4" [class.has-error]="passport_place_issued.invalid && passport_place_issued.touched" [class.has-success]="passport_place_issued.valid">
+                  <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                    <mat-label >Passport Place issue</mat-label>
+                    <input matInput formControlName="passport_place_issued" placeholder="Passport Place issue" pattern="^[a-zA-Z ]*$" [(ngModel)]="employeeDetails[0]['passport_place_issued']" required>
+                    <mat-error class="help-block" *ngIf="!passport_place_issued.valid && (passport_place_issued.touched || passport_place_issued.dirty)">
+                      <mat-error *ngIf="passport_place_issued.errors.required">Passport Place issue is required</mat-error>
+                      <mat-error *ngIf="passport_place_issued.errors.pattern">Passport Place issue should be Charachers</mat-error>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="row row-style">
+              <div class="col">
+                <div class="col-sm-12">
+                  <div class="form-group col-sm-4">
+                    <label for="input-file-id" class="md-button md-raised md-primary">Aadhar Softcopy</label>
+                    <input class="ng-hide" id="input-file-id" formControlName="aadhar_soft_copy" type="file" />
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="input-file-id" class="md-button md-raised md-primary">Pan Softcopy</label>
+                    <input class="ng-hide" id="input-file-id" formControlName="pan_soft_copy" type="file" />
+                  </div>
+                  <div class="form-group col-sm-4">
+                    <label for="input-file-id" class="md-button md-raised md-primary">Passport Softcopy</label>
+                    <input class="ng-hide" id="input-file-id" formControlName="pass_soft_copy" type="file" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="educationDetails()" style="margin-top: 1%;">Education Details</button>
+            <div *ngIf="isEducationalDetails" id="input-emp-e">
+              <div formArrayName="education">
+                <div *ngFor="let education of addEducationArray.controls; let i = index;" [formGroupName]="i">
+                  <div class="row row-style">
+                    <div class="form-group col-sm-2" [class.has-error]="education.get('edu_type').invalid && education.get('edu_type').touched" [class.has-success]="education.get('edu_type').valid">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label >Course</mat-label>
+                          <input matInput formControlName="edu_type" id="{{'edu_type' + i}}" placeholder="Course" required>
+                          <mat-error class="help-block" *ngIf="!education.get('edu_type').valid && (education.get('edu_type').touched || education.get('edu_type').dirty)">
+                            <mat-error *ngIf="education.get('edu_type').errors.required">Course is required</mat-error>
+                          </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-3" [class.has-error]="education.get('institution_name').invalid && education.get('institution_name').touched" [class.has-success]="education.get('institution_name').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Institution Name</mat-label>
+                        <input matInput formControlName="institution_name" id="{{'institution_name' + i}}" placeholder="Institution Name" required>
+                        <mat-error class="help-block" *ngIf="!education.get('institution_name').valid && (education.get('institution_name').touched || education.get('institution_name').dirty)">
+                          <mat-error *ngIf="education.get('institution_name').errors.required">Institution Name is required</mat-error>
+                          <mat-error *ngIf="education.get('institution_name').errors.pattern">Institution Name should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-3" [class.has-error]="education.get('passesout_year').invalid && education.get('passesout_year').touched" [class.has-success]="education.get('passesout_year').valid">
+                      <label for="{{ 'passesout_year' + i }}" class="control-label">Passed Out year<span class="text-danger m-l-5">*</span></label> 
+                      <input class="form-control input-sm" type="month" max="today" name="passesout_year" id="{{ 'passesout_year' + i }}" formControlName="passesout_year" required>
+                      <div class="help-block" *ngIf="education.get('passesout_year').invalid && (education.get('passesout_year').touched || education.get('passesout_year').dirty)">
+                        <div *ngIf="education.get('passesout_year').errors.required">Passedout Year is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-sm-2" [class.has-error]="education.get('score').invalid && education.get('score').touched" [class.has-success]="education.get('score').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Percentage / CGPA</mat-label>
+                        <input matInput formControlName="score" id="{{'score' + i}}" placeholder="Percentage / CGPA" required>
+                        <mat-error class="help-block" *ngIf="!education.get('score').valid && (education.get('score').touched || education.get('score').dirty)">
+                          <mat-error *ngIf="education.get('score').errors.required">Percentage / CGPA is required</mat-error>
+                          <mat-error *ngIf="education.get('score').errors.pattern">Percentage / CGPA should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-2 btn-toolbar" id="addBtn">
+                      <button class="btn btn-primary"  (click)="addEducation()">+</button>
+                      <button class="btn btn-danger" (click)="removeEducation(i)" *ngIf="form.get('education').length > 1">-</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="technicalSkillsDetails()" style="margin-top: 1%;">Technical Details</button>
+            <div formArrayName="techskills" *ngIf="isTechnicalSkillsDetails" id="input-emp-e">
+                <div *ngFor="let skill of addArray.controls; let i = index;" [formGroupName]="i">
+                  <div class="row row-style">
+                    <div class="form-group col-sm-3" [class.has-error]="skill.get('languages').invalid && skill.get('languages').touched" [class.has-success]="skill.get('languages').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Language</mat-label>
+                        <input matInput formControlName="languages" id="languages" placeholder="Language" required [(ngModel)]="lang">
+                        <mat-error class="help-block" *ngIf="!skill.get('languages').valid && (skill.get('languages').touched || skill.get('languages').dirty)">
+                          <mat-error *ngIf="skill.get('languages').errors.required">Language is required</mat-error>
+                          <mat-error *ngIf="skill.get('languages').errors.pattern">Language should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-3" [class.has-error]="skill.get('database').invalid && skill.get('database').touched" [class.has-success]="skill.get('database').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Database</mat-label>
+                        <input matInput formControlName="database" id="database" placeholder="Database" required [(ngModel)]="db">
+                        <mat-error class="help-block" *ngIf="!skill.get('database').valid && (skill.get('database').touched || skill.get('database').dirty)">
+                          <mat-error *ngIf="skill.get('database').errors.required">Database is required</mat-error>
+                          <mat-error *ngIf="skill.get('database').errors.pattern">Database should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-3" [class.has-error]="skill.get('platform').invalid && skill.get('platform').touched" [class.has-success]="skill.get('platform').valid">
+                      <mat-form-field class="example-full-width col-sm-4"appearance="fill">
+                        <mat-label >Platform</mat-label>
+                        <input matInput formControlName="platform" id="platform" placeholder="platform" required [(ngModel)]="plat">
+                        <mat-error class="help-block" *ngIf="!skill.get('platform').valid && (skill.get('platform').touched || skill.get('platform').dirty)">
+                          <mat-error *ngIf="skill.get('platform').errors.required">Platform is required</mat-error>
+                          <mat-error *ngIf="skill.get('platform').errors.pattern">Platform should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-3" [class.has-error]="skill.get('operating_system').invalid && skill.get('operating_system').touched" [class.has-success]="skill.get('operating_system').valid">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                        <mat-label >Operating System</mat-label>
+                        <input matInput formControlName="operating_system" id="operating_system" placeholder="operating_system" required [(ngModel)]="os">
+                        <mat-error class="help-block" *ngIf="!skill.get('operating_system').valid && (skill.get('operating_system').touched || skill.get('operating_system').dirty)">
+                          <mat-error *ngIf="skill.get('operating_system').errors.required">Operating System is required</mat-error>
+                          <mat-error *ngIf="skill.get('operating_system').errors.pattern">Operating System should be Valid</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="certificationDetails()" style="margin-top: 1%;">Certification Details</button>
+            <div *ngIf="isCertificationDetails" id="input-emp-e">
+              <div formArrayName="certification">
+                  <div *ngFor="let certification of addCertificationArray.controls; let i = index;" [formGroupName]="i">
+                    <div class="row row-style">
+                        <div class="form-group col-sm-3">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label >Name</mat-label>
+                            <input matInput formControlName="certification_name" id="certification_name" placeholder="Certification Name" required>
+                          </mat-form-field>
+                        </div>
+                        <div class="form-group col-sm-3">
+                          <label for="{{ 'year' + i }}" class="control-label">Year</label>
+                          <input class="form-control input-sm" type="month" name="year" id="{{ 'year' + i }}" formControlName="year">
+                        </div>
+                        <div class="form-group col-sm-2">
+                          <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Valid Till</mat-label>
+                            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker2" formControlName="valid_till">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                          </mat-form-field>
+                        </div>
+                        <div class="form-group col-sm-2">
+                          <label for="input-file-id" class="md-button md-raised md-primary">Record Copy</label>
+                          <input class="ng-hide" id="input-file-id" formControlName="record_copy_cert" type="file" />
+                        </div>
+                        <div class="form-group col-sm-2 btn-toolbar" id="addBtn">
+                          <button class="btn btn-primary"  (click)="addCertification()">+</button>
+                          <button class="btn btn-danger" (click)="removeCertification(i)" *ngIf="form.get('certification').length > 1">-</button>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="preEmpDetails()" style="margin-top: 1%;">Previous Employeement Details</button>
+            <div *ngIf="isPreEmpDetails" id="input-emp-e">
+              <div formArrayName="previous_employment">
+                  <div *ngFor="let preEmp of addPreviousEmployeementArray.controls; let i = index;" [formGroupName]="i">
+                    <div class="row row-style">
+                      <div class="form-group col-sm-3">
+                        <mat-form-field class="example-full-width col-sm-2" appearance="fill">
+                          <mat-label >Name and Address</mat-label>
+                          <input matInput formControlName="name_address" id="{{ 'name_address' + i }}" placeholder="Name and Address" required>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label>Date of Joining</mat-label>
+                          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker3" formControlName="doj">
+                          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                          <mat-datepicker #picker3></mat-datepicker>
+                        </mat-form-field> 
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label >Designation</mat-label>
+                          <input matInput formControlName="descig_on_join" id="{{ 'descig_on_join' + i }}" placeholder="Designation" required>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label >Joining Salary</mat-label>
+                          <input matInput formControlName="salary_on_join" id="{{ 'salary_on_join' + i }}" placeholder="Salary on Joining" required>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row row-style">
+                      <div class="form-group col-sm-2">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label>Relieving Date</mat-label>
+                          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker4" formControlName="dor">
+                          <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                          <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field> 
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label >Designation on Relieving</mat-label>
+                          <input matInput formControlName="descig_on_leaving" id="{{ 'descig_on_leaving' + i}}" placeholder="Designation on Relieving" required>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-sm-3">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label >Salary on Relieving</mat-label>
+                          <input matInput formControlName="salary_on_leaving" id="{{ 'salary_on_leaving' + i }}" placeholder="Salary on Relieving" required>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-sm-2">                       
+                        <label for="input-file-id" class="md-button md-raised md-primary">Record Copy</label>
+                        <input class="ng-hide" id="input-file-id" formControlName="record_copy_emp" type="file" />
+                      </div>
+                      <div class="form-group col-sm-2 btn-toolbar" id="addBtn">
+                        <button class="btn btn-primary"  (click)="addPreviousEmployeement()">+</button>
+                        <button class="btn btn-danger" (click)="removePreviousEmployeement(i)" *ngIf="form.get('previous_employment').length > 1">-</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-primary" id="btn-tab" (click)="familyDetails()" style="margin-top: 1%;">Family Details</button>
+            <div *ngIf="isFamilyDetails" id="input-emp-e">
+              <div formArrayName="emp_fmly_details">
+                  <div class="row" *ngFor="let family of addFamilyArray.controls; let i = index;" [formGroupName]="i">
+                      <div class="form-group col-sm-2" [class.has-error]="family.get('name').invalid && family.get('name').touched" [class.has-success]="family.get('name').valid">
+                        <mat-form-field class="example-full-width col-sm-12"  appearance="fill">
+                          <mat-label >Name</mat-label>
+                          <input matInput formControlName="name" id="name" placeholder="name" pattern="^[a-zA-Z ]*$" required>
+                          <mat-error class="help-block" *ngIf="!family.get('name').valid && (family.get('name').touched || family.get('name').dirty)">
+                            <mat-error *ngIf="family.get('name').errors.required">Name is required</mat-error>
+                            <mat-error *ngIf="family.get('name').errors.pattern">Name should be Charachers</mat-error>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-sm-3" [class.has-error]="family.get('relationship').invalid && family.get('relationship').touched" [class.has-success]="family.get('relationship').valid">
+                        <mat-form-field class="example-full-width col-sm-4"  appearance="fill">
+                          <mat-label >Relationship</mat-label>
+                          <input matInput formControlName="relationship" id="relationship" pattern="^[a-zA-Z ]*$" placeholder="relationship" required>
+                          <mat-error class="help-block" *ngIf="!family.get('relationship').valid && (family.get('relationship').touched || family.get('relationship').dirty)">
+                            <mat-error *ngIf="family.get('relationship').errors.required">Relationship is required</mat-error>
+                            <mat-error *ngIf="family.get('relationship').errors.pattern">Relationship should be Charachers</mat-error>
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="form-group col-sm-3" [class.has-error]="family.get('dob').invalid && family.get('dob').touched" [class.has-success]="family.get('dob').valid">
+                        <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                          <mat-label>Date of Birth</mat-label>
+                          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker5" formControlName="dob">
+                          <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                          <mat-datepicker #picker5></mat-datepicker>
+                        </mat-form-field> 
+                    </div>
+                    <div class="form-group col-sm-2" [class.has-error]="family.get('occupation').invalid && family.get('occupation').touched" [class.has-success]="family.get('occupation').valid">
+                      <mat-form-field class="example-full-width col-sm-4"  appearance="fill">
+                        <mat-label >Occupation</mat-label>
+                        <input matInput formControlName="occupation" id="occupation" pattern="^[a-zA-Z ]*$" placeholder="occupation" required>
+                        <mat-error class="help-block" *ngIf="!family.get('occupation').valid && (family.get('occupation').touched || family.get('occupation').dirty)">
+                          <mat-error *ngIf="family.get('occupation').errors.required">Occupation is required</mat-error>
+                          <mat-error *ngIf="family.get('occupation').errors.pattern">Occupation should be Charachers</mat-error>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="form-group col-sm-2 btn-toolbar" id="addBtn">
+                      <button class="btn btn-primary"  (click)="addFamily()">+</button>
+                      <button class="btn btn-danger" (click)="removeFamily(i)" *ngIf="form.get('emp_fmly_details').length > 1">-</button>
+                    </div>
+                  </div>
+              </div>
+            </div>
+         
+            <div class="m-t-20 text-center">
+              <div *ngIf="addEmployeeValidation" class="alert alert-info m-t-10">
+                <strong>Warning!</strong> Must Fill all Mandatory Fields.
+              </div>
+              <button class="btn btn-primary btn-sm" type="button" (click)="onSubmit()">Submit</button>
+            </div>
+        
+      </form>
+    </div>
+  </div>
+</div>

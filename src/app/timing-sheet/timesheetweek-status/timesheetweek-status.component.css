@@ -1,0 +1,5 @@
+.table.custom-table > thead > tr > th ,.table.custom-table > tbody > tr > td{
+    padding: 10px 8px;
+    vertical-align: middle;
+    text-align: center;
+}

@@ -1,0 +1,234 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-xs-4">
+        <h4 class="page-title">Projects</h4>
+      </div>
+      <div class="col-xs-8 text-right m-b-30">
+        <!-- <a
+          href="javascript:"
+          class="btn btn-primary rounded pull-right"
+          data-toggle="modal"
+          data-target="#create_project"
+          ><i class="fa fa-plus"></i> Create Project</a
+        > -->
+        <a (click)="addProjectPage()" class="btn btn-primary rounded pull-right">
+          <i class="fa fa-plus"></i> Create Project</a>
+        <div class="view-icons">
+          <!-- <a [ngClass]="{active:allProjects}" (click)="allProjects=true" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+          <a [ngClass]="{active:!allProjects}" (click)="allProjects=false" class="list-view btn btn-link"><i class="fa fa-bars"></i></a> -->
+          <a class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
+          <a class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+        </div>
+      </div>
+    </div>
+    <!--<div class="row filter-row">
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group form-focus">
+          <label class="control-label">Project Name</label>
+         
+          <input type="text" class="form-control floating" />
+        </div>
+      </div>
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group form-focus">
+          <label class="control-label">Employee Name</label>
+        
+          <input type="text" class="form-control floating" />
+        </div>
+      </div>
+      <div class="col-sm-3 col-xs-6">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Designation</label>
+        
+          <select class="select floating form-control">
+            <option value="">All Roles</option>
+            <option value="Web Developer">Web Developer</option>
+            <option value="Web Designer">Web Designer</option>
+            <option value="Android Developer">Android Developer</option>
+            <option value="Ios Developer">Ios Developer</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-3 col-xs-6">
+        <a href="javascript:" class="btn btn-success btn-block"> Search </a>
+      </div>
+    </div>-->
+
+    <div class="row" *ngIf="allProjects">
+      <div class="col-lg-3 col-sm-4" *ngFor="let item of rows">
+        <div class="card-box project-box">
+          <div class="dropdown profile-action">
+            <a href="javascript:" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                class="fa fa-ellipsis-v"></i></a>
+            <ul class="dropdown-menu pull-right">
+              <li>
+                <a data-toggle="modal" data-target="#edit_project" (click)="onEdit(item)"><i
+                    class="fa fa-pencil m-r-5"></i> Edit</a>
+              </li>
+              <li>
+                <a (click)="onDelete(item)"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+              </li>
+            </ul>
+          </div>
+
+          <h4 class="project-title">
+            <a data-toggle="modal" data-target="#view_project" (click)="viewProfile(item)">{{ item.projectName }}</a>
+          </h4>
+          <small class="block text-ellipsis m-b-15">
+            <span class="text-xs">1</span>
+            <span class="text-muted"> open tasks, </span>
+            <span class="text-xs">9</span>
+            <span class="text-muted"> tasks completed</span>
+          </small>
+          <p class="text-muted">{{ item.description }}...</p>
+          <div class="pro-deadline m-b-15">
+            <div class="sub-title">Deadline:</div>
+            <div class="text-muted">
+              {{ item.deadline.formatted }}
+            </div>
+          </div>
+          <div class="project-members m-b-15">
+            <div>Project Leader :</div>
+            <ul class="team-members">
+              <li>
+                <a href="javascript:" tooltip="Jeffery Lalor" title="Jeffery Lalor"><img src="assets/img/user.jpg"
+                    alt="Jeffery Lalor" /></a>
+              </li>
+            </ul>
+          </div>
+          <div class="project-members m-b-15">
+            <div>Team :</div>
+            <ul class="team-members">
+              <li>
+                <a href="javascript:" tooltip="John Doe" title="John Doe"><img src="assets/img/user.jpg"
+                    alt="John Doe" /></a>
+              </li>
+              <li>
+                <a href="javascript:" tooltip="Richard Miles" title="Richard Miles"><img src="assets/img/user.jpg"
+                    alt="Richard Miles" /></a>
+              </li>
+              <li>
+                <a href="javascript:" tooltip="John Smith" title="John Smith"><img src="assets/img/user.jpg"
+                    alt="John Smith" /></a>
+              </li>
+              <li>
+                <a href="javascript:" tooltip="Mike Litorus" title="Mike Litorus"><img src="assets/img/user.jpg"
+                    alt="Mike Litorus" /></a>
+              </li>
+              <li>
+                <a href="javascript:" class="all-users">+15</a>
+              </li>
+            </ul>
+          </div>
+          <p class="m-b-5">
+            Progress <span class="text-success pull-right">40%</span>
+          </p>
+          <div class="progress progress-xs m-b-0">
+            <div class="progress-bar progress-bar-success" role="progressbar" tooltip="40%" title="40%"
+              style="width: 40%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive table-responsive-inherit">
+          <table class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable" [mfRowsOnPage]="5">
+            <thead>
+              <tr>
+                <th style="width: 15%">
+                  <mfDefaultSorter by="proj_id">Project Id</mfDefaultSorter>
+                </th>
+                <th style="width: 15%">
+                  <mfDefaultSorter by="proj_name">Project Name</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="proj_region">Project Region</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="start_date">Start Date</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                  <mfDefaultSorter by="end_date">End Date</mfDefaultSorter>
+                </th>
+                <th style="width: 15%">
+                  <mfDefaultSorter by="created_date">Created Date</mfDefaultSorter>
+                </th>
+                <th style="width: 5%" class="text-center">
+                  <mfDefaultSorter by="description">Project Type</mfDefaultSorter>
+                </th>
+                <th style="width: 5%">
+                  <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let project of projectsInfo |paginate: { 
+                                          itemsPerPage: pageSize, 
+                                          currentPage:page,
+                                          totalItems : Count }; let i index">
+                <!-- <tr *ngFor="let project of projectsInfo; let i index">                       -->
+
+                <td>
+                  <a href="" data-toggle="modal" data-target="#edit_project" (click)="onUpdate(project.proj_code)">
+                    <i class="fa fa-pencil m-r-5"></i>{{ project.proj_code }}</a>
+                </td>
+                <td>{{ project.proj_name }}</td>
+                <td>{{ project.proj_region }}</td>
+                <td>{{ project.start_date | date: "dd/MM/yyyy" }}</td>
+                <td>{{ project.end_date | date: "dd/MM/yyyy" }}</td>
+                <td>{{ project.created_date | date: "dd/MM/yyyy"}}</td>
+                <td>{{ project.proj_type }}</td>
+                <td [ngClass]="{
+                  'text-success':project.proj_status === 'Inprogress',
+                  'text-primary':project.proj_status === 'Open',
+                  'text-danger':project.proj_status === 'Close'
+                }">{{ project.proj_status }}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="20">
+                  <div class="row">
+                    <div class="col">
+                      <div class="col-sm-8">
+                        Items per Page:
+                        <select (change)="handlePageSizeChange($event)">
+                          <option *ngFor="let size of pageSizes" [ngValue]="size">
+                            {{ size }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-sm-4">
+                        <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+                          (pageChange)="handlePageChange($event)"></pagination-controls>
+                        <mfBootstrapPaginator></mfBootstrapPaginator>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="create_project" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <div class="modal-content modal-lg">
+        <div class="modal-header">
+          <h4 class="modal-title">Create Project</h4>
+        </div>
+        <div class="modal-body">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

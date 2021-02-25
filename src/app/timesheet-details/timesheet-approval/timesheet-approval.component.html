@@ -1,0 +1,197 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-sm-4 col-xs-3">
+        <h4 class="page-title">Pending for Approval</h4>
+      </div>
+      <!-- <div class="col-sm-8 col-xs-9 text-right m-b-20">
+        <a href="javascript:" class="btn btn-primary rounded pull-right" (click)="addReset()"><i class="fa fa-plus"></i>
+          Add Client</a>
+        <div class="view-icons">
+          <a [ngClass]="{active:!allClients}" (click)="allClients=false" class="grid-view btn btn-link"><i class="fa fa-th"></i></a>
+          <a [ngClass]="{active:allClients}" (click)="allClients=true" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
+        </div>
+      </div> -->
+    </div>
+    <div class="row filter-row">
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Employees</label>
+          
+          <!-- <select [ngModel]="assignedEmployees" (ngModelChange)="selectedEmployees($event)" name="multiselect2" multiple class="select floating form-control">
+            <option *ngFor="let emp of empDetails" [ngValue]="emp">{{ emp.f_name }}</option>
+          </select> -->
+
+          <!-- <ng-multiselect-dropdown
+            [placeholder]="'select Employees '"
+            [data]="employees"
+            [(ngModel)]="selectedItems"
+            [settings]="dropdownSettings"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            (onDeSelect)="onItemDeSelect($event)"
+            [ngModelOptions]="{standalone: true}">
+          </ng-multiselect-dropdown> -->
+
+          <select style="height:40px; width:180px;" class="select floating form-control" (input)="searchEmployee($event.target.value)">
+            <option class="control-label" value="">Select Employee</option>
+            <option value="All">All</option>
+            <option *ngFor="let employee of employees" value="{{employee.id}}">
+              {{employee.itemName}}
+            </option>
+         </select>
+
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Project</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchProject($event.target.value)">
+            <option class="control-label" value="">Select Project</option>
+            <option value="All">All</option>
+            <option *ngFor="let project of projectList" value="{{project.proj_code}}">
+              {{project.proj_name}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Activity</label>
+         
+          <select style="height:40px;" class="select floating form-control" (input)="searchActivity($event.target.value)">
+            <option  class="control-label" value="">Select Activity</option>
+            <option  class="control-label" value="All">All</option>
+            <option *ngFor="let activity of activitiesList" value="{{activity.Proj_actv_Id}}">
+              {{activity.Proj_actv_Name}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Start Date</label>
+            <my-date-picker class="my-date" [options]="myDatePickerOptions1"  required (dateChanged)="searchStartDate($event)"></my-date-picker>
+          <!--<input type="date" class="form-control" placeholder="YYYY-MM-DD" [max]="DojMax" (input)="searchStartDate($event.target.value)" />-->
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">End Date</label>
+           <my-date-picker class="my-date-end" [options]="myDatePickerOptionsF"  required (dateChanged)="searchEndDate($event)"></my-date-picker>
+          <!--<input  type="date" class="form-control" [max]="DojMax | date:'yyyy-MM-dd'" (input)="searchEndDate($event.target.value)" />-->
+        </div>
+      </div>
+      <!-- <div class="col-sm-2 col-xs-4">
+        <a href="javascript:" class="btn btn-success btn-block"> Search </a>
+      </div> -->
+    </div> 
+    
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-responsive-inherit">
+          <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable"
+          [mfRowsOnPage]="5">
+          <thead>
+            <tr>
+              <th style="width: 10%">
+                <input style = "margin-right: 16px"type="checkbox" [(ngModel)]="isMasterSel" name="list_name" value="h1" (change)="checkUncheckAll()"/>
+                <!-- <input style = "margin-right: 16px" type="checkbox" [(ngModel)]="masterSelected" (change)="checkUncheckAll()"/> SelectAll -->
+              </th>
+              <th style="width: 16%">
+                <mfDefaultSorter by="employee">Employee</mfDefaultSorter>
+              </th>
+              <th style="width: 16%">
+                <mfDefaultSorter by="project">Project</mfDefaultSorter>
+              </th>
+              <th style="width: 16%">
+                <mfDefaultSorter by="date">Date</mfDefaultSorter>
+              </th>
+              <th style="width: 16%">
+                <mfDefaultSorter by="activity">Activity Type</mfDefaultSorter>
+              </th>
+              <th style="width: 11%">
+                <mfDefaultSorter by="hours">Hours Spent</mfDefaultSorter>
+              </th>
+              <th style="width: 15%" class="text-center">
+                <mfDefaultSorter by="remarks">Billable/Non-billable</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of TimesheetsList |paginate: { 
+                  itemsPerPage: pageSize, 
+                  currentPage:page,
+                  totalItems : count }; let i index">
+              <!-- <td>
+                <a href="javascript:" class="avatar" (click)="viewProfile(item)">{{item.companyName.split('')[0]}}</a>
+                <h2><a href="javascript:" (click)="viewProfile(item)">{{item.companyName}}</a></h2>
+              </td> -->
+              <td><input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/></td>
+              <!-- <td><input type="checkbox" [(ngModel)]="item.isSelected" value="{{item.status}}" (change)="isAllSelected(item)"/></td> -->
+              <td>{{item.emp_id}} - {{item.emp_name}}</td>
+              <td>{{item.proj_name}}</td>
+              <td>{{item.tsht_date | date: 'dd/MM/yyyy' }}</td>
+              <td>{{item.actv_name}}</td>
+              <td>{{ item.hours }}</td>
+              <td>{{ item.actv_status === '1' ? 'Billable' : 'Non Billable' }}</td>
+              <!-- <td class="text-center">
+                <div class="dropdown action-label">
+                  <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                      class="fa fa-dot-circle-o text-success"></i> {{item}} <i class="caret"></i></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="javascript:"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+                    <li><a href="javascript:"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+                  </ul>
+                </div>
+              </td> -->
+              <!-- <td class="text-right">
+                <div class="dropdown">
+                  <a href="javascript:" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                  <ul class="dropdown-menu pull-right">
+                    <li><a href="javascript:" (click)="onEdit(item)"><i class="fa fa-pencil m-r-5"></i>
+                        Edit</a></li>
+                    <li><a href="javascript:" (click)="onDelete(item)"><i class="fa fa-trash-o m-r-5"></i>
+                        Delete</a></li>
+                  </ul>
+                </div>
+              </td> -->
+            </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                <td colspan="20">
+                  <div class="mt-3">
+                    Items per Page:
+                    <select (change)="handlePageSizeChange($event)">
+                      <option>No of items</option>
+                      <option *ngFor="let size of pageSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="page">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+                      (pageChange)="handlePageChange($event)"></pagination-controls>
+                    <mfBootstrapPaginator></mfBootstrapPaginator>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div style='padding-left: 295px' *ngIf="show">
+    <label for="remarks">Remarks</label><br>
+    <textarea (change)="cancel($event);" rows='7' cols='49' placeholder="please enter the remarks" name="description" [(ngModel)]="description"></textarea>
+    <button class="cancel" (click)="rejectCancel()">x</button>
+  </div>
+  
+  <div style='padding-left: 380px'>
+    <button type="button" class="btn btn-sm btn-danger" style='margin-right:16px' (click)="rejectTimesheet()">Rejected</button> 
+    <button type="button" class="btn btn-sm btn-success" style='margin-right:16px' (click)="approvedTimehseet()">Approved</button>
+  </div>
+  
+  </div>
+</div>

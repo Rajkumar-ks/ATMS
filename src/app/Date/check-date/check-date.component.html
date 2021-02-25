@@ -1,0 +1,61 @@
+<div class="page-wrapper">
+  <div class="content container-fluid container">
+    <div class="container" style="margin:3%;">
+      <form class="form-horizontal" [formGroup]="form">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">
+                  Date Validation
+              </h3>
+          </div>   
+          <div class="panel-body">
+            <div class="row">
+              <div class="col">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="startDate" class="col-sm-4 control-label">Start Date<span class="text-danger m-l-5">*</span></label>
+                    <input type="date" id="startDate" class="col-sm-8" formControlName="startDate">
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="endDate" class="col-sm-4 control-label">End Date<span class="text-danger m-l-5">*</span></label>
+                    <input type="date" id="endDate" class="col-sm-8" formControlName="endDate">
+                    <label *ngIf="form.errors">{{ form.errors?.dates | json }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="startDate" class="control-label">My Start Date<span class="text-danger m-l-5">*</span></label>
+                     <!-- <input type="date" id="startDate" class="col-sm-8" formControlName="startDate"> -->
+                    <my-date-picker [options]="myDatePickerOptions" formControlName="myStartDate"></my-date-picker>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="endDate" class="control-label">My End Date<span class="text-danger m-l-5">*</span></label>
+                    <my-date-picker [options]="myDatePickerOptions" formControlName="myEndDate"></my-date-picker>
+                    <label *ngIf="form.errors">{{ form.errors?.myDates | json }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="addSubmit()">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>  
+  </div>
+</div>

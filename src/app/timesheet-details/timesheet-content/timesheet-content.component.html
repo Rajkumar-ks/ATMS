@@ -1,0 +1,52 @@
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+      <div class="filter-form" >
+        <ul>
+            <li class="col-lg-4 col-md-3 col-sm-6 col-xs-6">
+              <label style="font-size: 17px;" >Employee Id</label><span style="margin:0 4px 0 41px">:</span>
+              <label id="timeSheetEmpID" style="font-size: 12px;" >AS00123</label><br/>
+              <label style="font-size: 17px;" >Employee Name</label><span style="margin:0 3px 3px 11px">:</span>
+              <label id="timeSheetEmpName" style="font-size: 14px;" >DEEPAK</label>
+            </li> 
+            <li class="col-lg-5 col-md-3 col-sm-6 col-xs-6">
+                <label style="font-size: 17px;" >TimeSheet Period</label><span style="margin:0 4px 0 25px">:</span>
+                <label id="timeSheetPeriodId" style="font-size: 12px;"></label><br/>
+                <label style="font-size: 17px;" >Work Week</label><span style="margin:0 4px 0 72px">:</span>
+                <label id="timeSheetWorkWeekId" style="font-size: 12px;"></label>
+            </li>
+            <li class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                <label style="font-size: 17px;" >Total Hours</label><span style="margin:0 3px 0 14px">:</span>
+                <label id="timeSheetTotalHrId" style="font-size: 12px;">00:00</label><br/>
+            </li> 
+       
+         </ul>  
+      </div>
+      <div id="loader"></div>
+
+      <form class="form-horizontal">
+        <table id="timeSheetTable_HeadrId" style="border: 1px solid rgb(122, 122, 122);height: 40px; margin-bottom:1%;border-radius: 5px;">
+        <thead>
+          <tr>
+          <th class="link" *ngFor="let header of tableHeader">{{header}}</th>
+          </tr>
+        </thead>
+        </table>
+      </form>
+
+      <button  class="btn btn-success" (click) = "addTimesheetRow()" ><i class="fa fa-plus"></i>
+      </button>
+      <!-- <button  style="background: #eff3f6;padding: 0;border: none;"><i style="color: #6ae46a;font-size: 31px;" class="fa fa-plus"></i>New Line</button> -->
+      <table id="timesheetTableId">
+      </table>
+
+
+
+       <br>
+      <div class="save_submit">
+        <!-- <button class="save" id="saveTimesheetId" (click)="saveTimeSheet('save')" >Save
+        </button> -->
+        <button class="submit" id="submitTimesheetId" (click)="sumbitTimesheet('submit')" style="display:none">Submit
+        </button></div>
+    </div>
+  </div>

@@ -1,0 +1,361 @@
+<div class="content container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h4 class="page-title">Leave Policy Configuration - {{this.y}} </h4>
+    </div>
+    <div class="col-xs-4 text-right m-b-30">
+      <a href="javascript:" class="btn btn-info " (click)="addReset()">
+        Add Leave Type</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-responsive-inherit">
+        <table class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable" [mfRowsOnPage]="10">
+          <thead>
+            <tr>
+              <th style="width: 20%">
+                <mfDefaultSorter by="leaveType">Leave Type</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="days">No.of Days</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="carry_forward_status">CF Status</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="max_carry_forward_days">Max CF Days</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="Start_Date">Start Date</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="End_Date">End Date</mfDefaultSorter>
+              </th>
+              <th style="width: 5%">
+                <mfDefaultSorter by="status">status</mfDefaultSorter>
+              </th>
+            </tr>
+            
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of leaveconfigStatus; let i = index" class="empleave-{{item.status}}">
+              <td class="leaveTypeTd">{{item.lc_timeoff_type}}</td>
+              <td>{{item.days}}</td>
+              <td>{{item.carry_forward_status === '0'?'No':'yes'}}</td>
+              <td>{{item.max_carry_forward_days === '0'?'Nil': item.max_carry_forward_days }}</td>
+              <td>{{item.year_st_date | date: 'mediumDate'}}</td>
+              <td>{{item.year_ed_date | date: 'mediumDate'}}</td>
+              <td class="text-text-success">{{item.status===true?'Active':'Inactive'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="page-title">Leave Policy Configuration - {{this.y+1}} </h4>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-responsive-inherit">
+        <table class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable" [mfRowsOnPage]="10">
+          <thead>
+            <tr>
+              <th style="width: 10%">
+                <mfDefaultSorter by="leaveType">Leave Type</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="days">No.of Days</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="carry_forward_status">CF Status</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="max_carry_forward_days">Max CF Days</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="Start_Date">Start Date</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="End_Date">End Date</mfDefaultSorter>
+              </th>
+              <th style="width: 5%">
+                <mfDefaultSorter by="status">status</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="Action">Action</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of futureleaveconfigStatus; let i = index" class="empleave-{{item.status}}">
+              <td class="leaveTypeTd">{{item.lc_timeoff_type}}</td>
+              <td>{{item.days}}</td>
+              <td>{{item.carry_forward_status === '0'?'No':'yes'}}</td>
+              <td>{{item.max_carry_forward_days === '0'?'Nil': item.max_carry_forward_days }}</td>
+              <td>{{item.year_st_date | date: 'mediumDate'}}</td>
+              <td>{{item.year_ed_date | date: 'mediumDate'}}</td>
+              <td>{{item.status==='true'?'Active':'Inactive'}}</td>
+              <td>
+                <button data-toggle="modal" class="btn btn-warning btn-sm-toolbar"
+                  (click)="edit(item.lev_config_id,item.lc_timeoff_type,item.days,item.carry_forward_status, item.max_carry_forward_days, item.year_st_date,item.year_ed_date)">
+                  <span class="usrrm glyphicon glyphicon-pencil" style="color:white;"> </span>
+                </button>
+                <button data-toggle="modal" class="btn btn-danger btn-sm-toolbar" (click)="delete(item.lev_config_id)">
+                  <span class="usrrm glyphicon glyphicon-trash"> </span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="add_Type" class="modal fade" style="padding: 20px;" role="dialog">
+    <div class="modal-dialog uc-modal">
+      <div class="modal-body" style=" width: 752px">
+        <form class="form-horizontal" [formGroup]="form">
+          <div class="panel panel-primary" style="color:black">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="modal-title m-l-15" style="margin:15px 3px 3px 4px;">Add Leave Type</h4>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group" [class.has-error]="fromDate.invalid && fromDate.touched"
+                    [class.has-success]="fromDate.valid">
+                    <label class="control-label">Year Start Date</label>
+                    <my-date-picker [options]="myDatePickerOptions" name="fromDate" id="fromDate"
+                      formControlName="fromDate" required> </my-date-picker>
+                    <div class="help-block" *ngIf="!fromDate.valid && (fromDate.touched || fromDate.dirty)">
+                      <div *ngIf="fromDate.errors.required">From Date is required</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group" [class.has-error]="toDate.invalid && toDate.touched"
+                    [class.has-success]="toDate.valid">
+                    <label class="control-label">Year End Date</label>
+                    <my-date-picker [options]="myDatePickerOptions" name="toDate" id="toDate" formControlName="toDate"
+                      required>
+                    </my-date-picker>
+                    <div class="help-block" *ngIf="!toDate.valid && (toDate.touched || toDate.dirty)">
+                      <div *ngIf="toDate.errors.required">End Date is required</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body" style="padding: 30px ;">
+              <div formArrayName="leave_config">
+                <div class="row" *ngFor="let leave of addLeaveArray.controls; let i = index;" [formGroupName]="i">
+                  <div class="col-sm-3">
+                    <div class="form-group"
+                      [class.has-error]="leave.get('leaveType').invalid && leave.get('leaveType').touched"
+                      [class.has-success]="leave.get('leaveType').valid">
+                      <label for="{{ 'leaveType' + i}}" class="control-label">Leave Type</label>
+                      <select style="height:35px;" class="select form-control input-sm" formControlName="leaveType"
+                        id="{{ 'leaveType' + i}}" name="selectLeaveType" required>
+                        <option value="">...Select leave Type...</option>
+                        <option value="Casual Leave">Casual Leave</option>
+                        <option value="Privilege Leave">Privilege Leave</option>
+                        <option value="Sick Leave">Sick Leave</option>
+                      </select>
+                      <div class="help-block"
+                        *ngIf="!leave.get('leaveType').valid && (leave.get('leaveType').touched || leave.get('leaveType').dirty)">
+                        <div *ngIf="leave.get('leaveType').errors.required">leave Type is required</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group"
+                      [class.has-error]="  leave.get('no_of_days').invalid &&   leave.get('no_of_days').touched"
+                      [class.has-success]="  leave.get('no_of_days').valid">
+                      <label class="control-label" for="{{ 'no_of_days' + i}}">Days</label>
+                      <input style="height:35px;" class="form-control floating input-md" required
+                        formControlName="no_of_days" id="{{ 'no_of_days' + i}}" name="no_of_days"
+                        placeholder="Allocated Days" type="number">
+                      <div class="help-block"
+                        *ngIf="!  leave.get('no_of_days').valid && (  leave.get('no_of_days').touched ||   leave.get('no_of_days').dirty)">
+                        <div *ngIf="  leave.get('no_of_days').errors.required">Allocated Days is required</div>
+                        <div *ngIf="  leave.get('no_of_days').errors.pattern">Allocated Days should be number</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label class="control-label" for="{{ 'carryForward' + i}}">Carry Forward</label>
+                      <label class="switch" style="width: 100%;">
+                        <select (change)="enableCarryForwardAct(i, $event.target.checked)" style="height:35px;"
+                          class="select form-control input-sm" formControlName="carryForward"
+                          id="{{ 'carryForward' + i}}" [value]='0' name="carryForward" required>
+                          <option value="0">Disable</option>
+                          <option value="1">Enable</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="form-group">
+                      <label class="control-label" for="{{ 'max_carry_forward_days' + i}}">Max</label>
+                      <input type="number" value="0" style="height:35px;" class="form-control floating input-md"
+                        formControlName="max_carry_forward_days" id="{{ 'max_carry_forward_days' + i}}"
+                        name="max_carry_forward_days" placeholder="Max Days" disabled>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 form-group btn-toolbar" id="addBtn" style="margin-top:1%; "
+                    *ngIf="form.get('leave_config').length > 1">
+                    <label></label>
+                    <button class="btn btn-danger " (click)="removeLeave(i)"><i class="fa fa-minus"></i></button>
+                  </div>
+                  <div class="col-sm-1 " style="margin-top:24.5px; margin-right: 3px;">
+                    <button class="btn btn-success" (click)="addLeave()"> <i class="fa fa-plus"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <div row>
+                <div class="m-t-20 btn-toolbar">
+                  <button class="btn btn-danger pull-right" data-dismiss="modal" (click)=form.reset();> <span
+                      class="usrrm glyphicon glyphicon-remove" style="color:white;"></span></button>
+                  <button class="btn btn-success pull-right" data-dismiss="modal" [disabled]="form.invalid"
+                    (click)="submit()"><span class="usrrm glyphicon glyphicon-ok"> </span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="confirmation" style="padding: 49px 0 3px 3px;" class="modal fade" role="dialog">
+    <div class="modal-dialog uc-modal">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title" class="text-center">
+            Leave Configuration
+          </h3>
+        </div>
+        <div class="panel-body" style="padding: 30px ;">
+          <h6>Are you sure want to Add Leave Configuration?</h6>
+          <!-- <table width="80%"> -->
+          <div class="table-responsive table-responsive-inherit">
+            <table class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable" [mfRowsOnPage]="10">
+              <thead>
+                <tr>
+                  <th style="width: 30%">
+                    <mfDefaultSorter by="leaveType">Leave Type</mfDefaultSorter>
+                  </th>
+                  <th style="width: 10%">
+                    <mfDefaultSorter by="days">Allocated Days</mfDefaultSorter>
+                  </th>
+                  <th style="width: 10%">
+                    <mfDefaultSorter by="carry_forward_status">Carry Forward</mfDefaultSorter>
+                  </th>
+                  <th style="width: 5%">
+                    <mfDefaultSorter by="max_carry_forward_days">CF Days</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+              <tbody style="margin-left: 5px;">
+                <tr *ngFor="let item of this.listleave; let i = index" class="empleave-{{item.status}}">
+                  <td>{{this.listleave[i].leaveType}}</td>
+                  <td>{{this.listleave[i].no_of_days}}</td>
+                  <td>{{this.listleave[i].carryForward === '0' ?'No carryForward':'carryForward'}}</td>
+                  <!-- <td *ngIf="this.listleave[i].carryForward === 1">Enabled</td> -->
+                  <td>{{this.listleave[i].max_carry_forward_days === '0' ? 'Nil'
+                    :this.listleave[i].max_carry_forward_days }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        <div class="panel-footer">
+          <div class=" m-t-20 text-left">
+            <div row>
+              <div class="col-sm-1">
+                <button class="btn btn-info" data-dismiss="modal" (click)="reappear()">
+                  <i class="fa fa-arrow-left" style="size:38%;"></i>
+                </button>
+              </div>
+            </div>
+            <div class="text-right">
+              <button type="cancel" class="btn btn-danger" data-dismiss="modal" (click)=form.reset();>Cancel</button>
+              <button type="submit" data-dismiss="modal" (click)="confirm()" class="btn btn-success">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="edit_Type" class="modal fade" style="padding: 20px;" role="dialog">
+    <div class="modal-dialog uc-modal">
+      <div class="modal-body" style=" width: 752px">
+        <form class="form-horizontal" [formGroup]="editLeaveCofig">
+          <div class="panel panel-primary" style="color:black">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h4 class="modal-title m-l-15" style="margin:40px 3px 3px 4px;">Edit Leave Type</h4>
+                </div>
+              </div>
+            </div>
+            <div class="panel-body" style="padding: 30px ;">
+              <div class="row">
+                <div class="col">
+                  <div class="col-sm-2">
+                    <h6> {{this.leave_Type}}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12">
+                  <div class="col">
+                    <div class="col-sm-3">
+                      <label class="control-label">Days</label>
+                      <input style=" height:35px;" class="form-control floating input-md" required
+                        formControlName="days" id="days" name="days" [(ngModel)]="no_ofDays" type="number">
+                    </div>
+                    <div class="col-sm-3">
+                      <label class="control-label">Carry Forward</label>
+                      <label class="switch" style="width: 100%;">
+                        <select style="height:35px;" class="select form-control input-sm" formControlName="cForward"
+                          id="cForward" name="cForward" [(ngModel)]="CFStatus" required>
+                          <option value="0">Disable</option>
+                          <option value="1">Enable</option>
+                        </select>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="col-sm-3">
+                      <label class="control-label">Max</label>
+                      <input type="number" value="0" style="height:35px;" class="form-control floating input-md"
+                        formControlName="max_cf_days" id="max_cf_days" name="max_cf_days"
+                        [(ngModel)]="max_CForwardDays">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <div row>
+                <div class="m-t-20 btn-toolbar">
+                  <button class="btn btn-danger pull-right" data-dismiss="modal"> <span
+                      class="usrrm glyphicon glyphicon-remove" style="color:white;"></span></button>
+                  <button class="btn btn-success pull-right" data-dismiss="modal" (click)="update()"><span
+                      class="usrrm glyphicon glyphicon-ok"> </span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

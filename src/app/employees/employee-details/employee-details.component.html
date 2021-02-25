@@ -1,0 +1,281 @@
+<div class="content container-fluid">
+  <div class="row" style="margin:0% 8%;">
+    <div class="col-md-9">
+      
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary" style="margin-left:61%" type="button" routerLink="/employees">Back</button>
+    </div>
+  </div>
+  <div class="row m-t-20" style="margin:8%;">
+    <div class="col-md-12">
+      <form class="form-horizontal example-form" [formGroup]="form" autocomplete="off">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <div class="panel-title">View / Edit Employee</div>
+          </div>
+          <div class="panel-body">
+            <mat-slide-toggle formControlName="status" id="status">Status</mat-slide-toggle>
+            <div class="row" id="input-size-e">
+              <div class="col">
+                <div class="col-sm-12">
+                      <mat-form-field class="example-full-width col-sm-4" appearance="standard">
+                        <mat-label >First name</mat-label>
+                        <input matInput formControlName="f_name">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width col-sm-4" appearance="standard">
+                        <mat-label>Last name</mat-label>
+                        <input matInput formControlName="l_name">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="standard" class="example-full-width col-sm-4">
+                        <mat-label>Business Unit</mat-label>
+                        <mat-select formControlName="bussiness_id" name="bussiness_id">
+                          <mat-option *ngFor="let unit of business_unit_arr" [value] ="unit.key">
+                            {{unit.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div class="col-sm-2">
+                        <img id="prof-pic" [src]="testimgresult" alt="img"/>
+                        <input type="file" formControlName="profile_picture" id="profile_picture" class="form-control input-sm" (change)="onFileSelect($event)">
+                      </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" id="input-size-e">
+              <div class="col">
+                <div class="col-sm-12">
+
+                  <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                    <mat-label>Resource Type</mat-label>
+                    <mat-select formControlName="resourcetype_id" name="resourcetype_id">
+                      <mat-option *ngFor="let unit of resource_type_Arr" [value]="unit.key">
+                        {{unit.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                    <mat-label>Designation</mat-label>
+                    <mat-select formControlName="descignation_id" name="descignation_id">
+                      <mat-option *ngFor="let unit of designation_arr" [value]="unit.key">
+                        {{unit.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                    <mat-label>Role Type</mat-label>
+                    <mat-select formControlName="roletype_id" name="roletype_id">
+                      <mat-option *ngFor="let unit of role_type_arr" [value]="unit.key">
+                        {{unit.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                    <mat-label>Grade</mat-label>
+                    <mat-select formControlName="level_id" name="level_id">
+                      <mat-option *ngFor="let unit of level_type_arr" [value]="unit.key">
+                        {{unit.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+            <div class="row" id="input-size-e">
+              <div class="col">
+                <div class="col-md-12">
+
+                  <div id="ng-autocomplete" class="col-md-3">
+                    <label for="country" class="control-label">Enter Country Name</label>
+                    <ng-autocomplete 
+                      [data]="countryData"
+                      formControlName = "country"
+                      [searchKeyword]="keywordCountry"
+                      (selected)='selectEvent($event)'
+                      (inputChanged)='onCountryChangeSearch($event)'
+                      (inputFocused)='onFocused($event)'
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">                                 
+                    </ng-autocomplete>
+                    
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.name"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+
+                  <div id="ng-autocomplete"  class="col-md-3">
+                    <label for="state" class="control-label">Enter State Name</label>
+                    <ng-autocomplete 
+                      formControlName = "state"
+                      [data]="stateData"
+                      [searchKeyword]="keywordState"
+                      (selected)='selectEvent($event)'
+                      (inputChanged)='onStateChangesSearch($event)'
+                      (inputFocused)='onFocused($event)'
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">                                 
+                    </ng-autocomplete>
+                    
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.name"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+              
+                  <div id="ng-autocomplete" class="col-md-3">
+                    <label for="job_location" class="control-label">Enter City Name</label>
+                    <ng-autocomplete 
+                      formControlName = "job_location"
+                      [data]="locData"
+                      [searchKeyword]="keywordLoc"
+                      (selected)='selectEvent($event)'
+                      (inputChanged)='onCityChangesSearch($event)'
+                      (inputFocused)='onFocused($event)'
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate">                                 
+                    </ng-autocomplete>
+                    
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.name"></a>
+                    </ng-template>
+                    
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+
+                  <mat-form-field class="example-full-width col-sm-3" appearance="standard" style="margin-top: 2%;">
+                    <mat-label>Choose a Date of Birth</mat-label>
+                    <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" formControlName="dob">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>  
+                
+                </div>
+              </div>
+            </div>
+            <div class="row" id="input-size-e">
+              <div class="col">
+                <div class="col-md-12">
+                 
+                  <mat-form-field class="example-full-width col-sm-3" appearance="standard">
+                    <mat-label >Pan Number</mat-label>
+                    <input matInput formControlName="pan_num">
+                  </mat-form-field>
+
+                  <mat-form-field class="col-sm-3" appearance="standard">
+                    <mat-label >Aadhar Id</mat-label>
+                    <input matInput formControlName="addhar_num">
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width col-sm-3" appearance="standard">
+                    <mat-label>Personal Email</mat-label>
+                    <input type="email" matInput formControlName="per_mail" [errorStateMatcher]="matcher"
+                          placeholder="Ex. admin@agnoshin.com">
+                    <mat-error *ngIf="per_mail.hasError('email') && !per_mail.hasError('required')">
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="per_mail.hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width col-sm-3" appearance="standard">
+                    <mat-label>Official Email</mat-label>
+                    <input type="email" matInput formControlName="official_mail" [errorStateMatcher]="matcher"
+                          placeholder="Ex. admin@agnoshin.com">
+                    <mat-error *ngIf="official_mail.hasError('email') && !official_mail.hasError('required')">
+                      Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="official_mail.hasError('required')">
+                      Email is <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+            <div class="row" id="input-size-e">
+              <div class="col">
+                <div class="col-md-12">
+
+                  <div class="col-md-6">
+                    <label for="gender" class="control-label col-md-2" id="gender-label">Gender</label>
+                    <mat-radio-group aria-label="Select an Gender" formControlName="gender" class="col-md-10">
+                      <mat-radio-button value="male">Male</mat-radio-button>
+                      <mat-radio-button value="female">Female</mat-radio-button>
+                      <mat-radio-button value="other">Transgender</mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+
+                  <label for="rep_emp_id" class="control-label col-sm-2" id="resourcetype-label">Resource Type</label>
+                  <mat-radio-group aria-label="Select an Resource Type Request" class="col-sm-3" formControlName="rep_emp_id">
+                    <mat-radio-button name="rep_emp_id" value="new" (change)="enableNew()">New</mat-radio-button>
+                    <mat-radio-button name="rep_emp_id" value="replace" (change)="enableReplace()">Replace</mat-radio-button>
+                  </mat-radio-group>
+
+                </div>
+              </div>
+            </div>
+            <div class="row" id="input-size-e">
+              <div class="col">
+                <div class="col-md-12">
+                  <mat-form-field appearance="standard" class="example-full-width col-sm-3">
+                    <mat-label>Access Role</mat-label>
+                    <mat-select formControlName="role_id" name="role_id" id="role_id">
+                      <mat-option *ngFor="let unit of role_id_arr" [value]="unit.key">
+                        {{unit.value}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="col-sm-3" appearance="outline">
+                    <mat-label>Choose a Date of Joining</mat-label>
+                    <input matInput [min]="minDateDOJ" [max]="maxDateDOJ" [matDatepicker]="picker2" formControlName="doj">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field> 
+
+                  <mat-form-field appearance="standard" class="col-sm-3">
+                    <mat-label>Reporting Manager</mat-label>
+                    <mat-select formControlName="rptmgr_id" name="rptmgr_id">
+                      <mat-option *ngFor="let unit of prgOwnerRes" [value]="unit.empid">
+                        {{unit.empname}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="standard" class="example-full-width col-sm-3" *ngIf="isEmployeeId">
+                    <mat-label>Employee Id</mat-label>
+                    <mat-select formControlName="emp_id" name="emp_id">
+                      <mat-option *ngFor="let unit of prgEmpRes" [value]="unit.empid">
+                        {{unit.empname}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary" type="button" (click)="updateSubmit()">Update Employee</button>
+          </div>
+        </div>
+       </form>
+    </div>
+  </div>
+</div>

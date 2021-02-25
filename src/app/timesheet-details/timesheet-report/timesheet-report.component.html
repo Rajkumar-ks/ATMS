@@ -1,0 +1,180 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <div class="row">
+      <div class="col-sm-4 col-xs-3">
+        <h4 class="page-title">Timesheet Report</h4>
+      </div>
+      <div class="col-sm-8 col-xs-9 text-right m-b-20">
+        <a href="javascript:" class="btn btn-primary rounded pull-right" (click)="downloadtsht()"> <span class="glyphicon glyphicon-download-alt"></span>
+         Download</a>
+      </div>
+    </div>
+    <div class="row filter-row">
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Employees</label>
+          <select style="height:40px; width:180px;" class="select floating form-control" (input)="searchEmployee($event.target.value)">
+            <option class="control-label" value="">Select Employee</option>
+            <option value="All">All</option>
+            <option *ngFor="let employee of employees" value="{{employee.id}}">
+              {{employee.itemName}}
+            </option>
+         </select>
+
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Project</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchProject($event.target.value)">
+            <option class="control-label" value="">Select Project</option>
+            <option value="All">All</option>
+            <option *ngFor="let project of projectList" value="{{project.proj_code}}">
+              {{project.proj_name}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Activity</label>
+         
+          <select style="height:40px;" class="select floating form-control" (input)="searchActivity($event.target.value)">
+            <option value="">Select Activity</option>
+            <option value="All">All</option>
+            <option *ngFor="let activity of activitiesList" value="{{activity.Proj_actv_Id}}">
+              {{activity.Proj_actv_Name}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Status</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchStatus($event.target.value)">
+            <option class="control-label">Select Status</option>
+            <option value="All">All</option>
+            <option value="submitted">submitted</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+            
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Start Date</label>
+          <my-date-picker class="my-date" [options]="myDatePickerOptions1"  required (dateChanged)="searchStartDate($event)"></my-date-picker>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">End Date</label>
+          <my-date-picker class="my-date-end" [options]="myDatePickerOptionsF"  required (dateChanged)="searchEndDate($event)"></my-date-picker>
+        </div>
+      </div>
+    </div> 
+    
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive table-responsive-inherit">
+          <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable"
+          [mfRowsOnPage]="5">
+          <thead>
+            <tr>
+              <th style="width: 10%">
+                <mfDefaultSorter by="employeeId">Employee Id</mfDefaultSorter>
+              </th>
+              <th style="width: 13%">
+                <mfDefaultSorter by="employeeName">Employee Name</mfDefaultSorter>
+              </th>
+              <th style="width: 12%">
+                <mfDefaultSorter by="projectId">Project Id</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="projectName">Project Name</mfDefaultSorter>
+              </th>
+              <th style="width: 15%">
+                <mfDefaultSorter by="activity">Activity</mfDefaultSorter>
+              </th>
+              <th style="width: 5%">
+                <mfDefaultSorter by="hours">Hours</mfDefaultSorter>
+              </th>
+              <th style="width: 15%" class="text-center">
+                <mfDefaultSorter by="remarks">Remarks</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="timesheetDate">Timesheet Date</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="status">Status</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of TimesheetsList |paginate: { 
+                  itemsPerPage: pageSize, 
+                  currentPage:page,
+                  totalItems : count }; let i index">
+              <!-- <td>
+                <a href="javascript:" class="avatar" (click)="viewProfile(item)">{{item.companyName.split('')[0]}}</a>
+                <h2><a href="javascript:" (click)="viewProfile(item)">{{item.companyName}}</a></h2>
+              </td> -->
+              <td>{{item.emp_id}}</td>
+              <td>{{item.emp_name}}</td>
+              <td>{{item.proj_code}}</td>
+              <td>{{item.proj_name}}</td>
+              <td>{{item.actv_name}}</td>
+              <td>{{item.hours}}</td>
+              <td>{{item.remarks}}</td>
+              <td>{{item.tsht_date | date: 'dd/MM/yyyy' }}</td>
+              <td [ngStyle]="{'color': item.status === 'Approved' ? 'green' : item.status === 'submitted' ? 'orange' : 'red' }">{{item.status}}</td>
+              <!-- <td class="text-center">
+                <div class="dropdown action-label">
+                  <a class="btn btn-white btn-sm rounded dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                      class="fa fa-dot-circle-o text-success"></i> {{item}} <i class="caret"></i></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="javascript:"><i class="fa fa-dot-circle-o text-success"></i> Active</a></li>
+                    <li><a href="javascript:"><i class="fa fa-dot-circle-o text-danger"></i> Inactive</a></li>
+                  </ul>
+                </div>
+              </td> -->
+              <!-- <td class="text-right">
+                <div class="dropdown">
+                  <a href="javascript:" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                  <ul class="dropdown-menu pull-right">
+                    <li><a href="javascript:" (click)="onEdit(item)"><i class="fa fa-pencil m-r-5"></i>
+                        Edit</a></li>
+                    <li><a href="javascript:" (click)="onDelete(item)"><i class="fa fa-trash-o m-r-5"></i>
+                        Delete</a></li>
+                  </ul>
+                </div>
+              </td> -->
+            </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                <td colspan="20">
+                  <div class="mt-3">
+                    Items per Page:
+                    <select (change)="handlePageSizeChange($event)">
+                      <option>No of items</option>
+                      <option *ngFor="let size of pageSizes" [ngValue]="size">
+                        {{ size }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="page">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+                      (pageChange)="handlePageChange($event)"></pagination-controls>
+                    <mfBootstrapPaginator></mfBootstrapPaginator>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

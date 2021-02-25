@@ -1,0 +1,114 @@
+table{
+    width:100%;
+    
+}
+/* .link{
+padding-left: 3%;
+} */
+.btn{
+margin-top: 100px;
+}
+
+.year{
+padding: 5px;
+padding-right: 30px;
+visibility: hidden;
+}
+
+.month{
+padding: 5px;
+margin:10px;
+/* visibility: hidden; */
+}
+.week{
+padding: 5px;
+padding-right: 0px;
+max-width: 131px;
+min-width: 131px;
+}
+#prjectheader tr td{width:11%;text-align: center;}
+#prjectheader tr td:first-child {width: 18%;text-align: center;}
+
+#prjectheader tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+#prjectheader tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.btn{
+    margin-top:0px;
+    margin-right:-700px;
+}
+mat-expansion-panel-header{
+    font-size:15px;
+    font-weight: bolder;
+}
+.add{display:none}
+.minus{display:none}
+.display_block{display: inline-block;}
+.display_none{display:none}
+
+input[type=text] { 
+    text-align:center;
+    border:0.5px solid gray; 
+}
+input:focus{
+    text-align:center ;
+    border:0.5px solid green; 
+    
+}
+::placeholder {
+
+text-align:center; }
+
+.cancel{
+    position: relative;
+    bottom: 134px;
+    left: 115.6%;
+}
+
+.save{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: 400px;
+    background-color: #009999;
+    color: white;
+    border: none;
+    font-size: 14px;
+    line-height: 18px;
+    border-radius: 4px;
+}
+.submit{
+    margin:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:20px;
+    padding-right:20px;
+    background-color: #4c9900;
+    color:white;
+    border: none;
+    font-size: 14px;
+    line-height: 18px;
+    border-radius: 4px;
+}
+.close{
+    background: #ff9b44;
+    background: -webkit-gradient(left top, right top, color-stop(0%, #ff9b44), color-stop(100%, #fc6075));
+    background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9b44', endColorstr='#fc6075', GradientType=1);
+    border-radius: 50%;
+    height: 50px;
+    left: -15px;
+    opacity: 1;
+    position: relative;
+    top: -14px;
+    width: 50px;
+    text-shadow: inherit;
+    color: #fff;
+    z-index: 99;
+}
+
+

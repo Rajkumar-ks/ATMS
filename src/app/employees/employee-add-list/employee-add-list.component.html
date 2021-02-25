@@ -1,0 +1,649 @@
+<div class="content container-fluid">
+  <!-- <nav class="navbar navbar-default" style="background-color: whitesmoke; margin-top: -1%;">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WebSiteName</a>
+      </div>
+      <h1>Employee</h1>
+      <ul class="nav navbar-nav">
+        <li><a href="#">Employee</a></li>
+        
+      </ul>
+    </div>
+  </nav> -->
+  <div class="row">
+    <div class="col-xs-4">
+      <h4 class="page-title">Employee</h4>
+    </div>
+
+    <!-- <div class="col-xs-8 text-right m-b-30">
+      <a href="javascript:" class="btn btn-primary pull-right rounded" (click)="addReset()"><i class="fa fa-plus"></i>
+        Add Employee</a>
+      <div class="view-icons">
+        <a class="grid-view btn btn-link" [ngClass]="{active:!allEmployees}" (click)="allEmployees=false"><i
+            class="fa fa-th"></i></a>
+        <a class="list-view btn btn-link" [ngClass]="{active:allEmployees}" (click)="allEmployees=true"><i
+            class="fa fa-bars"></i></a>
+      </div>
+
+    </div> -->
+  </div>
+  <!--<div class="row filter-row">
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Employees</label>
+          <select style="height:40px; width:180px;" class="select floating form-control" (input)="searchEmployee($event.target.value)">
+            <option class="control-label" value="">Select Employee</option>
+            <option value="All">All</option>
+            <option *ngFor="let employee of employee" value="{{employee.id}}">
+              {{employee.itemName}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Job Title</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchJobTitle($event.target.value)">
+            <option class="control-label" value="">Select Job</option>
+            <option value="All">All</option>
+            <option *ngFor="let job of jobs" value="{{job.id}}">
+              {{job.itemName}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Status</label>
+          <select style="height:40px;" class="select floating form-control" (input)="searchStatus($event.target.value)">
+            <option class="control-label">Select Status</option>
+            <option value="All">All</option>
+            <option *ngFor="let status of employeeStatus" value="{{status.id}}">
+              {{status.itemName}}
+            </option>
+         </select>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">Start Date</label>
+          <my-date-picker class="my-date" [options]="myDatePickerOptions"  required (dateChanged)="searchStartDate($event)"></my-date-picker>
+        </div>
+      </div>
+      <div class="col-sm-2 col-xs-4">
+        <div class="form-group form-focus select-focus">
+          <label class="control-label">End Date</label>
+          <my-date-picker class="my-date-end" [options]="myDatePickerOptions"  required (dateChanged)="searchEndDate($event)"></my-date-picker>
+        </div>
+      </div>
+    </div>   -->
+  <div class="row" *ngIf="allEmployees">
+    <div style="margin-right: 50%;" class="alert alert-success" *ngIf="addEmployeeErrMsg" >{{addEmployeeErrMsg}}</div>    
+    <div class="col-md-12">
+      <div class="table-responsive table-responsive-inherit">
+       <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows" #mf="mfDataTable"
+          [mfRowsOnPage]="5">
+          <thead style="background-color: gray;">
+            <tr>
+              <th style="width: 15%">
+                <mfDefaultSorter by="firstName">Employee Name</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="employeeID">Employee ID</mfDefaultSorter>
+              </th>
+             <!-- <th style="width: 10%">
+                <mfDefaultSorter by="roleName">Role</mfDefaultSorter>
+              </th>-->
+              <th style="width: 10%">
+                <mfDefaultSorter by="email">Email</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="mobile">Mobile</mfDefaultSorter>
+              </th>
+              <th style="width: 10%">
+                <mfDefaultSorter by="joinDate">Date of Joining</mfDefaultSorter>
+              </th>
+             <!-- <th style="width: 10%" class="text-center">
+                <mfDefaultSorter by="designation">Designation</mfDefaultSorter>
+              </th>-->
+              <th style="width: 5%" class="text-center">
+                <mfDefaultSorter by="status">Status</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of employeeData">
+              <td><a href="javascript:" class="avatar">{{item.f_name.split('')[0]}}</a>
+                <h2><a href="javascript:" data-toggle="modal" data-target="#edit_employee"
+                    (click)="onEdit(item)">{{item.f_name}} {{item.l_name}}<span>{{item.job_title}}</span></a></h2>
+              </td>
+              <td>{{item.emp_id}}</td>
+              <!--<td>{{item.rolename}}</td>-->
+              <td>{{item.official_mail}}</td>
+              <td>{{item.ph_no}}</td>
+              <td>{{item.doj | date: "dd/MM/yyyy"}}</td>
+              <!--<td>{{item.job_title}}</td>-->
+              <td [ngStyle]="{'color': item.status === '1' ? 'green' : 'red' }">
+                {{item.status === '1' ? 'Active' : 'Inactive'}}</td>
+            </tr>
+          </tbody>
+
+          <!-- <tfoot>
+            <tr>
+              <td colspan="20">
+                <div class="mt-3">
+                  Items per Page:
+                  <select (change)="handlePageSizeChange($event)">
+                    <option *ngFor="let size of pageSizes" [ngValue]="size">
+                      {{ size }}
+                    </option>
+                  </select>
+                </div>
+                <div class="page">
+                  <pagination-controls previousLabel="Prev" nextLabel="Next" responsive="true"
+                    (pageChange)="handlePageChange($event)"></pagination-controls>
+                  <mfBootstrapPaginator></mfBootstrapPaginator>
+                </div>
+              </td>
+            </tr>
+          </tfoot> -->
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row staff-grid-row" *ngIf="!allEmployees">
+    <div class="col-md-4 col-sm-4 col-xs-6 col-lg-3" *ngFor="let item of empDetails">
+      <div class="profile-widget">
+        <div class="profile-img">
+          <a href="javascript:"><img class="avatar" src="{{item.prof_pic}}" alt=""></a>
+        </div>
+        <div class="dropdown profile-action">
+          <a href="javascript:" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+              class="fa fa-ellipsis-v"></i></a>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="javascript:" data-toggle="modal" data-target="#edit_employee" (click)="onEdit(item)"><i
+                  class="fa fa-pencil m-r-5"></i> Edit</a></li>
+            <li><a (click)="onDelete(item.id)"><i class="fa fa-trash-o m-r-5"></i>
+                Delete</a></li>
+          </ul>
+        </div>
+        <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="javascript:">{{item.f_name}} {{item.l_name}}</a></h4>
+        <div class="small text-muted">{{item.job_title}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="add_employee" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <div class="modal-content modal-lg">
+      <div class="modal-header">
+        <h4 class="modal-title employee">Add Employee</h4>
+      </div>
+      <div class="modal-body">
+      <form class="m-b-30" id="form-employee" [formGroup]="form" novalidate>
+        <button class="btn btn-sm btn-primary" id="btn-tab" (click)="BasicDetails()">Basic Details</button>
+        <div *ngIf="isBasicDetails">
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              
+              <div class="form-group" [class.has-error]="city.invalid && city.touched" [class.has-success]="city.valid">
+                <label class="control-label">City<span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="^[a-zA-Z ]*$" type="text" required formControlName="city" id="city" name="city" maxlength="30" placeholder="City Name">
+                <div class="help-block" *ngIf="!city.valid && (city.touched || city.dirty)">
+                  <div *ngIf="city.errors.required">City is required</div>
+                  <div *ngIf="city.errors.pattern">City should be characters</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="ph_no.invalid && ph_no.touched" [class.has-success]="ph_no.valid">
+                <label class="control-label">Phone Number <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="(\d{10})" type="text" required formControlName="ph_no" id="ph_no" name="ph_no" maxlength="30" placeholder="Mobile Number">
+                <div class="help-block" *ngIf="!ph_no.valid && (ph_no.touched || ph_no.dirty)">
+                  <div *ngIf="ph_no.errors.required">Phone Number is required</div>
+                  <div *ngIf="ph_no.errors.pattern">Phone Number should be valid</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="emr_contact_per_name.invalid && emr_contact_per_name.touched" [class.has-success]="emr_contact_per_name.valid">
+                <label class="control-label">Emergency Contact Person Name <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="^[a-zA-Z ]*$" type="text" required formControlName="emr_contact_per_name" id="emr_contact_per_name" name="emr_contact_per_name" maxlength="30" placeholder="Emergency Contact Person Name">
+                <div class="help-block" *ngIf="!emr_contact_per_name.valid && (emr_contact_per_name.touched || emr_contact_per_name.dirty)">
+                  <div *ngIf="emr_contact_per_name.errors.required">Emergency Contact Person Name is required</div>
+                  <div *ngIf="emr_contact_per_name.errors.pattern">Emergency Contact Person Name should be characters</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="emr_contact_per_ph_no.invalid && emr_contact_per_ph_no.touched" [class.has-success]="emr_contact_per_ph_no.valid">
+                <label class="control-label">Emergency Contact Person Number<span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="(\d{10})" type="text" required formControlName="emr_contact_per_ph_no" id="emr_contact_per_ph_no" name="emr_contact_per_ph_no" maxlength="30" placeholder="Emergency Contact Person Number">
+                <div class="help-block" *ngIf="!emr_contact_per_ph_no.valid && (emr_contact_per_ph_no.touched || emr_contact_per_ph_no.dirty)">
+                  <div *ngIf="emr_contact_per_ph_no.errors.required">Emergency Contact Person Number is required</div>
+                  <div *ngIf="emr_contact_per_ph_no.errors.pattern">Emergency Contact Person Number should be valid</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="perm_addr.invalid && perm_addr.touched" [class.has-success]="perm_addr.valid">
+                <label class="control-label">Permanent Address <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="^[a-zA-Z ]*$" type="text" required formControlName="perm_addr" id="perm_addr" name="perm_addr" maxlength="30" placeholder="Permanent Address">
+                <div class="help-block" *ngIf="!perm_addr.valid && (perm_addr.touched || perm_addr.dirty)">
+                  <div *ngIf="perm_addr.errors.required">Permanent Address is required</div>
+                  <div *ngIf="perm_addr.errors.pattern">Permanent Address should be characters</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="temp_addr.invalid && temp_addr.touched" [class.has-success]="temp_addr.valid">
+                <label class="control-label">Temporary Address<span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="^[a-zA-Z ]*$" type="text" required formControlName="temp_addr" id="temp_addr" name="temp_addr" maxlength="30" placeholder="Temporary Address">
+                <div class="help-block" *ngIf="!temp_addr.valid && (temp_addr.touched || temp_addr.dirty)">
+                  <div *ngIf="temp_addr.errors.required">Temporary Address is required</div>
+                  <div *ngIf="temp_addr.errors.pattern">Temporary Address should be valid</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="blood_grp.invalid && blood_grp.touched" [class.has-success]="blood_grp.valid">
+                  <label class="control-label">Blood Group<span class="text-danger m-l-5">*</span></label>
+                    <select class="select form-control" formControlName="blood_grp" id="blood_grp" name="blood_grp" required>
+                        <option value="">Select Blood Group</option>
+                        <option *ngFor="let item of bloodGroup;" [value]="item.name">{{item.name}}</option>
+                    </select>
+                  <div class="help-block" *ngIf="!blood_grp.valid && (blood_grp.touched || blood_grp.dirty)">
+                    <div *ngIf="blood_grp.errors.required">Select Blood is required</div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-primary" id="btn-tab" (click)="BankDetails()" style="margin-top: 1%;">Bank Details</button>
+        <div formArrayName="bank_details" *ngIf="isBankDetails">
+          <div class="row" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i">
+            <div class="form-group col-sm-4" [class.has-error]="bank.get('name_asper_bank').invalid && bank.get('name_asper_bank').touched" [class.has-success]="bank.get('name_asper_bank').valid">
+              <label class="control-label">Account Holder <span class="text-danger m-l-5">*</span></label>  
+              <input type="text" class="form-control input-sm" pattern="^[a-zA-Z ]*$" id="name_asper_bank" formControlName="name_asper_bank" placeholder="Account Holder Name">
+                  <div class="help-block" *ngIf="bank.get('name_asper_bank').invalid && (bank.get('name_asper_bank').touched || bank.get('name_asper_bank').dirty)">
+                  <div *ngIf="bank.get('name_asper_bank').errors.required">Account Holder Name is required</div>
+                  <div *ngIf="bank.get('name_asper_bank').errors.pattern">Account Holder Name should be valid</div>
+                </div>
+            </div>
+            <div class="form-group col-sm-4" [class.has-error]="bank.get('acc_no').invalid && bank.get('acc_no').touched" [class.has-success]="bank.get('acc_no').valid">
+              <label class="control-label">Account Number <span class="text-danger m-l-5">*</span></label>   
+              <input type="text" class="form-control input-sm" pattern="^(0|[1-9][0-9]*)$" id="acc_no" formControlName="acc_no" placeholder="Account Number">
+                <div class="help-block" *ngIf="bank.get('acc_no').invalid && (bank.get('acc_no').touched || bank.get('acc_no').dirty)">
+                  <div *ngIf="bank.get('acc_no').errors.required">Account Number is required</div>
+                  <div *ngIf="bank.get('acc_no').errors.pattern">Account Number should be valid</div>
+                </div>
+            </div>
+          </div>
+          <div class="row" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i">
+            <div class="form-group col-sm-4" [class.has-error]="bank.get('bank_name').invalid && bank.get('bank_name').touched" [class.has-success]="bank.get('bank_name').valid">
+              <label class="control-label">Bank Name <span class="text-danger m-l-5">*</span></label>    
+              <input type="text" class="form-control input-sm" pattern="^[a-zA-Z ]*$" id="bank_name" formControlName="bank_name" placeholder="Name As Per Bank">
+                <div class="help-block" *ngIf="bank.get('bank_name').invalid && (bank.get('bank_name').touched || bank.get('bank_name').dirty)">
+                  <div *ngIf="bank.get('bank_name').errors.required">Bank Name is required</div>
+                  <div *ngIf="bank.get('bank_name').errors.pattern">Bank Name should be Charachers</div>
+                </div>
+            </div>
+            <div class="form-group col-sm-4" [class.has-error]="bank.get('ifsc_code').invalid && bank.get('ifsc_code').touched" [class.has-success]="bank.get('ifsc_code').valid">
+              <label class="control-label">IFSC Number<span class="text-danger m-l-5">*</span></label>      
+              <input type="text" class="form-control input-sm" id="ifsc_code" formControlName="ifsc_code" placeholder="IFSC Code">
+                <div class="help-block" *ngIf="bank.get('ifsc_code').invalid && (bank.get('ifsc_code').touched || bank.get('ifsc_code').dirty)">
+                  <div *ngIf="bank.get('ifsc_code').errors.required">IFSC Number is required</div>
+                </div>
+            </div>
+          </div>
+          <div class="row" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i">
+            <div class="form-group col-sm-4" [class.has-error]="bank.get('branch').invalid && bank.get('branch').touched" [class.has-success]="bank.get('branch').valid">
+              <label class="control-label">Branch Name<span class="text-danger m-l-5">*</span></label>        
+              <input type="text" class="form-control input-sm" pattern="^[a-zA-Z ]*$" id="branch" formControlName="branch" placeholder="Branch Name">
+                  <div class="help-block" *ngIf="bank.get('branch').invalid && (bank.get('branch').touched || bank.get('branch').dirty)">
+                  <div *ngIf="bank.get('branch').errors.required">Branch Name is required</div>
+                  <div *ngIf="bank.get('branch').errors.pattern">Branch Name should be Charachers</div>
+                </div>
+            </div>
+            <div class="form-group col-sm-4" [class.has-error]="bank.get('acc_type').invalid && bank.get('acc_type').touched" [class.has-success]="bank.get('acc_type').valid">
+              <label class="control-label">Account Type<span class="text-danger m-l-5">*</span></label>        
+              <input type="text" class="form-control input-sm" pattern="^[a-zA-Z ]*$" id="acc_type" formControlName="acc_type" placeholder="Account Type">
+              <div class="help-block" *ngIf="bank.get('acc_type').invalid && (bank.get('acc_type').touched || bank.get('acc_type').dirty)">
+                <div *ngIf="bank.get('acc_type').errors.required">Account Type is required</div>
+                <div *ngIf="bank.get('acc_type').errors.pattern">Account Type should be Charachers</div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngFor="let bank of addBankArray.controls; let i = index;" [formGroupName]="i">
+            <div class="form-group col-sm-4">
+              <label class="control-label">Check Copy</label>  
+                 
+                <input type="file" class="form-control input-sm" id="check_copy" formControlName="check_copy" placeholder="Check Copy Name">
+                  <!-- <div class="help-block" *ngIf="bank.get('check_copy').invalid && (bank.get('check_copy').touched || bank.get('check_copy').dirty)">
+                  <div *ngIf="bank.get('check_copy').errors.required">Check Copy Name is required</div>
+                </div> -->
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btn-tab" (click)="documentDetails()" style="margin-top: 1%;">Document Details</button>
+        <div *ngIf="this.isDocumentDetails">
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="addhar_num.invalid && addhar_num.touched" [class.has-success]="addhar_num.valid">
+                <label class="control-label">Addhar Number <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" pattern="^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$" type="text" required formControlName="addhar_num" id="addhar_num" name="addhar_num" maxlength="30" placeholder="Addhar Number">
+                <div class="help-block" *ngIf="!addhar_num.valid && (addhar_num.touched || addhar_num.dirty)">
+                  <div *ngIf="addhar_num.errors.required">Addhar Number is required</div>
+                  <div *ngIf="addhar_num.errors.pattern">Addhar Number should be Valid</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">Aadhar Softcopy</label>
+                <input class="form-control floating input-sm" type="file" required formControlName="aadhar_soft_copy" id="aadhar_soft_copy" name="aadhar_soft_copy" maxlength="30" placeholder="Aadhar Softcopy">
+                <!-- <div class="help-block" *ngIf="!aadhar_soft_copy.valid && (aadhar_soft_copy.touched || aadhar_soft_copy.dirty)">
+                  <div *ngIf="aadhar_soft_copy.errors.required">Aadhar Softcopy is required</div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="uan_num.invalid && uan_num.touched" [class.has-success]="uan_num.valid">
+                <label class="control-label">PF Number <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" type="text" required formControlName="uan_num" id="uan_num" name="uan_num" maxlength="30" placeholder="PF Number">
+                <div class="help-block" *ngIf="!uan_num.valid && (uan_num.touched || uan_num.dirty)">
+                  <div *ngIf="uan_num.errors.required">PF Number is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">Pan Softcopy</label>
+                <input class="form-control floating input-sm" type="file" required formControlName="pan_soft_copy" id="pan_soft_copy" name="pan_soft_copy" maxlength="30" placeholder="Pan Softcopy">
+                <!-- <div class="help-block" *ngIf="!pan_soft_copy.valid && (pan_soft_copy.touched || pan_soft_copy.dirty)">
+                  <div *ngIf="pan_soft_copy.errors.required">Pan Number is required</div>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="passport_num.invalid && passport_num.touched" [class.has-success]="passport_num.valid">
+                <label class="control-label">Passport Number <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" type="text" required formControlName="passport_num" id="passport_num" name="passport_num" maxlength="30" placeholder="Passport Number">
+                <div class="help-block" *ngIf="!passport_num.valid && (passport_num.touched || passport_num.dirty)">
+                  <div *ngIf="passport_num.errors.required">Passport Number is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="passport_exp_date.invalid && passport_exp_date.touched" [class.has-success]="passport_exp_date.valid">
+                <label class="control-label">Passport Expiry Date<span class="text-danger m-l-5">*</span></label>
+                <!-- <input class="form-control floating input-sm" type="text" required formControlName="passport_exp_date" id="passport_exp_date" name="passport_exp_date" maxlength="30" placeholder="Passport Expiry Date"> -->
+                <my-date-picker [options]="myDatePickerOptions" name="passport_exp_date" formControlName="passport_exp_date" required></my-date-picker>
+                <div class="help-block" *ngIf="!passport_exp_date.valid && (passport_exp_date.touched || passport_exp_date.dirty)">
+                  <div *ngIf="passport_exp_date.errors.required">Passport Expiry Date is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="col-sm-4">
+              <div class="form-group">
+                <label class="control-label">Passport Softcopy</label>
+                <input class="form-control floating input-sm" type="file" required formControlName="pass_soft_copy" id="pass_soft_copy" name="pass_soft_copy" maxlength="30" placeholder="Passport Softcopy">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group" [class.has-error]="passport_place_issued.invalid && passport_place_issued.touched" [class.has-success]="passport_place_issued.valid">
+                <label class="control-label">Passport Place issued<span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating input-sm" type="text" pattern="^[a-zA-Z ]*$" required formControlName="passport_place_issued" id="passport_place_issued" name="passport_place_issued" maxlength="30" placeholder="Passport Place issued">
+                <div class="help-block" *ngIf="!passport_place_issued.valid && (passport_place_issued.touched || passport_place_issued.dirty)">
+                  <div *ngIf="passport_place_issued.errors.required">Passport Placed Issued is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-primary" id="btn-tab" (click)="educationDetails()" style="margin-top: 1%;">Education Details</button>
+      <div formArrayName="education" *ngIf="isEducationalDetails">
+          <div *ngFor="let education of addEducationArray.controls; let i = index;" [formGroupName]="i">
+            <div class="row">
+              <div class="form-group col-sm-2" [class.has-error]="education.get('edu_type').invalid && education.get('edu_type').touched" [class.has-success]="education.get('edu_type').valid">
+                
+                <label class="control-label">Course <span class="text-danger m-l-5">*</span></label>
+                <input type="text" class="form-control input-sm" id="edu_type" formControlName="edu_type" placeholder="10 or 12 or UG, PG etc">
+                 <div class="help-block" *ngIf="education.get('edu_type').invalid && (education.get('edu_type').touched || education.get('edu_type').dirty)">
+                  <div *ngIf="education.get('edu_type').errors.required">course is required</div>
+                  <div *ngIf="education.get('edu_type').errors.pattern">course should be Charachers</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-3" [class.has-error]="education.get('institution_name').invalid && education.get('institution_name').touched" [class.has-success]="education.get('institution_name').valid">
+                 <label class="control-label">Institution Name<span class="text-danger m-l-5">*</span></label>
+                <input type="text" class="form-control input-sm" id="institution_name" formControlName="institution_name" placeholder="Ex: Anna University">
+                 <div class="help-block" *ngIf="education.get('institution_name').invalid && (education.get('institution_name').touched || education.get('institution_name').dirty)">
+                  <div *ngIf="education.get('institution_name').errors.required">Institution Name is required</div>
+                  <div *ngIf="education.get('institution_name').errors.pattern">Institution Name should be Charachers</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-2" [class.has-error]="education.get('passesout_year').invalid && education.get('passesout_year').touched" [class.has-success]="education.get('passesout_year').valid">
+                <label class="control-label">Passedout year<span class="text-danger m-l-5">*</span></label> 
+                <my-date-picker [options]="myDatePickerOptions" name="passesout_year" formControlName="passesout_year" required></my-date-picker>
+                 <div class="help-block" *ngIf="education.get('passesout_year').invalid && (education.get('passesout_year').touched || education.get('passesout_year').dirty)">
+                  <div *ngIf="education.get('passesout_year').errors.required">Passedout Year is required</div>
+                </div>
+              </div>
+              <div class="form-group col-sm-3" [class.has-error]="education.get('score').invalid && education.get('score').touched" [class.has-success]="education.get('score').valid">
+                 <label class="control-label">Percentage / CGPA <span class="text-danger m-l-5">*</span></label>
+                <input class="form-control floating col-half-offset input-sm" type="text" required formControlName="score" id="score" name="Score" placeholder="Ex: 80">
+                 <div class="help-block" *ngIf="education.get('score').invalid && (education.get('score').touched || education.get('score').dirty)">
+                  <div *ngIf="education.get('score').errors.required">Percentage / CGPA is required</div>
+                  <div *ngIf="education.get('score').errors.pattern">Percentage / CGPA should be Charachers</div>
+                 </div>
+              </div>
+              <div class="form-group col-sm-2 btn-toolbar" id="addBtn" style="margin-top:2%;">
+                <button class="btn btn-primary"  (click)="addEducation()">+</button>
+                <button class="btn btn-danger" (click)="removeEducation(i)">-</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btn-tab" (click)="technicalSkillsDetails()" style="margin-top: 1%;">Technical Details</button>
+        <div formArrayName="techskills" *ngIf="isTechnicalSkillsDetails">
+            <div *ngFor="let skill of addArray.controls; let i = index;" [formGroupName]="i">
+              <div class="row">
+                <div class="form-group col-sm-3" [class.has-error]="skill.get('languages').invalid && skill.get('languages').touched" [class.has-success]="skill.get('languages').valid">
+                   <label class="control-label">Language<span class="text-danger m-l-5">*</span></label>  
+                  <input type="text" class="form-control input-sm" id="languages" formControlName="languages" placeholder="Ex: Java">
+                     <div class="help-block" *ngIf="skill.get('languages').invalid && (skill.get('languages').touched || skill.get('languages').dirty)">
+                      <div *ngIf="skill.get('languages').errors.required">Langulage is required</div>
+                      <div *ngIf="skill.get('languages').errors.pattern">Langulage should be valid</div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3" [class.has-error]="skill.get('database').invalid && skill.get('database').touched" [class.has-success]="skill.get('database').valid">
+                   <label class="control-label">Database <span class="text-danger m-l-5">*</span></label>  
+                  <input type="text" class="form-control input-sm" id="database" formControlName="database" placeholder="Ex: SQL">
+                    <div class="help-block" *ngIf="skill.get('database').invalid && (skill.get('database').touched || skill.get('database').dirty)">
+                      <div *ngIf="skill.get('database').errors.required">Database is required</div>
+                      <div *ngIf="skill.get('database').errors.pattern">Database should be valid</div>
+                    </div>
+                </div>
+              
+                <div class="form-group col-sm-3" [class.has-error]="skill.get('platform').invalid && skill.get('platform').touched" [class.has-success]="skill.get('platform').valid">
+                   <label class="control-label">Platform<span class="text-danger m-l-5">*</span></label>
+                  <input type="text" class="form-control input-sm" id="platform" formControlName="platform" placeholder="Ex: Eclipse">
+                   <div class="help-block" *ngIf="skill.get('platform').invalid && (skill.get('platform').touched || skill.get('platform').dirty)">
+                    <div *ngIf="skill.get('platform').errors.required">Platform is required</div>
+                    <div *ngIf="skill.get('platform').errors.pattern">Platform should be valid</div>
+                  </div>
+                </div>
+                <div class="form-group col-sm-3" [class.has-error]="skill.get('operating_system').invalid && skill.get('operating_system').touched" [class.has-success]="skill.get('operating_system').valid">
+                   <label class="control-label">Operating System<span class="text-danger m-l-5">*</span></label>  
+                  <input type="text" class="form-control input-sm" id="operating_system" formControlName="operating_system" placeholder="Ex: windows">
+                    <div class="help-block" *ngIf="skill.get('operating_system').invalid && (skill.get('operating_system').touched || skill.get('operating_system').dirty)">
+                      <div *ngIf="skill.get('operating_system').errors.required">Operating System is required</div>
+                      <div *ngIf="skill.get('operating_system').errors.pattern">Operating System should be valid</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btn-tab" (click)="certificationDetails()" style="margin-top: 1%;">Certification Details</button>
+        <div formArrayName="certification" *ngIf="this.isCertificationDetails">
+            <div *ngFor="let certification of addCertificationArray.controls; let i = index;" [formGroupName]="i">
+              <div class="row">
+                  <div class="form-group col-sm-2">
+                     <label class="control-label">Name</label>
+                    <input type="text" class="form-control input-sm" id="certification_name" formControlName="certification_name" placeholder="Ex: Java">
+                    
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <!-- <input type="text" class="form-control input-sm" id="year" formControlName="year" placeholder="year"> -->
+                    <label class="control-label">Year</label>
+                    <my-date-picker [options]="myDatePickerOptions" name="year" formControlName="year" required></my-date-picker>
+                  </div>
+                  <div class="form-group col-sm-3">
+                    <!-- <input type="text" class="form-control input-sm" id="valid_till" formControlName="valid_till" placeholder="Valid Till"> -->
+                    <label class="control-label">Valid Till</label>
+                    <my-date-picker [options]="myDatePickerOptions" name="valid_till" formControlName="valid_till" required></my-date-picker> 
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label class="control-label">Record Copy</label>
+                    <input type="file" class="form-control input-sm" id="record_copy_cert" formControlName="record_copy_cert" placeholder="Record Copy">
+                  </div>
+                  <div class="form-group col-sm-2 btn-toolbar" id="addBtn" style="margin-top:2%;">
+                    <button class="btn btn-primary"  (click)="addCertification()">+</button>
+                    <button class="btn btn-danger" (click)="removeCertification(i)">-</button>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btn-tab" (click)="preEmpDetails()" style="margin-top: 1%;">Previous Employeement Details</button>
+        <div formArrayName="previous_employment" *ngIf="this.isPreEmpDetails">
+            <div *ngFor="let preEmp of addPreviousEmployeementArray.controls; let i = index;" [formGroupName]="i">
+              <div class="row">
+                <div class="form-group col-sm-3">
+                   <label class="control-label">Company Name</label> 
+                  <input type="text" class="form-control input-sm" id="name_address" formControlName="name_address" placeholder="Ex: Agnoshin, Chennai">
+                </div>
+                <div class="form-group col-sm-3">
+                    <!-- <input type="text" class="form-control input-sm" id="doj" formControlName="doj" placeholder="Date of Joining"> -->
+                    <label class="control-label">Date of Joining</label> 
+                    <my-date-picker [options]="myDatePickerOptions" name="doj" formControlName="doj" required></my-date-picker>
+                </div>
+                <div class="form-group col-sm-2">
+                  <label class="control-label">Designation</label> 
+                  <input type="text" class="form-control input-sm" id="descig_on_join" pattern="^[a-zA-Z ]*$" formControlName="descig_on_join" placeholder="Ex: software engineer">
+                </div>
+                <div class="form-group col-sm-2">
+                  <!-- <input type="text" class="form-control input-sm" id="salary_on_join" formControlName="salary_on_join" placeholder="Date of Joining"> -->
+                  <label class="control-label">Joining Salary</label> 
+                  <input class="form-control floating col-half-offset input-sm" pattern="^(0|[1-9][0-9]*)$" type="text" required formControlName="salary_on_join" id="salary_on_join" name="salary_on_join" placeholder="Ex: 10000">
+                </div>
+
+                <div class="form-group col-sm-2">
+                  <!-- <input type="text" class="form-control input-sm" id="dor" formControlName="dor" placeholder="Date of Relieving"> -->
+                  <label class="control-label">Relieving Date</label> 
+                  <my-date-picker [options]="myDatePickerOptions" name="dor" formControlName="dor" required></my-date-picker>
+                </div>
+               
+              </div>
+              <div class="row">
+                <div class="form-group col-sm-3">
+                  <!-- <input type="text" class="form-control input-sm" id="descig_on_leaving" formControlName="descig_on_leaving" placeholder="Date of Joining"> -->
+                  <label class="control-label">Designation on Relieving</label> 
+                  <input type="text" class="form-control input-sm" id="descig_on_leaving" pattern="^[a-zA-Z ]*$" formControlName="descig_on_leaving" placeholder="Ex: Software Engineer">
+              </div>
+              <div class="form-group col-sm-3">
+                <label class="control-label">Salary on Relieving</label> 
+                <input type="text" class="form-control input-sm" id="salary_on_leaving" pattern="^(0|[1-9][0-9]*)$" formControlName="salary_on_leaving" placeholder="Salary on Relieving">
+              </div>
+                <div class="form-group col-sm-3">
+                  <!-- <input type="text" class="form-control input-sm" id="record_copy_emp" formControlName="record_copy_emp" placeholder="Date of Joining"> -->
+                  <label class="control-label">Record Copy</label> 
+                  <input class="form-control floating col-half-offset input-sm" type="file" required formControlName="record_copy_emp" id="record_copy_emp" name="record_copy_emp" placeholder="Record Copy">
+                </div>
+                <div class="form-group col-sm-2 btn-toolbar" id="addBtn" style="margin-top:2%;">
+                    <button class="btn btn-primary"  (click)="addPreviousEmployeement()">+</button>
+                    <button class="btn btn-danger" (click)="removePreviousEmployeement(i)">-</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btn-tab" (click)="familyDetails()" style="margin-top: 1%;">Family Details</button>
+        <div formArrayName="emp_fmly_details" *ngIf="isFamilyDetails">
+            <div class="row" *ngFor="let family of addFamilyArray.controls; let i = index;" [formGroupName]="i">
+                <div class="form-group col-sm-3" [class.has-error]="family.get('name').invalid && family.get('name').touched" [class.has-success]="family.get('name').valid">
+                  <label class="control-label">Name<span class="text-danger m-l-5">*</span></label>   
+                  <input type="text" class="form-control input-sm" id="name" formControlName="name" placeholder="Name">
+                     <div class="help-block" *ngIf="family.get('name').invalid && (family.get('name').touched || family.get('name').dirty)">
+                      <div *ngIf="family.get('name').errors.required">Name is required</div>
+                      <div *ngIf="family.get('name').errors.pattern">Name should be valid</div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2" [class.has-error]="family.get('relationship').invalid && family.get('relationship').touched" [class.has-success]="family.get('relationship').valid">
+                  <label class="control-label">Relationship<span class="text-danger m-l-5">*</span></label>   
+                  <input type="text" class="form-control input-sm" id="relationship" formControlName="relationship" placeholder="Relationship">
+                    <div class="help-block" *ngIf="family.get('relationship').invalid && (family.get('relationship').touched || family.get('relationship').dirty)">
+                      <div *ngIf="family.get('relationship').errors.required">Date of Joining is required</div>
+                      <div *ngIf="family.get('relationship').errors.pattern">Date of Joining should be valid</div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2" [class.has-error]="family.get('dob').invalid && family.get('dob').touched" [class.has-success]="family.get('dob').valid">
+                  <label class="control-label">Date of Birth<span class="text-danger m-l-5">*</span></label>   
+                  <my-date-picker [options]="myDatePickerOptions" name="dob" formControlName="dob" required></my-date-picker>
+                   <div class="help-block" *ngIf="family.get('dob').invalid && (family.get('dob').touched || family.get('dob').dirty)">
+                    <div *ngIf="family.get('dob').errors.required">Date of Birth is required</div>
+                  </div>
+              </div>
+              <div class="form-group col-sm-3" [class.has-error]="family.get('occupation').invalid && family.get('occupation').touched" [class.has-success]="family.get('occupation').valid">
+                <label class="control-label">Occupation<span class="text-danger m-l-5">*</span></label>     
+                <input type="text" class="form-control input-sm" id="occupation" formControlName="occupation" placeholder="Occupation">
+                  <div class="help-block" *ngIf="family.get('occupation').invalid && (family.get('occupation').touched || family.get('occupation').dirty)">
+                    <div *ngIf="family.get('occupation').errors.required">Occupation is required</div>
+                    <div *ngIf="family.get('occupation').errors.pattern">Occupation should be valid</div>
+                  </div>
+              </div>
+                <div class="form-group col-sm-2 btn-toolbar" id="addBtn" style="margin-top: 2%;">
+                  <button class="btn btn-primary"  (click)="addFamily()">+</button>
+                  <button class="btn btn-danger" (click)="removeFamily(i)">-</button>
+              </div>
+            </div>
+        </div>
+        <div class="m-t-20 text-center">
+          <div *ngIf="addEmployeeValidation" class="alert alert-info m-t-10">
+            <strong>Warning!</strong> Must Fill all Mandatory Fields.
+          </div>
+          <button class="btn btn-primary btn-sm" type="button" (click)="onSubmit()">Submit</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>

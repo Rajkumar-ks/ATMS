@@ -1,0 +1,56 @@
+
+
+<div class="page-wrapper">
+  <div class="content container-fluid">
+    <form  autocomplete="off">
+      <!-- <label>Year</label> -->
+      <div class="" >
+        <div class="row">
+          <div class="col-xs-4">
+            <h4 class="page-title">Role permission</h4>
+          </div>
+          <div class="col-xs-8 text-right m-b-30">
+            <button type="button" style="background-color: transparent; border: none;  color: green;float: right;" class="fa fa-user-plus" id="add_role_btn" title="Add Role" (click)="createRole()"></button>
+          </div>
+        </div>
+
+        <div style="margin: 0px; width: 100%; padding: 15px;background-color: #FFFFFF;border-left: 1px solid #e2e2e2;border-bottom: 1px solid #e2e2e2;border-right: 1px solid #e2e2e2;">
+          
+          <div style="margin: 0px auto;    padding: 3px 0 0 340px; ">
+            <label style="margin: 10px 0 0 4px;">Role Name:</label>
+            
+            <div id="role_types" style="margin: -25px 0 0 82px;">
+                  <select id="role_type1" (change)="onChangeRoleAction()" style="border-radius: 5px;outline: none;width: 173px;height: 32px;">
+              </select>
+              <button (click)="remove_role()" type="button" class="fa fa-trash" title="Delete Role" style="background-color:transparent;color:red;border: none;width: 49px;outline: none;padding: 0 0 0 0px;"></button>
+            </div>
+
+            <div id="create_role" style="display:none;margin: -25px 0 0 82px;">
+              <input  type="text" id="add_role_id" maxlength="20" style="border-radius: 5px;outline: none;width: 173px;height: 32px;">
+            </div>
+          </div>
+     
+
+          <!-- <div id="CreatecheckId">
+          <div class="form-check"  *ngFor="let cat of mainModuleNameList">
+            <input class="form-check-input" (change)="onChangeMainModule(cat.feature_id, $event.target.checked)" name="checkname" type="checkbox" id="{{cat.feature_id}}">
+            <label class="form-check-label" for="{{cat.feature_name}}">{{cat.feature_name}} </label>
+            <div style="margin: 5px 364px 10px -30px;" id="checkboxes{{cat.feature_id}}" class="role_checkbox"  ></div> 
+          </div></div> -->
+
+          <div id="checkboxes" class="role_checkbox"  ></div> 
+
+
+          <button (click)="saveRole()" id="update_btn_id" type="button" value="submit" style="background: #f5891f;border: 0;height: 35px;outline: none;border-radius: 3px;color: white; cursor: pointer;margin: 0px auto;display: table;">Update</button>
+        </div>
+
+
+
+
+
+
+      </div>
+    </form>
+    
+  </div>
+</div>

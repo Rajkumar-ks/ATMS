@@ -1,0 +1,17 @@
+.example-full-width {
+    width: 33%;
+    }
+
+ .page{
+        margin-left: 70% !important; }
+.full-width{
+        width: 13%;
+
+     }                           
+
+     .view-icons .btn {
+        color: #5d5b5b;
+        font-size: 27px;
+        margin-right: 5px;
+        padding: 4px;
+    }

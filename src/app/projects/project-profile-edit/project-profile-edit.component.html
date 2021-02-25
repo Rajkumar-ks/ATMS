@@ -1,0 +1,754 @@
+<div class="page-wrapper">
+  <div class="content container-fluid">
+      <mat-tab-group #allTabs mat-align-tabs="center">
+        <mat-tab label="Project">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Update Project</legend>
+                <form class="m-b-30" id="form" [formGroup]="form" novalidate autocomplete="off">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-12">
+                                <!-- <mat-slide-toggle class="pull-right" formControlName="proj_status" name="proj_status" id="proj_status">Status</mat-slide-toggle> -->
+                              </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill" class="example-full-width col-sm-4">
+                                        <mat-label>Select Region</mat-label>
+                                        <mat-select formControlName="region" name="region">
+                                        <mat-option value="Asia">Asia</mat-option>
+                                        <mat-option value="America">America</mat-option>
+                                        <mat-option value="America">Africa</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill" class="example-full-width col-sm-4">
+                                        <mat-label>Client Name</mat-label>
+                                        <mat-select formControlName="client_name" name="client_name">
+                                            <mat-option *ngFor="let unit of clientList" [value]="unit.client_id">
+                                            {{unit.Client_Name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                                        <mat-label >Project name</mat-label>
+                                        <input matInput formControlName="project_name" name="project_name">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill" class="example-full-width col-sm-4">
+                                        <mat-label>Project Type</mat-label>
+                                        <mat-select formControlName="pr_type" name="pr_type">
+                                            <mat-option *ngFor="let unit of resource_unit_arr" [value]="unit[0]">
+                                            {{unit[1]}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                                        <mat-label>Start Date</mat-label>
+                                        <input matInput [matDatepicker]="picker" formControlName="pr_start_date" name="pr_start_date" (dateChange)="checkProjectStartDate($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                                        <mat-label>End Date</mat-label>
+                                        <input matInput [matDatepicker]="picker1" formControlName="pr_end_date" name="pr_end_date" (dateChange) = "checkProjectEndDate($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                                        <mat-label >Total Hours</mat-label>
+                                        <input matInput formControlName="totalHours" name="totalHours" readonly>
+                                    </mat-form-field>
+                                    <!-- <mat-hint>Read Only</mat-hint> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill" class="example-full-width col-sm-4">
+                                        <mat-label>Efforts</mat-label>
+                                        <mat-select formControlName="pr_efforts" name="pr_efforts" (selectionChange)="searchEfforts($event.value)">
+                                            <mat-option *ngFor="let unit of effort_Arr" [value]="unit[0]">
+                                            {{unit[1]}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                                        <mat-label >PO Value</mat-label>
+                                        <input matInput formControlName="pr_efforts_cost" name="pr_efforts_cost">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill" class="example-full-width col-sm-4">
+                                        <mat-label>Project Status</mat-label>
+                                        <mat-select formControlName="status" name="status">
+                                        <mat-option value="Inprogress">In progress</mat-option>
+                                        <mat-option value="Open">Open</mat-option>
+                                        <mat-option value="Close">Close</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill" class="example-full-width col-sm-4">
+                                        <mat-label>Project Owner</mat-label>
+                                        <mat-select formControlName="pr_owner" name="pr_owner">
+                                            <mat-option *ngFor="let unit of projectOwnerList" [value]="unit.empid">
+                                            {{unit.empname}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width col-sm-4" appearance="fill">
+                                        <mat-label >Description</mat-label>
+                                        <input matInput formControlName="pr_desc" name="pr_desc">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-t-20 text-center">
+                        <button mat-raised-button tabindex="-1" class="btn btn-primary" type="button"
+                        (click)='moveToSelectedTab("Project Activities", "create", "null", "null")'
+                        [disabled]="!form.valid">Update
+                        Project</button>
+                    </div>
+                </form>
+            </fieldset>
+        </mat-tab>
+          <mat-tab label="Project Activities">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Update Activity</legend>
+                <div class="row" id="form">
+                    <div class="col">
+                        <div class="col-sm-6">
+                            <h4>Project Code : &nbsp; {{project_id}}</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Project Name : &nbsp; {{projectname}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <form class="m-b-30" id="form" [formGroup]="activityForm" novalidate autocomplete="off">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-12">
+                                <mat-slide-toggle class="pull-right" formControlName="proj_actv_status" name="proj_actv_status" id="proj_actv_status">Status</mat-slide-toggle>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <!-- <label class="control-label">Activitiy Type <span
+                                            class="text-danger m-l-5">*</span></label>
+                                    <select class="select form-control input-st" formControlName="activity_type"
+                                        id="activity_type" name="activity_type" required>
+                                        <option value="">Select Activity Type...</option>
+                                        <option *ngFor="let unit of projectActivity_Arr" [value]="unit[0]">
+                                            {{unit[1]}}
+                                        </option>
+                                    </select>
+                                    <div class="help-block"
+                                        *ngIf="!activity_type.valid && (activity_type.touched || activity_type.dirty)">
+                                        <div *ngIf="activity_type.errors.required">Activity Type is required</div>
+                                    </div> -->
+                                    <mat-form-field appearance="fill" class="example-full-width">
+                                        <mat-label>Activitiy Type</mat-label>
+                                        <mat-select formControlName="activity_type" name="activity_type">
+                                            <mat-option *ngFor="let unit of projectActivity_Arr" [value]="unit">
+                                            {{unit[1]}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <!-- <label class="control-label">Activitiy Name <span
+                                            class="text-danger m-l-5">*</span></label>
+                                    <input class="form-control floating" type="text" required
+                                        formControlName="activity_name" id="activity_name" name="activity_name"
+                                        maxlength="30">
+                                    <div class="help-block"
+                                        *ngIf="!activity_name.valid && (activity_name.touched || activity_name.dirty)">
+                                        <div *ngIf="activity_name.errors.required">Activity Name is required</div>
+                                    </div> -->
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label >Activitiy Name</mat-label>
+                                        <input matInput formControlName="activity_name" name="activity_name">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <!-- <label class="control-label">Activity Start Date<span
+                                            class="text-danger">*</span></label>
+                                    <my-date-picker [options]="myDatePickerOptions3" name="ac_start_date" (dateChanged) = "checkStartDate($event)" 
+                                        formControlName="ac_start_date" required></my-date-picker>
+                                    <div class="help-block"
+                                        *ngIf="!ac_start_date.valid && (ac_start_date.touched || ac_start_date.dirty)">
+                                        <div *ngIf="ac_start_date.errors.required">Activity Start Date is required</div>
+                                    </div> -->
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Start Date</mat-label>
+                                        <input matInput [matDatepicker]="picker2" formControlName="ac_start_date" name="ac_start_date" (dateChange) = "checkStartDate($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field> 
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <!-- <label class="control-label">Activity End Date<span
+                                            class="text-danger">*</span></label>
+                                    <my-date-picker [options]="myDatePickerOptions4" name="ac_end_date" (dateChanged) = "checkEndDate($event)"
+                                        formControlName="ac_end_date" required></my-date-picker>
+                                    <div class="help-block"
+                                        *ngIf="!ac_end_date.valid && (ac_end_date.touched || ac_end_date.dirty)">
+                                        <div *ngIf="ac_end_date.errors.required">Activity End Date is required</div>
+                                    </div> -->
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>End Date</mat-label>
+                                        <input matInput [matDatepicker]="picker3" formControlName="ac_end_date" name="ac_end_date" (dateChange) = "checkEndDate($event)">
+                                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker3></mat-datepicker>
+                                    </mat-form-field> 
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="width: 14%;">
+                                <div class="form-group">
+                                    <!-- <label class="control-label">Allocated Hours<span
+                                            class="text-danger">*</span></label>
+                                    <input class="form-control floating" type="text" required
+                                        formControlName="ac_allocated_hrs" id="ac_allocated_hrs" name="ac_allocated_hrs" [(ngModel)]="allocatedHrs"
+                                        pattern="[0-9][0-9]:[0-9][0-9]">
+                                    <div class="help-block"
+                                        *ngIf="!ac_allocated_hrs.valid && (ac_allocated_hrs.touched || ac_allocated_hrs.dirty)">
+                                        <div *ngIf="ac_allocated_hrs.errors.required">Allocated Hours is required</div>
+                                        <div *ngIf="ac_allocated_hrs.errors.pattern">Allocated Hours should be Valid format like 00:00</div>
+                                    </div> -->
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label >Allocated Hours</mat-label>
+                                        <input matInput formControlName="ac_allocated_hrs" name="ac_allocated_hrs">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label></label>
+                                    <button class="btn btn-info" type="button" (click)="selectedActivity(projectCode)"><i
+                                            class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <input style="display: none;" class="form-control floating" type="text" required
+                                        formControlName="ac_utilized_hrs" id="ac_utilized_hrs" name="ac_utilized_hrs" [(ngModel)]="allocatedHrs"
+                                        maxlength="30">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <div class="form-group">
+                                    <input style="display: none;" class="form-control floating" type="text" required
+                                        formControlName="ac_remaining_hrs" id="ac_remaining_hrs" name="ac_remaining_hrs" [(ngModel)]="allocatedHrs"
+                                        maxlength="30">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-3">
+                                <div class="form-group"
+                                    [class.has-error]="ac_utilized_hrs.invalid && ac_utilized_hrs.touched"
+                                    [class.has-success]="ac_utilized_hrs.valid">
+                                    <!-- <label class="control-label">Utilized Hours<span
+                                            class="text-danger">*</span></label> -->
+                                    <input style="display: none;" class="form-control floating" type="text" required
+                                        formControlName="ac_utilized_hrs" id="ac_utilized_hrs" name="ac_utilized_hrs" [(ngModel)]="allocatedHrs"
+                                        maxlength="30">
+                                    <div class="help-block"
+                                        *ngIf="!ac_utilized_hrs.valid && (ac_utilized_hrs.touched || ac_utilized_hrs.dirty)">
+                                        <div *ngIf="ac_utilized_hrs.errors.required">Utilized Hours is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group"
+                                    [class.has-error]="ac_remaining_hrs.invalid && ac_remaining_hrs.touched"
+                                    [class.has-success]="ac_remaining_hrs.valid">
+                                    <!-- <label class="control-label">Remaining Hours<span
+                                            class="text-danger">*</span></label> -->
+                                    <input style="display: none;" class="form-control floating" type="text" required
+                                        formControlName="ac_remaining_hrs" id="ac_remaining_hrs" name="ac_remaining_hrs" [(ngModel)]="allocatedHrs"
+                                        maxlength="30">
+                                    <div class="help-block"
+                                        *ngIf="!ac_remaining_hrs.valid && (ac_remaining_hrs.touched || ac_remaining_hrs.dirty)">
+                                        <div *ngIf="ac_remaining_hrs.errors.required">Remaining Hours is required</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" id="row">
+                  <div class="col-md-12 table-view">
+                      <div class="table-responsive table-responsive-inherit">
+                        <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows"
+                        #mf="mfDataTable" [mfRowsOnPage]="5">
+                            <thead>
+                                <tr *ngIf="proj_Actv_Form.get('proj_Actv_From_rows')">
+                                    <th style="width: 10%; display: none;">
+                                        <mfDefaultSorter by="type">Type</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="Name">Activity Name</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="startDate">Start Date</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="endDate">End Date</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="allocatedHours">Allocated Hours</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="utilizedHours">Utilized Hours</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="remainingHours">Remaining Hours</mfDefaultSorter>
+                                    </th>
+                                    <th style="width: 10%">
+                                        <mfDefaultSorter by="status">Status</mfDefaultSorter>
+                                    </th>
+                                    <!-- <th style="width: 10%">
+                                        <mfDefaultSorter by="remove">Remove</mfDefaultSorter>
+                                    </th> -->
+                                </tr>
+                            </thead>
+                              <tbody>
+                                  <tr
+                                      *ngFor="let row of proj_Actv_Form.get('proj_Actv_From_rows')?.controls;let index = index;">
+                                      <td style="display: none;"> <input [formControl]="row.get('proj_act_type')"></td>
+                                      <td> <input [formControl]="row.get('proj_actv_name')"></td>
+                                      <!-- <td style="display: none;"> <input [formControl]="row.get('proj_act_type')"></td>
+                                      <td> <input [formControl]="row.get('proj_act_type_name')"></td> -->
+                                      <td> <input [formControl]="row.get('proj_actv_start_date')"></td>
+                                      <td><input [formControl]="row.get('proj_actv_end_date')"></td>
+                                      <td> <input [formControl]="row.get('proj_act_allocat_hrs')"></td>
+                                      <td> <input [formControl]="row.get('proj_act_util_hrs')"></td>
+                                      <td> <input [formControl]="row.get('proj_act_remaining_hrs')"></td>
+                                      <td><input [formControl]="row.get('proj_actv_status')"></td>
+                                      <!-- <td> <button class="btn btn-sm btn-danger" (click)="onActivityremoveRow(index)">-</button></td> -->
+                                     
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <div class="m-t-20 text-center">
+                              <button class="btn btn-primary" mat-raised-button tabindex="-1" type="button"
+                                  
+                                  (click)='moveToSelectedTab("Resource Allocations", "activity", projectCode, projectName)'>Update</button>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </fieldset>
+          </mat-tab>
+          <mat-tab label="Resource Allocations">
+            <fieldset class="scheduler-border">
+                <legend class="scheduler-border">Update Resource</legend>
+                <div class="row" id="form">
+                    <div class="col">
+                        <div class="col-sm-6">
+                            <h4>Project Code : &nbsp; {{project_id}}</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Project Name : &nbsp;  {{projectname}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <form class="m-b-30" id="form" [formGroup]="resourceAllocateForm" novalidate autocomplete="off">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-12">
+                                <!-- <mat-slide-toggle class="pull-right" formControlName="proj_actv_status" name="proj_actv_status" id="proj_actv_status">Status</mat-slide-toggle> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                    <!-- <label class="control-label">Activity<span
+                                            class="text-danger m-l-5">*</span></label>
+                                    <select class="select form-control"
+                                        formControlName="activityAct" id="activityAct" name="activityAct" required (change)="getActivtyId($event)">
+                                        <option value="">Select Activity Name...</option>
+                                        <option *ngFor="let unit of activityDetails" [value]="unit.Proj_actv_Id">
+                                            {{unit.Proj_actv_Name}}</option>
+                                    </select>
+                                    <div class="help-block"
+                                        *ngIf="!activityAct.valid && (activityAct.touched || activityAct.dirty)">
+                                        <div *ngIf="activityAct.errors.required">Activity is required</div>
+                                    </div> -->
+
+                                    <mat-form-field appearance="fill" class="example-full-width">
+                                        <mat-label>Activitiy</mat-label>
+                                        <mat-select formControlName="activityAct" name="activityAct" (selectionChange)="getActivtyId($event.value)">
+                                            <mat-option *ngFor="let unit of activityDetails" [value]="unit.Proj_actv_Id">
+                                            {{unit.Proj_actv_Name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <div class="col-sm-1" style="display: none;">
+                                        <div class="form-group">
+                                            <input style="display: none;" class="form-control floating" type="text" required
+                                                formControlName="resActvityName" id="resActvityName" name="resActvityName" [(ngModel)]="actIdName"
+                                                maxlength="30">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+                                    <!-- <label class="control-label">Resource Type<span
+                                            class="text-danger m-l-5">*</span></label>
+                                    <select class="select form-control"
+                                        formControlName="resourceType" id="resourceType" name="resourceType" required (change)="getResourceTypeName($event)">
+                                        <option value="">Select Resource Type...</option>
+                                        <option *ngFor="let unit of resource_Arr" [value]="unit[0]">{{unit[1]}}</option>
+                                    </select>
+                                    <div class="help-block"
+                                        *ngIf="!resourceType.valid && (resourceType.touched || resourceType.dirty)">
+                                        <div *ngIf="resourceType.errors.required">Resource Type is required</div>
+                                    </div> -->
+
+                                    <mat-form-field appearance="fill" class="example-full-width">
+                                        <mat-label>Resource Type</mat-label>
+                                        <mat-select formControlName="resourceType" name="resourceType" (selectionChange)="getResourceTypeName($event.value)">
+                                            <mat-option *ngFor="let unit of resource_Arr" [value]="unit[0]">
+                                            {{unit[1]}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <div class="col-sm-1" style="display: none;">
+                                        <div class="form-group">
+                                            <input style="display: none;" class="form-control floating" type="text" required
+                                                formControlName="resResourceTypeName" id="resResourceTypeName" name="resResourceTypeName" [(ngModel)]="resResTypeName"
+                                                maxlength="30">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    
+                                    <!-- <label class="control-label">Employee Name<span
+                                            class="text-danger m-l-5">*</span></label>
+                                    <select class="select form-control" formControlName="employeeName" id="employeeName"
+                                        name="employeeName" required (change)="getEmployeeName($event)">
+                                        <option value="">Select Employee Name...</option>
+                                        <option *ngFor="let employee of projectEmployeeList" [value]="employee.empid">
+                                            {{employee.empname}}</option>
+                                    </select>
+                                    <div class="help-block"
+                                        *ngIf="!employeeName.valid && (employeeName.touched || employeeName.dirty)">
+                                        <div *ngIf="employeeName.errors.required">Employee Name is required</div>
+                                    </div> -->
+
+                                    <mat-form-field appearance="fill" class="example-full-width">
+                                        <mat-label>Employee Name</mat-label>
+                                        <mat-select formControlName="employeeName" name="employeeName" (selectionChange)="getEmployeeName($event.value)">
+                                            <mat-option *ngFor="let unit of projectEmployeeList" [value]="unit.empid">
+                                            {{unit.empname}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <div class="col-sm-1" style="display: none;">
+                                        <div class="form-group">
+                                            <input style="display: none;" class="form-control floating" type="text" required
+                                                formControlName="resEmployeeName" id="resEmployeeName" name="resEmployeeName" [(ngModel)]="resEmpName"
+                                                maxlength="30">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>Start Date</mat-label>
+                                        <input matInput [matDatepicker]="picker4" formControlName="re_start_date" name="re_start_date">
+                                        <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker4></mat-datepicker>
+                                    </mat-form-field> 
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label>End Date</mat-label>
+                                        <input matInput [matDatepicker]="picker5" formControlName="re_end_date" name="re_end_date">
+                                        <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker5></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width" appearance="fill">
+                                        <mat-label >Allocate Hours</mat-label>
+                                        <input matInput formControlName="allottedHours" name="allottedHours">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label></label>
+                                    <button class="btn btn-info" type="button"
+                                        (click)="selectedResourceAllocation(projectCode)"><i
+                                            class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row" id="row">
+                    <div class="col-md-12 table-view">
+                        <div class="table-responsive table-responsive-inherit">
+
+                            <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows"
+                            #mf="mfDataTable" [mfRowsOnPage]="5">
+                                <thead>
+                                    <tr *ngIf="addProj_Resource_Form.get('addProj_Resource_Form_rows')">
+                                        <th style="width: 10%; display: none;">
+                                            <mfDefaultSorter by="type">Employee Id</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <mfDefaultSorter by="type">Employee Name</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%; display: none;">
+                                            <mfDefaultSorter by="Name">Type</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <mfDefaultSorter by="Name">Resource Type</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%; display: none;">
+                                            <mfDefaultSorter by="activity">ActivityId</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <mfDefaultSorter by="activity">Activity</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <mfDefaultSorter by="startDate">Start Date</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <mfDefaultSorter by="endDate">End Date</mfDefaultSorter>
+                                        </th>
+                                        <th style="width: 10%">
+                                            <mfDefaultSorter by="allocatedHours">Allocated Hours</mfDefaultSorter>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let row of addProj_Resource_Form.get('addProj_Resource_Form_rows')?.controls;let index = index;">
+                                        <!-- <td > <input [formControl]="row.get('emp_id')"></td>
+                                        <td> <input [formControl]="row.get('emp_name')"></td>
+                                        <td> <input [formControl]="row.get('proj_actv_id')"></td>
+                                        <td><input [formControl]="row.get('res_start_date')"></td>
+                                        <td> <input [formControl]="row.get('res_end_date')"></td>
+                                        <td> <input [formControl]="row.get('res_allocat_hrs')"></td> -->
+                                            <td style="display: none;"> <input [formControl]="row.get('emp_id')"></td>
+                                            <td style="display: none;"> <input [formControl]="row.get('proj_res_role_type')"></td>
+                                            <td style="display: none;"> <input [formControl]="row.get('proj_actv_id')"></td>
+                                            <td> <input [formControl]="row.get('resEmployeeName')"></td>
+                                            <td> <input [formControl]="row.get('resResourceTypeName')"></td>
+                                            <td> <input [formControl]="row.get('proj_act_name')"></td>
+                                            <td><input [formControl]="row.get('res_start_date')"></td>
+                                            <td> <input [formControl]="row.get('res_end_date')"></td>
+                                            <td> <input [formControl]="row.get('res_allocat_hrs')"></td>
+                                        <!-- <td> <button class="btn btn-sm btn-danger" (click)="onResourceremoveRow(index)">-</button></td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="m-t-20 text-center">
+                                <button class="btn btn-primary" mat-raised-button tabindex="-1" type="button"
+                                    
+                                    (click)='moveToSelectedTab("Project Document", "resource allocation", "null", "null")'>Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+          </mat-tab>
+          <mat-tab label="Project Document">
+              <div class="row" id="form">
+                  <div class="col">
+                      <div class="col-sm-6">
+                          <h4>Project Code : &nbsp; {{projectCode}}</h4>
+                      </div>
+                      <div class="col-sm-6">
+                          <h4>Project Name : &nbsp; {{projectName}}</h4>
+                      </div>
+                  </div>
+              </div>
+              <form class="m-b-30" id="form" [formGroup]="documentForm" novalidate autocomplete="off">
+                <div class="row">
+                    <div class="col">
+                        <div class="col-sm-12">
+                            <mat-slide-toggle class="pull-right" formControlName="documentAccessStatus" name="documentAccessStatus" id="documentAccessStatus">Status</mat-slide-toggle>
+                        </div>
+                    </div>
+                </div>
+                  <div class="row">
+                      <div class="col">
+                          <div class="col-sm-5">
+                              <div class="form-group" [class.has-error]="document.invalid && document.touched"
+                                  [class.has-success]="document.valid">
+                                  <label class="control-label">Document Name <span
+                                          class="text-danger m-l-5">*</span></label>
+                                  <input class="form-control floating" type="text" required formControlName="document"
+                                      id="document" name="document" maxlength="30">
+                                  <div class="help-block"
+                                      *ngIf="!document.valid && (document.touched || document.dirty)">
+                                      <div *ngIf="document.errors.required">Document Name is required</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-5">
+                              <div class="form-group" [class.has-error]="documentFile.invalid && documentFile.touched"
+                                  [class.has-success]="documentFile.valid">
+                                  <label class="control-label">Document File <span
+                                          class="text-danger m-l-5">*</span></label>
+                                  <input class="form-control floating" type="file" required
+                                      formControlName="documentFile" id="documentFile" name="documentFile"
+                                      maxlength="30">
+                                  <div class="help-block"
+                                      *ngIf="!documentFile.valid && (documentFile.touched || documentFile.dirty)">
+                                      <div *ngIf="documentFile.errors.required">Document Name is required</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-sm-2">
+                              <div class="form-group icon-si">
+                                  <label></label>
+                                  <button type="button" class="btn btn-info"><i class="fa fa-arrow-down fa-2x" aria-hidden="true"></i></button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+              <div class="row" id="row">
+                  <div class="col-md-12 table-view">
+                      <div class="table-responsive table-responsive-inherit">
+                          <table style="width: 100%" class="table table-striped custom-table" [mfData]="rows"
+                              #mf="mfDataTable" [mfRowsOnPage]="5">
+                              <thead>
+                                  <tr>
+                                      <th style="width: 50%">
+                                          <mfDefaultSorter by="documentName">Document Name</mfDefaultSorter>
+                                      </th>
+                                      <th style="width: 50%">
+                                          <mfDefaultSorter by="file">File</mfDefaultSorter>
+                                      </th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td></td>
+                                      <td></td>
+                                  </tr>
+                              </tbody>
+                              <tfoot>
+                                  <tr>
+                                      <td colspan="20">
+                                          <div class="mt-3"></div>
+                                      </td>
+                                  </tr>
+                              </tfoot>
+                          </table>
+                          <div class="m-t-20 text-center">
+                              <button class="btn btn-primary" mat-raised-button tabindex="-1" type="button"
+                                  (click)='moveToSelectedTab("Create Project", "null", "null", "null")'>Upload
+                                  Documents</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </mat-tab>
+      </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+  <div class="account-page">
+    <div class="container">
+      <h3 class="account-title"></h3>
+      <div class="account-box">
+        <div class="account-wrapper">
+          <div class="account-logo">
+            <a href="javascript:"><img src="assets/img/logo2.jpg" alt="Focus Technologies"></a>
+          </div>
+          <form  [formGroup] = "form" autocomplete="off">
+            <div class="form-group form-focus">
+              <label class="control-label">Email</label>
+              <input class="form-control floating" type="email"
+                formControlName = "email" required            
+                id="email">
+            </div>
+            <div *ngIf="f.email.dirty && f.email.invalid" class="alert alert-danger">
+              <div *ngIf="f.email.errors.required">Email is required.</div>
+              <div *ngIf="f.email.errors.pattern">Email must be in the valid pattern</div>
+            </div>
+            <div class="form-group text-center">
+              <button class="btn btn-primary btn-block account-btn" type="button" [disabled]="form.invalid" (click)="reset()">Reset Password</button>
+            </div>
+            <div class="text-center">
+              <a routerLink="../login">Back to Login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
